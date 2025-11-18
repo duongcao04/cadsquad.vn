@@ -10,6 +10,7 @@ import ImgCadService from '@/assets/images/cad-services.webp'
 import { Link } from '@/i18n/navigation'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
 
+import ButtonDownloadBrochure from '../../../../../components/ButtonDownloadBrochure'
 import ServiceCard from './_components/cards/ServiceCard'
 
 export default function CADServices() {
@@ -18,7 +19,7 @@ export default function CADServices() {
 
     return (
         <div className="min-h-screen pb-16 max-w-screen">
-            <section className="relative w-full overflow-hidden h-[600px] lg:h-[500px]">
+            <section className="relative w-full overflow-hidden h-[760px] lg:h-[500px]">
                 <div className="relative size-full">
                     <Image
                         src={ImgCadService}
@@ -63,6 +64,7 @@ export default function CADServices() {
                         <p className="mt-5 leading-normal max-w-[95%] lg:max-w-[85%] text-justify">
                             {tCadServices('heading.description')}
                         </p>
+                        <ButtonDownloadBrochure />
                     </div>
                 </div>
             </section>

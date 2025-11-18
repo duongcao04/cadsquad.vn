@@ -1,17 +1,15 @@
 import React from 'react'
 
-import { Button } from '@heroui/react'
-import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import Link from 'next/link'
+
+import ButtonDownloadBrochure from '@/components/ButtonDownloadBrochure'
 
 import AboutUsImage from '@/assets/images/about-us-banner.webp'
 import { MotionH1 } from '@/lib/motion'
 
 export default function AboutUsHeading() {
     const tAboutUs = useTranslations('landing.aboutUs')
-    const tButton = useTranslations('button')
 
     return (
         <section className="relative w-full overflow-hidden h-[450px] lg:h-[520px]">
@@ -37,26 +35,7 @@ export default function AboutUsHeading() {
                                 paragraph: (chunk) => <p>{chunk}</p>,
                             })}
                         </div>
-                        <Link
-                            href={
-                                '/sites/default/files/CSD-%20Profile%202025.pdf'
-                            }
-                            passHref
-                            title="CSD- Profile 2025.pdf"
-                            target="_blank"
-                            className="block"
-                        >
-                            <Button
-                                size="lg"
-                                className="mt-5 rounded-sm border-3 border-transparent hover:border-white duration-150"
-                                startContent={<Download />}
-                                color="secondary"
-                            >
-                                <p className="text-sm lg:text-base">
-                                    {tButton('downloadBrochure')}
-                                </p>
-                            </Button>
-                        </Link>
+                        <ButtonDownloadBrochure />
                     </div>
                 </div>
             </div>

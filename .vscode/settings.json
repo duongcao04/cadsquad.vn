@@ -1,0 +1,6 @@
+{
+	"i18n-ally.localesPaths": [
+		"public/messages",
+		"src/i18n"
+	]
+}
