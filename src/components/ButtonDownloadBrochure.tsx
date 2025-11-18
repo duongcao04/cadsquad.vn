@@ -3,8 +3,7 @@ import React from 'react'
 import { Button } from '@heroui/react'
 import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-
-import { Link } from '../i18n/navigation'
+import Link from 'next/link'
 
 export default function ButtonDownloadBrochure() {
     const tButton = useTranslations('button')
