@@ -1,7 +1,5 @@
 'use client'
 
-import React from 'react'
-
 import { Button, Skeleton } from '@heroui/react'
 import { Image } from 'antd'
 import { ChevronRight } from 'lucide-react'
@@ -9,24 +7,26 @@ import { Variants } from 'motion'
 import { useLocale, useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/navigation'
+import { INTERNAL_URLS } from '@/lib'
 import { MotionDiv } from '@/lib/motion'
 import { useDevice } from '@/shared/hooks/useDevice'
-import { CadService } from '@/validationSchemas/cad-service.schema'
+import { TService, TServiceTranslation } from '@/types'
 
 type Props = {
-    data: CadService
+    data: TService
 }
 
 export default function ServiceCard({ data }: Props) {
-    const locale = useLocale()
+    const locale = useLocale().toUpperCase()
     const tButton = useTranslations('button')
     const { isMobile } = useDevice()
 
-    const title = locale === 'vi' ? data?.title?.vi : data?.title?.original
-    const shortDescription =
-        locale === 'vi'
-            ? data?.shortDescription?.vi
-            : data?.shortDescription?.original
+    const cadServiceTranslations = (data?.translations.find(
+        (it) => it.language === locale
+    ) ??
+        data?.translations.find(
+            (it) => it.language === 'EN'
+        )) as TServiceTranslation
 
     const wrapperVariants: Variants = {
         init: {
@@ -45,8 +45,6 @@ export default function ServiceCard({ data }: Props) {
         },
     }
 
-    const destination = `/cad-services/${data.slug}`
-
     return (
         <MotionDiv
             variants={wrapperVariants}
@@ -57,14 +55,16 @@ export default function ServiceCard({ data }: Props) {
         >
             <div className="h-full overflow-hidden rounded-lg aspect-video">
                 <Link
-                    href={destination}
+                    href={INTERNAL_URLS.cadServiceDetail(
+                        cadServiceTranslations.slug
+                    )}
                     passHref
                     className="block"
-                    title={title}
+                    title={cadServiceTranslations.title}
                 >
                     <Image
-                        src={data?.thumbnail?.vertical}
-                        alt={title}
+                        src={data?.horizontalThumbnail?.url}
+                        alt={cadServiceTranslations.title}
                         className="object-cover h-full aspect-video"
                         preview={false}
                     />
@@ -72,16 +72,23 @@ export default function ServiceCard({ data }: Props) {
             </div>
             <div className="mt-6 lg:mt-0 w-full">
                 <Link
-                    href={destination}
+                    href={INTERNAL_URLS.cadServiceDetail(
+                        cadServiceTranslations.slug
+                    )}
                     className="text-2xl font-semibold line-clamp-1 hover:underline underline-offset-4"
-                    title={title}
+                    title={cadServiceTranslations.title}
                 >
-                    {title}
+                    {cadServiceTranslations.title}
                 </Link>
                 <p className="mt-3 lg:mt-5 text-lg text-gray-700">
-                    {shortDescription}
+                    {cadServiceTranslations.shortDescription}
                 </p>
-                <Link href={destination} className="block">
+                <Link
+                    href={INTERNAL_URLS.cadServiceDetail(
+                        cadServiceTranslations.slug
+                    )}
+                    className="block"
+                >
                     <Button
                         className="mt-8 capitalize rounded-full"
                         variant="bordered"

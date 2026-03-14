@@ -1,19 +1,7 @@
-import React from 'react'
-import { Suspense } from 'react'
-
-import { Image } from 'antd'
 import { getLocale } from 'next-intl/server'
-import { MDXRemote } from 'next-mdx-remote-client/rsc'
 
-import { MotionSection } from '@/lib/motion'
-import { cleanMarkdownString } from '@/lib/utils'
-import { CAD_SERVICES } from '@/shared/database/cadServices'
+import { CADServiceDetailClient } from './client-page'
 
-import OurServices from '../../(home)/_components/OurServices'
-import PageBreadcumbs from './_components/PageBreadcumbs'
-import ServiceNavigate from './_components/ServiceNavigate'
-
-const cadServices = CAD_SERVICES
 export default async function CADServiceDetailPage({
     params,
 }: {
@@ -21,7 +9,6 @@ export default async function CADServiceDetailPage({
 }) {
     const locale = await getLocale()
     const { slug } = await params
-    const data = cadServices.filter((item) => item.slug === slug)?.[0]
 
     /**
      * Use for create new content with this template
@@ -92,86 +79,11 @@ export default async function CADServiceDetailPage({
 
     // console.log(JSON.stringify(templateContent.replaceAll('  ', '')))
 
-    const descriptionSource = (
-        locale === 'vi' ? data?.description?.vi : data?.description?.original
-    ) as string
-    const contentSource = (
-        locale === 'vi' ? data?.content?.vi : data?.content?.original
-    ) as string
-    const description = cleanMarkdownString(descriptionSource)
-    const source = cleanMarkdownString(contentSource)
-
-    const title = locale === 'vi' ? data?.title?.vi : data?.title?.original
+    // const source = cleanMarkdownString(serviceTranslation.content)
 
     return (
         <div className="min-h-screen pb-20 max-w-screen">
-            <section className="relative w-full overflow-hidden h-[350px] lg:h-[500px]">
-                <div className="relative size-full">
-                    <Image
-                        src={
-                            data?.thumbnail.horizontal ??
-                            (data?.thumbnail as string)
-                        }
-                        alt="Image"
-                        className="!object-cover !size-full"
-                        rootClassName="!object-cover !size-full"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80" />
-                </div>
-                <div className="absolute top-[50%] translate-y-[-50%] left-0 w-screen">
-                    <div className="container" style={{ color: 'white' }}>
-                        <PageBreadcumbs pageName={title as string} />
-                        <h2 className="mt-5 text-3xl lg:text-6xl font-bold font-saira mb-3">
-                            {title}
-                        </h2>
-                        <MDXRemote
-                            source={description}
-                            components={{
-                                wrapper({ children }) {
-                                    return (
-                                        <div className="leading-normal lg:leading-relaxed !text-sm lg:!text-lg !opacity-85">
-                                            {children}
-                                        </div>
-                                    )
-                                },
-                            }}
-                            onError={() => <p></p>}
-                        />
-                    </div>
-                </div>
-            </section>
-
-            <MotionSection
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                className="container min-h-40 mt-16"
-            >
-                <Suspense fallback={<p>Loading...</p>}>
-                    {/* Use antd Image and replace bold middle paraph */}
-                    <MDXRemote
-                        source={source
-                            .replaceAll('img', 'Image')
-                            .replaceAll('**', '')}
-                        components={{
-                            Image,
-                            wrapper: ({ children }) => (
-                                <div suppressHydrationWarning>{children}</div>
-                            ),
-                        }}
-                        onError={(err) => (
-                            <p>{`Couldn't load content!${JSON.stringify(err)}`}</p>
-                        )}
-                    />
-                </Suspense>
-            </MotionSection>
-
-            <MotionSection className="container mt-24 mb-16 flex items-center justify-end lg:justify-between gap-5">
-                <ServiceNavigate service={data} />
-            </MotionSection>
-
-            <MotionSection>
-                <OurServices />
-            </MotionSection>
+            <CADServiceDetailClient slug={slug} locale={locale} />
         </div>
     )
 }

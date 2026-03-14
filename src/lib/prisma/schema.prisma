@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. Define supported languages
+enum Language {
+  EN
+  VI
+}
+
+// ==========================================
+// POSTS
+// ==========================================
+
+model Post {
+  id           String  @id @default(cuid())
+  thumbnailUrl String
+  bgCoverUrl   String?
+  countView    Int     @default(0)
+
+  // Relations
+  translations PostTranslation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PostTranslation {
+  id       String   @id @default(cuid())
+  postId   String
+  language Language
+
+  // Localized Content
+  slug             String   @unique
+  title            String
+  shortDescription String?
+  content          String
+  tags             String[]
+
+  // Localized SEO Metadata
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String[]
+
+  // Relation back to parent
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  // Ensure a post only has ONE translation per language
+  @@unique([postId, language])
+}
+
+// ==========================================
+// SERVICES
+// ==========================================
+
+model ServiceType {
+  id   String @id @default(cuid())
+  code String @unique
+
+  services     Service[]
+  translations ServiceTypeTranslation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceTypeTranslation {
+  id            String   @id @default(cuid())
+  serviceTypeId String
+  language      Language
+
+  displayName String
+  description String?
+  brochureUrl String?
+
+  serviceType ServiceType @relation(fields: [serviceTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceTypeId, language])
+}
+
+model Service {
+  id            String  @id @default(cuid())
+  orderNumber   Int     @unique
+  serviceTypeId String?
+
+  // Thumbnail Keys
+  verticalThumbnailId   String?
+  horizontalThumbnailId String?
+
+  // Relations
+  serviceType         ServiceType?         @relation(fields: [serviceTypeId], references: [id])
+  verticalThumbnail   ServiceThumbnail?    @relation("VerticalServiceThumbnail", fields: [verticalThumbnailId], references: [id])
+  horizontalThumbnail ServiceThumbnail?    @relation("HorizontalServiceThumbnail", fields: [horizontalThumbnailId], references: [id])
+  translations        ServiceTranslation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceTranslation {
+  id        String   @id @default(cuid())
+  serviceId String
+  language  Language
+
+  // Localized Content
+  slug             String @unique
+  title            String
+  description      String
+  shortDescription String
+  content          String
+
+  // Localized SEO Metadata
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String[]
+
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, language])
+}
+
+// ==========================================
+// MEDIA
+// ==========================================
+
+model ServiceThumbnail {
+  id   String               @id @default(cuid())
+  url  String // Actual file path/URL
+  type ServiceThumbnailType @default(ImagePng)
+
+  // Opposite relation fields mapping to the Service model
+  verticalServices   Service[] @relation("VerticalServiceThumbnail")
+  horizontalServices Service[] @relation("HorizontalServiceThumbnail")
+}
+
+enum ServiceThumbnailType {
+  ImagePng
+  VideoGif
+}

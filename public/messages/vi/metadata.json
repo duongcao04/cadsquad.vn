@@ -26,6 +26,15 @@
         "ogImage": "https://res.cloudinary.com/dqx1guyc0/image/upload/v1754592421/Cadsquad/ogImage_mogssp.png",
         "canonical": "https://cadsquad.vn/cad-services"
     },
+    "digitalServices": {
+        "title": "Digital Services | Cadsquad.vn",
+        "description": "Professional CAD services tailored for architects, engineers, and designers. Get high-quality drafting, 2D/3D modeling, rendering at Cadsquad.vn - trusted CAD solutions in Vietnam.",
+        "keywords": "CAD services, 2D CAD drafting, 3D modeling, CAD rendering, technical drawings, AutoCAD services, Revit modeling, CAD for architecture, CAD for engineering, services CAO, modélisation 3D, dessin technique, rendu 3D, plans d'architecture, CAO pour ingénieurs, CAO pour architectes, externalisation CAO, services AutoCAD, services Revit",
+        "canonical": "https://cadsquad.vn/cad-services",
+        "ogTitle": "Professional CAD Services in Vietnam | Cadsquad.vn",
+        "ogDescription": "Explore our CAD drafting, 3D modeling, and rendering solutions tailored for engineers and architects worldwide.",
+        "ogImage": "https://res.cloudinary.com/dqx1guyc0/image/upload/v1754592421/Cadsquad/ogImage_mogssp.png"
+    },
     "newsMedia": {
         "title": "Tin tức & Truyền thông | Cadsquad.vn",
         "description": "Cập nhật tin tức mới nhất về CAD, xu hướng thiết kế, phần mềm và công nghệ ngành.",

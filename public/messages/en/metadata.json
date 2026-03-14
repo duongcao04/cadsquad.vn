@@ -1,38 +1,94 @@
 {
+    "layout": {
+        "followUsOn": "Follow us on"
+    },
     "home": {
-        "title": "Cadsquad | Highly skilled and experienced group",
-        "description": "CADSQUAD Vietnam delivers high-quality mechanical design and CAD services, turning ideas into sustainable products for global clients.",
-        "keywords": "CAD services, mechanical design, CAD outsourcing, CAD Vietnam, product development, CAD experts, 2D CAD, 3D CAD, CAD drafting, CAD engineering, services de CAO, conception mécanique, externalisation CAO, ingénierie Vietnam, conception de produit, experts CAO, dessin technique, CAO 2D, CAO 3D",
-        "canonical": "https://cadsquad.vn/",
-        "ogTitle": "Cadsquad Vietnam - High-Quality CAD & Mechanical Design Services",
-        "ogDescription": "Expert CAD services from Vietnam. Mechanical design, 2D/3D modeling, drafting, and more for global businesses.",
-        "ogImage": "https://res.cloudinary.com/dqx1guyc0/image/upload/v1754592421/Cadsquad/ogImage_mogssp.png"
+        "heading": {
+            "title": "Home"
+        },
+        "slogan": "Global Mechanical Design Partner",
+        "sloganDescription": "We turn innovative ideas, drawing into reality, delivering high-quality CAD and engineering solutions for a sustainable future.",
+        "sections": {
+            "ourServices": {
+                "title": "Our <highlight>Services</highlight>"
+            },
+            "popularProject": {
+                "title": "Popular <highlight>Project</highlight>"
+            },
+            "whyChooseUs": {
+                "title": "Why Choose <highlight>Cadsquad</highlight>?"
+            },
+            "customerReview": {
+                "title": "Customer <highlight>Review</highlight>"
+            },
+            "contactUs": {
+                "title": "Get in <highlight>touch</highlight>",
+                "description": "Any question or remarks? Just write us a message!",
+                "contactInformation": {
+                    "title": "Contact",
+                    "description": "Say something to start a live chat!"
+                }
+            },
+            "workflow": {
+                "title": "How do we <highlight>work</highlight>?"
+            }
+        }
+    },
+    "vision": {
+        "heading": {
+            "title": "Who we are?",
+            "description": "\"We are a highly skilled and experienced group of mechanical engineers passionate about turning innovative ideas into tangible reality.\""
+        },
+        "sections": {
+            "paragraph1": "Welcome to our Engineering Design Team. We are a group of highly skilled and experienced mechanical engineers who are passionate about turning creative ideas into tangible reality. With expertise in many areas of mechanical engineering, we provide comprehensive design solutions tailored to your specific needs. Our team brings together a wealth of knowledge and practical experience in concept development, 3D modeling, CAD drafting and product design. In addition, CADSQUAD also develops the Academy system to train design software to help engineers and students approach professional mechanical design.",
+            "paragraph2": "CADSQUAD's vision is to become a trusted and reputable partner in the field of 3D design and related services. We strive to achieve this mission by bringing creativity, quality and outstanding performance to our customers in every project. With the ideal of exceeding customer expectations and creating superior design products and solutions, CADSQUAD is committed to shaping and driving sustainable growth in the CAD and 3D design industry. We prioritize continuous improvement, relentless innovation and ensure that all our projects leave a unique mark and bring significant value to our customers.",
+            "paragraph3": "“With a highly experienced workforce that has accumulated years of expertise in their respective fields, including notable achievements in mechanical engineering CAD design competitions, and a richly experienced team of 3D artists, CADSQUAD Vietnam takes pride in the quality of services we deliver to our clients.”",
+            "meetTheTeam": {
+                "title": "Meet the team"
+            }
+        }
     },
     "aboutUs": {
-        "title": "About us | Cadsquad.vn",
-        "description": "Discover the mission, values, and expertise behind Cadsquad.vn - Vietnam's trusted CAD solutions provider. Learn how we empower designers, engineers, and businesses with innovative CAD tools and services.",
-        "keywords": "about Cadsquad, CAD company Vietnam, CAD professionals, CAD solutions, engineering team, who we are, trusted CAD partner, à propos de Cadsquad, société de CAO au Vietnam, équipe d'ingénieurs, solutions CAO, partenaire de confiance CAO, professionnels de la CAO, expertise CAO",
-        "canonical": "https://cadsquad.vn/about-us",
-        "ogTitle": "About Cadsquad - Trusted CAD Experts in Vietnam",
-        "ogDescription": "Learn more about our team, mission, and expertise in providing top-tier CAD services for global partners.",
-        "ogImage": "https://res.cloudinary.com/dqx1guyc0/image/upload/v1754592421/Cadsquad/ogImage_mogssp.png"
+        "heading": {
+            "title": "About Us",
+            "slogan": "CADSQUAD VIETNAM",
+            "description": "<paragraph>CADSQUAD Vietnam is a global provider of tailored mechanical design solutions, specializing in high-quality CAD and engineering services. We transform innovative ideas into tangible, sustainable products, delivering exceptional value to industries worldwide.</paragraph><paragraph>CADSQUAD Vietnam is ready to deliver world class engineering solutions that exceed your expectations.</paragraph>"
+        },
+        "sections": {
+            "overview": {
+                "title": "Overview",
+                "aboutCadsquad": "CADSQUAD VIETNAM"
+            },
+            "founderStory": {
+                "title": "Founder Story",
+                "body": "<paragraph>Mr. Pham Tien Phong is a young mechanical engineer with hands-on experience working for leading corporations in the heavy industry and food processing sectors. Throughout his career, he has been deeply involved in machine design, technical drawings, and real-world manufacturing processes-giving him a strong understanding of the gap between engineering ideas and practical execution.</paragraph><paragraph>Driven by the desire to bridge that gap, he founded CADSquad - a service-oriented company that delivers mechanical design, CAD data conversion, engineering simulation, and professional CAD training. His goal is to provide high-quality, reliable technical services that empower engineers, manufacturers, and students to master modern design technology and apply it with confidence.</paragraph><paragraph>At CADSquad, we are committed to being more than just a service provider - we are your technical partner, helping turn ideas into real-world solutions.</paragraph>"
+            },
+            "ourJourney": {
+                "title": "Our Journey"
+            },
+            "clientAndPartner": {
+                "title": "Our Client",
+                "button": {
+                    "client": "Client",
+                    "partner": "Partner"
+                }
+            }
+        }
     },
     "cadServices": {
-        "title": "CAD Services | Cadsquad.vn",
-        "description": "Professional CAD services tailored for architects, engineers, and designers. Get high-quality drafting, 2D/3D modeling, rendering at Cadsquad.vn - trusted CAD solutions in Vietnam.",
-        "keywords": "CAD services, 2D CAD drafting, 3D modeling, CAD rendering, technical drawings, AutoCAD services, Revit modeling, CAD for architecture, CAD for engineering, services CAO, modélisation 3D, dessin technique, rendu 3D, plans d'architecture, CAO pour ingénieurs, CAO pour architectes, externalisation CAO, services AutoCAD, services Revit",
-        "canonical": "https://cadsquad.vn/cad-services",
-        "ogTitle": "Professional CAD Services in Vietnam | Cadsquad.vn",
-        "ogDescription": "Explore our CAD drafting, 3D modeling, and rendering solutions tailored for engineers and architects worldwide.",
-        "ogImage": "https://res.cloudinary.com/dqx1guyc0/image/upload/v1754592421/Cadsquad/ogImage_mogssp.png"
+        "heading": {
+            "title": "CAD services",
+            "description": "Customers and employees are the focus of CADSQUAD in all business activities. Customer satisfaction is the compass leading to the success of the organization. Therefore, the effort to listen, understand and quickly resolve customer requests and improve service quality is what CADSQUAD is constantly. With the commitment to support customers with reasonable design costs when using CADSQUAD services, we believe that your business will be satisfied when using our services. Our team of enthusiastic young engineers all graduated from good technical schools and worked at multinational corporations, are well-trained in technical software including Autodesk AutoCAD, Autodesk Inventor, Creo... We are confident in the quality of output when you choose us."
+        }
     },
     "newsMedia": {
-        "title": "News & Media | Cadsquad.vn",
-        "description": "Stay updated with the latest CAD news, design innovations, software updates, and industry trends. Explore expert insights, tutorials, and tips at Cadsquad.vn - your go-to hub for all things CAD in Vietnam.",
-        "keywords": "CAD news, CAD trends, design innovations, CAD software updates, tutorials CAD, tips CAD, industry news, actualités CAO, tendances de la CAO, innovations en conception, mises à jour logiciels CAO, tutoriels CAO, astuces CAO, actualités du secteur, nouvelles de l'industrie CAO",
-        "canonical": "https://cadsquad.vn/news-and-media",
-        "ogTitle": "CAD News & Industry Insights | Cadsquad.vn",
-        "ogDescription": "Get the latest updates on CAD technology, design trends, and expert tips from Cadsquad.vn.",
-        "ogImage": "https://res.cloudinary.com/dqx1guyc0/image/upload/v1754592421/Cadsquad/ogImage_mogssp.png"
+        "sections": {
+            "otherFeaturedPost": "Other featured posts",
+            "recentPosts": "Recent Posts",
+            "relatedPosts": "Related Posts",
+            "button": {
+                "allPosts": "All posts"
+            }
+        }
     }
 }

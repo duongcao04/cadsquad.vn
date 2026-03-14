@@ -1,6 +1,9 @@
 import { getLocale } from 'next-intl/server'
 
-import { CAD_SERVICES } from '@/shared/database/cadServices'
+import { parseData } from '@/lib'
+import { serviceApi } from '@/queires'
+import { TServiceTranslation } from '@/types'
+import { ServiceSchema } from '@/validationSchemas'
 
 export async function generateMetadata({
     params,
@@ -10,24 +13,29 @@ export async function generateMetadata({
     const locale = await getLocale()
     const { slug } = await params
 
-    const data = CAD_SERVICES.find((srv) => srv.slug === slug)
-
-    const title = locale === 'vi' ? data?.title?.vi : data?.title?.original
-    const description = locale === 'vi' ? data?.plainDescription?.vi : data?.plainDescription?.original
+    const service = await serviceApi
+        .detailBySlug(slug)
+        .then((res) => parseData(ServiceSchema, res))
+    const serviceTranslation = (service?.translations.find(
+        (it) => it.language === locale.toUpperCase()
+    ) ??
+        service?.translations.find(
+            (it) => it.language === 'EN'
+        )) as TServiceTranslation
 
     return {
-        title: title + ' | Cadsquad.vn',
-        description,
+        title: serviceTranslation.title + ' | Cadsquad.vn',
+        description: serviceTranslation.seoDescription,
         // keywords: data?.description?.split(','),
         openGraph: {
-            title: title,
-            description: description,
+            title: serviceTranslation.seoTitle,
+            description: serviceTranslation.seoDescription,
             images: [
                 {
-                    url: data?.thumbnail.horizontal,
+                    url: service?.horizontalThumbnail?.url,
                     width: 1200,
                     height: 630,
-                    alt: title,
+                    alt: serviceTranslation.seoTitle,
                 },
             ],
             siteName: 'Cadsquad.vn',
@@ -35,7 +43,7 @@ export async function generateMetadata({
             type: 'website',
         },
         alternates: {
-            canonical: `https://cadsquad.vn/cad-services/${data?.slug}`,
+            canonical: `https://cadsquad.vn/cad-services/${serviceTranslation?.slug}`,
         },
     }
 }
