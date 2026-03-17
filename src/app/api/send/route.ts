@@ -1,9 +1,8 @@
 import { render } from '@react-email/components'
 import { NextRequest } from 'next/server'
 
+// import { transporter } from '@/lib/nodemailer'
 import EmailTemplate from '@/shared/components/EmailTemplate'
-import envConfig from '@/config/config'
-import { transporter } from '@/lib/nodemailer'
 
 const EMAIL_SUBJECT = '[cadsquad.vn] Customer wants to connect'
 
@@ -23,15 +22,15 @@ export async function POST(req: NextRequest) {
             EmailTemplate({ fullName, email, message })
         )
 
-        await transporter.sendMail({
-            from: `${fullName} <${email}>`,
-            to: [
-                `${envConfig.NEXT_PUBLIC_CADSQUAD_EMAIL}`,
-                'contact@cadsquad.vn',
-            ],
-            subject: EMAIL_SUBJECT,
-            html: emailHtml,
-        })
+        // await transporter.sendMail({
+        //     from: `${fullName} <${email}>`,
+        //     to: [
+        //         `${envConfig.NEXT_PUBLIC_CADSQUAD_EMAIL}`,
+        //         'contact@cadsquad.vn',
+        //     ],
+        //     subject: EMAIL_SUBJECT,
+        //     html: emailHtml,
+        // })
 
         return Response.json(
             {

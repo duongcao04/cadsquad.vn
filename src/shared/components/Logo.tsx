@@ -27,7 +27,7 @@ export default function Logo({
     const Wrapper = ({ children }: { children: React.ReactNode }) => {
         const wrapperClassName = cn('block w-fit', classNames?.root)
         return canRedirect ? (
-            <Link href={href} className={wrapperClassName}>
+            <Link href={href} className={cn('block', wrapperClassName)}>
                 {children}
             </Link>
         ) : (

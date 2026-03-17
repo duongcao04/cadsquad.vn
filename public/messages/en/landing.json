@@ -81,6 +81,12 @@
             "description": "Customers and employees are the focus of CADSQUAD in all business activities. Customer satisfaction is the compass leading to the success of the organization. Therefore, the effort to listen, understand and quickly resolve customer requests and improve service quality is what CADSQUAD is constantly. With the commitment to support customers with reasonable design costs when using CADSQUAD services, we believe that your business will be satisfied when using our services. Our team of enthusiastic young engineers all graduated from good technical schools and worked at multinational corporations. are well-trained in technical software including Autodesk AutoCAD, Autodesk Inventor, Creo... We are confident in the quality of output when you choose us."
         }
     },
+    "digitalServices": {
+        "heading": {
+            "title": "Digital services",
+            "description": "Customers and employees are the focus of CADSQUAD in all business activities. Customer satisfaction is the compass leading to the success of the organization. Therefore, the effort to listen, understand and quickly resolve customer requests and improve service quality is what CADSQUAD is constantly. With the commitment to support customers with reasonable design costs when using CADSQUAD services, we believe that your business will be satisfied when using our services. Our team of enthusiastic young engineers all graduated from good technical schools and worked at multinational corporations. are well-trained in technical software including Autodesk AutoCAD, Autodesk Inventor, Creo... We are confident in the quality of output when you choose us."
+        }
+    },
     "newsMedia": {
         "otherFeaturedPost": "Other featured posts",
         "recentPosts": "Recent Posts",

@@ -62,6 +62,12 @@ export const HEADER_NAVIGATES: NavigateItem[] = [
         menus: getCadServiceMenu(),
     },
     {
+        enLabel: 'Digital Services',
+        viLabel: 'Dịch vụ kỹ thuật số',
+        href: '/digital-services',
+        menus: getCadServiceMenu(),
+    },
+    {
         enLabel: 'Academy',
         viLabel: 'Khóa học',
         href: 'https://courses.csdvietnam.com',

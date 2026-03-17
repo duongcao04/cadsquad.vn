@@ -81,6 +81,12 @@
             "description": "Khách hàng và nhân viên là trung tâm trong mọi hoạt động của CADSQUAD. Sự hài lòng của khách hàng là kim chỉ nam dẫn đến thành công của tổ chức. Vì vậy, CADSQUAD luôn nỗ lực lắng nghe, thấu hiểu và nhanh chóng giải quyết các yêu cầu của khách hàng, đồng thời không ngừng nâng cao chất lượng dịch vụ. Với cam kết hỗ trợ chi phí thiết kế hợp lý khi sử dụng dịch vụ của CADSQUAD, chúng tôi tin rằng doanh nghiệp của bạn sẽ hài lòng. Đội ngũ kỹ sư trẻ đầy nhiệt huyết của chúng tôi đều tốt nghiệp từ các trường kỹ thuật uy tín và từng làm việc tại các tập đoàn đa quốc gia, được đào tạo bài bản về các phần mềm kỹ thuật như Autodesk AutoCAD, Autodesk Inventor, Creo... Chúng tôi tự tin vào chất lượng sản phẩm khi bạn lựa chọn đồng hành cùng chúng tôi."
         }
     },
+    "digitalServices": {
+        "heading": {
+            "title": "Dịch vụ kỹ thuật số",
+            "description": "Customers and employees are the focus of CADSQUAD in all business activities. Customer satisfaction is the compass leading to the success of the organization. Therefore, the effort to listen, understand and quickly resolve customer requests and improve service quality is what CADSQUAD is constantly. With the commitment to support customers with reasonable design costs when using CADSQUAD services, we believe that your business will be satisfied when using our services. Our team of enthusiastic young engineers all graduated from good technical schools and worked at multinational corporations. are well-trained in technical software including Autodesk AutoCAD, Autodesk Inventor, Creo... We are confident in the quality of output when you choose us."
+        }
+    },
     "newsMedia": {
         "otherFeaturedPost": "Bài viết nổi bật khác",
         "recentPosts": "Bài viết gần đây",

@@ -5,11 +5,15 @@ import { Download } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
-export default function ButtonDownloadBrochure() {
+export default function ButtonDownloadBrochure({
+    downloadUrl,
+}: {
+    downloadUrl?: string
+}) {
     const tButton = useTranslations('button')
-    return (
+    return downloadUrl ? (
         <Link
-            href={'/sites/default/files/CSD-%20Profile%202025.pdf'}
+            href={downloadUrl}
             passHref
             title="CSD- Profile 2025.pdf"
             target="_blank"
@@ -26,5 +30,7 @@ export default function ButtonDownloadBrochure() {
                 </p>
             </Button>
         </Link>
+    ) : (
+        <></>
     )
 }
