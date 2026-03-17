@@ -21,8 +21,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 			},
 			include: {
 				serviceType: true,
-				verticalThumbnail: true,
-				horizontalThumbnail: true,
+				thumbnail: true,
+				backgroundCover: true,
 				translations: true,
 			}
 		})

@@ -1,7 +1,6 @@
 import { render } from '@react-email/components'
 import { NextRequest } from 'next/server'
 
-import { envConfig } from '@/config'
 // import { transporter } from '@/lib/nodemailer'
 import EmailTemplate from '@/shared/components/EmailTemplate'
 

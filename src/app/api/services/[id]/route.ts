@@ -15,8 +15,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       where: { id },
       include: {
         serviceType: true,
-        verticalThumbnail: true,
-        horizontalThumbnail: true,
+        thumbnail: true,
+        backgroundCover: true,
         translations: true,
       }
     })

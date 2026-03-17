@@ -1,27 +1,115 @@
 'use client'
 
-import React from 'react'
-
 import { Button } from '@heroui/react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { Image } from 'antd'
 import { ChevronRight } from 'lucide-react'
 import { Variants } from 'motion'
 import { useLocale } from 'next-intl'
-import Image from 'next/image'
 
 import { Link, usePathname } from '@/i18n/navigation'
 import { SupportLanguages } from '@/i18n/routing'
 import { MotionButton, MotionDiv, MotionLi, MotionP } from '@/lib/motion'
-import {
-    HEADER_NAVIGATES,
-    NavigateItem,
-} from '@/shared/constants/headerNavigate'
+
+import { getServiceMenu } from '../../../../lib/utils'
+import { serviceListOptions } from '../../../../queires'
+
+export type NavigateItem = {
+    viLabel: string
+    enLabel: string
+    href: string
+    outSite?: boolean
+    menus?: {
+        viLabel: string
+        enLabel: string
+        image: string
+        href: string
+        outSite?: boolean
+    }[]
+}
 
 export default function Navbar() {
+    const locale = useLocale()
+    const {
+        data: { services },
+    } = useSuspenseQuery(serviceListOptions)
+
+    const cadServiceMenus = getServiceMenu(
+        '/cad-services',
+        services.filter((it) => it.serviceType?.code === 'CAD_SER'),
+        locale
+    )
+
+    const digitalServiceMenus = getServiceMenu(
+        '/digital-services',
+        services.filter((it) => it.serviceType?.code === 'WEB_DEV'),
+        locale
+    )
     return (
         <nav className="z-50 flex items-center justify-start gap-2">
-            {HEADER_NAVIGATES.map((item, index) => {
-                return <NavbarItem key={index} data={item} index={index} />
-            })}
+            <NavbarItem
+                index={0}
+                data={{
+                    enLabel: 'About us',
+                    viLabel: 'Về chúng tôi',
+                    href: '/about-us',
+                    menus: [
+                        {
+                            viLabel: 'Tổng quan',
+                            enLabel: 'Overview',
+                            image: 'https://res.cloudinary.com/dqx1guyc0/image/upload/v1773729545/Cadsquad/teams_n80vcv.webp',
+                            href: '/about-us#overview',
+                        },
+                        {
+                            viLabel: 'Tầm nhìn',
+                            enLabel: 'Vision',
+                            image: 'https://res.cloudinary.com/dqx1guyc0/image/upload/v1773729544/Cadsquad/vision_iiees6.webp',
+                            href: '/about-us/vision',
+                        },
+                        {
+                            viLabel: 'Hành trình của chúng tôi',
+                            enLabel: 'Our journey',
+                            image: 'https://res.cloudinary.com/dqx1guyc0/image/upload/v1773729544/Cadsquad/journey_pyg7s7.webp',
+                            href: '/about-us#our-journey',
+                        },
+                    ],
+                }}
+            />
+            <NavbarItem
+                index={1}
+                data={{
+                    enLabel: 'CAD Services',
+                    viLabel: 'Dịch vụ CAD',
+                    href: '/cad-services',
+                    menus: cadServiceMenus,
+                }}
+            />
+            <NavbarItem
+                index={2}
+                data={{
+                    enLabel: 'Digital Services',
+                    viLabel: 'Dịch vụ kỹ thuật số',
+                    href: '/digital-services',
+                    menus: digitalServiceMenus,
+                }}
+            />
+            <NavbarItem
+                index={3}
+                data={{
+                    enLabel: 'Academy',
+                    viLabel: 'Khóa học',
+                    href: 'https://courses.csdvietnam.com',
+                    outSite: true,
+                }}
+            />
+            <NavbarItem
+                index={4}
+                data={{
+                    enLabel: 'News & Media',
+                    viLabel: 'Tin tức',
+                    href: '/news-and-media',
+                }}
+            />
         </nav>
     )
 }
@@ -165,16 +253,13 @@ function NavbarItem({ data, index }: { data: NavigateItem; index: number }) {
                                             menuItem.outSite ? '_blank' : ''
                                         }
                                     >
-                                        <div className="w-full overflow-hidden rounded-sm aspect-video">
-                                            <Image
-                                                src={menuItem.image}
-                                                alt={`${itemLabel} image`}
-                                                className="object-cover transition duration-300 rounded-sm size-full group-hover:scale-110"
-                                                width={500}
-                                                height={500}
-                                                quality={100}
-                                            />
-                                        </div>
+                                        <Image
+                                            src={menuItem?.image}
+                                            alt={`${itemLabel} image`}
+                                            preview={false}
+                                            rootClassName="aspect-video overflow-hidden"
+                                            className="size-full object-cover transition duration-300 rounded-sm group-hover:scale-110"
+                                        />
                                         <MotionP
                                             variants={itemLabelVariants}
                                             className="font-medium text-center align-middle"

@@ -93,14 +93,18 @@ model Service {
   serviceTypeId String?
 
   // Thumbnail Keys
-  verticalThumbnailId   String?
-  horizontalThumbnailId String?
 
   // Relations
-  serviceType         ServiceType?         @relation(fields: [serviceTypeId], references: [id])
-  verticalThumbnail   ServiceThumbnail?    @relation("VerticalServiceThumbnail", fields: [verticalThumbnailId], references: [id])
-  horizontalThumbnail ServiceThumbnail?    @relation("HorizontalServiceThumbnail", fields: [horizontalThumbnailId], references: [id])
-  translations        ServiceTranslation[]
+  serviceType  ServiceType?         @relation(fields: [serviceTypeId], references: [id])
+  translations ServiceTranslation[]
+
+  thumbnailId String?
+
+  thumbnail ServiceThumbnail? @relation(fields: [thumbnailId], references: [id])
+
+  backgroundCoverId String?
+
+  backgroundCover ServiceBackgroundCover? @relation(fields: [backgroundCoverId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -138,8 +142,16 @@ model ServiceThumbnail {
   type ServiceThumbnailType @default(ImagePng)
 
   // Opposite relation fields mapping to the Service model
-  verticalServices   Service[] @relation("VerticalServiceThumbnail")
-  horizontalServices Service[] @relation("HorizontalServiceThumbnail")
+  services Service[]
+}
+
+model ServiceBackgroundCover {
+  id   String               @id @default(cuid())
+  url  String // Actual file path/URL
+  type ServiceThumbnailType @default(ImagePng)
+
+  // Opposite relation fields mapping to the Service model
+  services Service[]
 }
 
 enum ServiceThumbnailType {

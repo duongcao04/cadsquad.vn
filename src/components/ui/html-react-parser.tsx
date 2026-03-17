@@ -59,5 +59,5 @@ export function HtmlReactParser({ htmlString }: HtmlReactParserProps) {
         },
     }
 
-    return <div className="prose">{parse(htmlString, options)}</div>
+    return <div className="prose max-w-full">{parse(htmlString, options)}</div>
 }

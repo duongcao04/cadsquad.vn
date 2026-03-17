@@ -32,7 +32,7 @@ export async function generateMetadata({
             description: serviceTranslation.seoDescription,
             images: [
                 {
-                    url: service?.horizontalThumbnail?.url,
+                    url: service?.thumbnail?.url,
                     width: 1200,
                     height: 630,
                     alt: serviceTranslation.seoTitle,

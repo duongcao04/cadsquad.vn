@@ -11,8 +11,8 @@ export async function GET() {
     const services = await prisma.service.findMany({
       include: {
         serviceType: true,
-        verticalThumbnail: true,
-        horizontalThumbnail: true,
+        thumbnail: true,
+        backgroundCover: true,
         translations: true,
       },
       orderBy: { orderNumber: 'asc' }
@@ -22,7 +22,8 @@ export async function GET() {
     console.error('Error fetching services:', error)
     return NextResponse.json({ error: 'Failed to fetch services' }, { status: 500 })
   }
-}
+} // import prisma from '@/lib/prisma' 
+
 // ==========================================
 // CREATE (POST)
 // ==========================================
@@ -35,56 +36,73 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Validation failed', details: validation.error.format() }, { status: 400 })
     }
 
-    const { orderNumber, serviceTypeId, verticalThumbnailId, horizontalThumbnailId, translations } = validation.data
+    // Đổi ID thành URL để nhận trực tiếp link ảnh từ Frontend
+    const { orderNumber, serviceTypeId, thumbnailUrl, backgroundCoverUrl, translations } = validation.data
 
-    // 1. Smart Auto-Increment Logic for Order Number
+    // 1. Logic tự động tăng Order Number
     let finalOrderNumber = orderNumber;
-
     if (!finalOrderNumber || finalOrderNumber <= 0) {
-      // Find the highest existing orderNumber in the database
-      const maxOrder = await (prisma as any).service.aggregate({
-        _max: {
-          orderNumber: true
-        }
-      });
-      // Add 1 to the max, or start at 1 if the table is completely empty
+      const maxOrder = await (prisma as any).service.aggregate({ _max: { orderNumber: true } });
       finalOrderNumber = (maxOrder._max.orderNumber || 0) + 1;
     } else {
-      // If the admin manually typed a specific number, verify it isn't already taken
-      const existingOrder = await (prisma as any).service.findUnique({
-        where: { orderNumber: finalOrderNumber }
-      });
-      if (existingOrder) {
-        return NextResponse.json({ error: 'Order number already exists' }, { status: 400 });
+      const existingOrder = await (prisma as any).service.findUnique({ where: { orderNumber: finalOrderNumber } });
+      if (existingOrder) return NextResponse.json({ error: 'Order number already exists' }, { status: 400 });
+    }
+
+    // 2. Kiểm tra ServiceType
+    if (serviceTypeId) {
+      const serviceType = await (prisma as any).serviceType.findUnique({ where: { id: serviceTypeId } })
+      if (!serviceType) return NextResponse.json({ error: 'Service type not found' }, { status: 404 })
+    }
+
+    // 3. XỬ LÝ MEDIA TỰ ĐỘNG (Pasted URL hoặc Cloudinary URL)
+    let resolvedThumbnailId = null;
+    if (thumbnailUrl) {
+      let thumb = await (prisma as any).serviceThumbnail.findFirst({ where: { url: thumbnailUrl } });
+      if (!thumb) {
+        thumb = await (prisma as any).serviceThumbnail.create({ data: { url: thumbnailUrl } });
       }
+      resolvedThumbnailId = thumb.id;
     }
 
-    // 2. Check unique slugs across all provided translations
-    const slugs = translations.map(t => t.slug)
+    let resolvedBackgroundCoverId = null;
+    if (backgroundCoverUrl) {
+      let cover = await (prisma as any).serviceBackgroundCover.findFirst({ where: { url: backgroundCoverUrl } });
+      if (!cover) {
+        cover = await (prisma as any).serviceBackgroundCover.create({ data: { url: backgroundCoverUrl } });
+      }
+      resolvedBackgroundCoverId = cover.id;
+    }
+
+    // 4. Kiểm tra slugs bị trùng
+    const slugs = translations.map((t: any) => t.slug)
     const existingSlugs = await (prisma as any).serviceTranslation.findMany({
-      where: { slug: { in: slugs } },
-      select: { slug: true }
+      where: { slug: { in: slugs } }, select: { slug: true }
     })
+    if (existingSlugs.length > 0) return NextResponse.json({ error: 'Some slugs already exist', slugs: existingSlugs.map((s: any) => s.slug) }, { status: 400 })
 
-    if (existingSlugs.length > 0) {
-      return NextResponse.json({
-        error: 'Some slugs already exist',
-        slugs: existingSlugs.map((s: any) => s.slug)
-      }, { status: 400 })
-    }
-
-    // 3. Create Service
+    // 5. Tạo Service
     const service = await (prisma as any).service.create({
       data: {
-        orderNumber: finalOrderNumber, // Use the calculated order number here
+        orderNumber: finalOrderNumber,
         serviceTypeId,
-        verticalThumbnailId,
-        horizontalThumbnailId,
+        thumbnailId: resolvedThumbnailId, // Truyền ID đã xử lý vào
+        backgroundCoverId: resolvedBackgroundCoverId, // Truyền ID đã xử lý vào
         translations: {
-          create: translations
+          create: translations.map((t: any) => ({
+            language: t.language,
+            slug: t.slug,
+            title: t.title,
+            description: t.description,
+            shortDescription: t.shortDescription,
+            content: t.content,
+            seoTitle: t.seoTitle,
+            seoDescription: t.seoDescription,
+            seoKeywords: t.seoKeywords || [],
+          }))
         }
       },
-      include: { serviceType: true, translations: true }
+      include: { serviceType: true, thumbnail: true, backgroundCover: true, translations: true }
     })
 
     return NextResponse.json(service, { status: 201 })
@@ -106,35 +124,63 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Validation failed', details: validation.error.format() }, { status: 400 })
     }
 
-    const { id, orderNumber, serviceTypeId, verticalThumbnailId, horizontalThumbnailId, translations } = validation.data
+    // Đổi ID thành URL
+    const { id, orderNumber, serviceTypeId, thumbnailUrl, backgroundCoverUrl, translations } = validation.data
 
-    // 1. Check orderNumber uniqueness (EXCLUDING current service)
-    const existingOrder = await (prisma as any).service.findFirst({
-      where: { orderNumber, id: { not: id } }
-    })
-    if (existingOrder) return NextResponse.json({ error: 'Order number is used by another service' }, { status: 400 })
+    if (orderNumber) {
+      const existingOrder = await (prisma as any).service.findFirst({ where: { orderNumber, id: { not: id } } })
+      if (existingOrder) return NextResponse.json({ error: 'Order number is used by another service' }, { status: 400 })
+    }
 
-    // 2. Check unique slugs (EXCLUDING current service translations)
-    const slugs = translations.map(t => t.slug)
+    if (serviceTypeId) {
+      const serviceType = await (prisma as any).serviceType.findUnique({ where: { id: serviceTypeId } })
+      if (!serviceType) return NextResponse.json({ error: 'Service type not found' }, { status: 404 })
+    }
+
+    // XỬ LÝ MEDIA TỰ ĐỘNG
+    let resolvedThumbnailId = null;
+    if (thumbnailUrl) {
+      let thumb = await (prisma as any).serviceThumbnail.findFirst({ where: { url: thumbnailUrl } });
+      if (!thumb) thumb = await (prisma as any).serviceThumbnail.create({ data: { url: thumbnailUrl } });
+      resolvedThumbnailId = thumb.id;
+    }
+
+    let resolvedBackgroundCoverId = null;
+    if (backgroundCoverUrl) {
+      let cover = await (prisma as any).serviceBackgroundCover.findFirst({ where: { url: backgroundCoverUrl } });
+      if (!cover) cover = await (prisma as any).serviceBackgroundCover.create({ data: { url: backgroundCoverUrl } });
+      resolvedBackgroundCoverId = cover.id;
+    }
+
+    const slugs = translations.map((t: any) => t.slug)
     const existingSlugs = await (prisma as any).serviceTranslation.findFirst({
       where: { slug: { in: slugs }, serviceId: { not: id } }
     })
     if (existingSlugs) return NextResponse.json({ error: 'One or more slugs are already in use' }, { status: 400 })
 
-    // 3. Update Service (Using deleteMany -> create for clean translation replacement)
     const updatedService = await (prisma as any).service.update({
       where: { id },
       data: {
         orderNumber,
         serviceTypeId,
-        verticalThumbnailId,
-        horizontalThumbnailId,
+        thumbnailId: resolvedThumbnailId, // Sẽ tự động gỡ ảnh (null) nếu user xóa URL
+        backgroundCoverId: resolvedBackgroundCoverId, // Tương tự
         translations: {
-          deleteMany: {}, // Clear old translations
-          create: translations // Insert new ones
+          deleteMany: {},
+          create: translations.map((t: any) => ({
+            language: t.language,
+            slug: t.slug,
+            title: t.title,
+            description: t.description,
+            shortDescription: t.shortDescription,
+            content: t.content,
+            seoTitle: t.seoTitle,
+            seoDescription: t.seoDescription,
+            seoKeywords: t.seoKeywords || [],
+          }))
         }
       },
-      include: { serviceType: true, translations: true }
+      include: { serviceType: true, thumbnail: true, backgroundCover: true, translations: true }
     })
 
     return NextResponse.json(updatedService, { status: 200 })

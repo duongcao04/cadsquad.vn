@@ -25,7 +25,7 @@ import {
     ArrowLeft,
     ArrowRight,
     CheckCircle2,
-    Image as ImageIcon,
+    Link as LinkIcon,
     Plus,
     Search,
     Settings2,
@@ -40,6 +40,7 @@ import {
     AdminPageContainer,
     AdminPageHeading,
 } from '../../../../../../../components'
+import MediaUploader from '../../../../../../../features/service-management/components/MediaUploader'
 import {
     serviceOptions,
     serviceTypesListOptions,
@@ -105,6 +106,8 @@ export default function CreateServicePage() {
     const [formData, setFormData] = useState({
         orderNumber: '',
         serviceTypeId: '',
+        thumbnailUrl: '',
+        backgroundCoverUrl: '',
         translations: {
             EN: {
                 title: '',
@@ -184,6 +187,8 @@ export default function CreateServicePage() {
                 orderNumber: existingData.orderNumber?.toString() || '',
                 // Explicitly cast incoming ID to a string
                 serviceTypeId: existingData.serviceTypeId?.toString() || '',
+                thumbnailUrl: existingData.thumbnail?.url || '',
+                backgroundCoverUrl: existingData.backgroundCover?.url || '',
                 translations: mappedTranslations,
             })
 
@@ -243,7 +248,9 @@ export default function CreateServicePage() {
         const payload = {
             ...(mode === 'edit' && { id }),
             orderNumber: parseInt(formData.orderNumber) || 0,
-            serviceTypeId: formData.serviceTypeId || undefined, // undefined prevents sending empty strings
+            serviceTypeId: formData.serviceTypeId || undefined,
+            thumbnailUrl: formData.thumbnailUrl || undefined,
+            backgroundCoverUrl: formData.backgroundCoverUrl || undefined,
             translations: activeLanguages.map((lang) => ({
                 language: lang,
                 ...formData.translations[lang],
@@ -589,7 +596,6 @@ export default function CreateServicePage() {
                                                     {serviceTypes.map(
                                                         (st: TServiceType) => (
                                                             <SelectItem
-                                                                // Cast the map iteration key to a string
                                                                 key={st.id.toString()}
                                                                 textValue={
                                                                     st.translations.find(
@@ -617,31 +623,97 @@ export default function CreateServicePage() {
                                                     )}
                                                 </Select>
                                             </div>
-                                            {/* Media Assets Placeholder */}
+
+                                            {/* Media Assets with URL Option */}
                                             <div>
                                                 <span className="block text-sm font-medium text-foreground pb-3">
                                                     Media Assets
                                                 </span>
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <div className="bg-white border-2 border-dashed border-default-200 rounded-xl p-6 text-center cursor-pointer hover:border-secondary transition-colors">
-                                                        <div className="w-10 h-10 bg-secondary-50 text-secondary rounded-full flex items-center justify-center mx-auto mb-3">
-                                                            <ImageIcon
-                                                                size={16}
-                                                            />
-                                                        </div>
-                                                        <span className="text-xs font-medium text-default-600">
-                                                            Vertical Thumbnail
+                                                <div className="flex flex-col gap-8">
+                                                    {/* Service Thumbnail */}
+                                                    <div className="flex flex-col gap-3">
+                                                        <span className="text-sm font-medium text-default-600">
+                                                            Service Thumbnail
                                                         </span>
+                                                        <MediaUploader
+                                                            label="Upload Thumbnail"
+                                                            value={
+                                                                formData.thumbnailUrl
+                                                            }
+                                                            onChange={(url) =>
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    thumbnailUrl:
+                                                                        url,
+                                                                })
+                                                            }
+                                                        />
+                                                        <Input
+                                                            placeholder="Or paste image URL here..."
+                                                            variant="flat"
+                                                            value={
+                                                                formData.thumbnailUrl
+                                                            }
+                                                            onChange={(e) =>
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    thumbnailUrl:
+                                                                        e.target
+                                                                            .value,
+                                                                })
+                                                            }
+                                                            radius="lg"
+                                                            startContent={
+                                                                <LinkIcon
+                                                                    size={16}
+                                                                    className="text-default-400"
+                                                                />
+                                                            }
+                                                        />
                                                     </div>
-                                                    <div className="bg-white border-2 border-dashed border-default-200 rounded-xl p-6 text-center cursor-pointer hover:border-secondary transition-colors">
-                                                        <div className="w-10 h-10 bg-secondary-50 text-secondary rounded-full flex items-center justify-center mx-auto mb-3">
-                                                            <ImageIcon
-                                                                size={16}
-                                                            />
-                                                        </div>
-                                                        <span className="text-xs font-medium text-default-600">
-                                                            Horizontal Thumbnail
+
+                                                    <Divider />
+
+                                                    {/* Background Cover */}
+                                                    <div className="flex flex-col gap-3">
+                                                        <span className="text-sm font-medium text-default-600">
+                                                            Background Cover
                                                         </span>
+                                                        <MediaUploader
+                                                            label="Upload Background Cover"
+                                                            value={
+                                                                formData.backgroundCoverUrl
+                                                            }
+                                                            onChange={(url) =>
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    backgroundCoverUrl:
+                                                                        url,
+                                                                })
+                                                            }
+                                                        />
+                                                        <Input
+                                                            placeholder="Or paste image URL here..."
+                                                            variant="flat"
+                                                            value={
+                                                                formData.backgroundCoverUrl
+                                                            }
+                                                            onChange={(e) =>
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    backgroundCoverUrl:
+                                                                        e.target
+                                                                            .value,
+                                                                })
+                                                            }
+                                                            radius="lg"
+                                                            startContent={
+                                                                <LinkIcon
+                                                                    size={16}
+                                                                    className="text-default-400"
+                                                                />
+                                                            }
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>

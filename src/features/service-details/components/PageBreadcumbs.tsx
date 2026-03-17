@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/navigation'
 
-export default function PageBreadcumbs({ pageName }: { pageName: string }) {
+export function PageBreadcumbs({ pageName }: { pageName: string }) {
     const tBreadcrumb = useTranslations('breadcrumbs')
     return (
         <Breadcrumb

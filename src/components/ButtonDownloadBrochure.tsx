@@ -8,10 +8,10 @@ import Link from 'next/link'
 export default function ButtonDownloadBrochure({
     downloadUrl,
 }: {
-    downloadUrl: string
+    downloadUrl?: string
 }) {
     const tButton = useTranslations('button')
-    return (
+    return downloadUrl ? (
         <Link
             href={downloadUrl}
             passHref
@@ -30,5 +30,7 @@ export default function ButtonDownloadBrochure({
                 </p>
             </Button>
         </Link>
+    ) : (
+        <></>
     )
 }

@@ -1,5 +1,5 @@
+import { TServiceType, TServiceTypeTranslation } from "@/types";
 import { ZodType, z } from "zod";
-import { TServiceType, TServiceTypeTranslation } from "../types";
 import { LanguageSchema } from "./_language.schema";
 import { ServiceSchema } from "./_service.schema";
 

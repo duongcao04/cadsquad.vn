@@ -10,11 +10,11 @@ import { MotionSection } from '@/lib/motion'
 import { serviceBySlugOptions } from '@/queires'
 import { TServiceTranslation } from '@/types'
 
-import OurServices from '../../(home)/_components/OurServices'
-import PageBreadcumbs from './_components/PageBreadcumbs'
-import ServiceNavigate from './_components/ServiceNavigate'
+import OurServices from '../../../app/[locale]/(pages)/(landing)/(home)/_components/OurServices'
+import { PageBreadcumbs } from './PageBreadcumbs'
+import { ServiceNavigate } from './ServiceNavigate'
 
-export const CADServiceDetailClient = ({
+export const DetailClientPage = ({
     slug,
     locale,
 }: {
@@ -36,7 +36,10 @@ export const CADServiceDetailClient = ({
             <section className="relative w-full overflow-hidden h-[350px] lg:h-[500px]">
                 <div className="relative size-full">
                     <Image
-                        src={service?.horizontalThumbnail?.url}
+                        src={
+                            service?.backgroundCover?.url ??
+                            service?.thumbnail?.url
+                        }
                         alt="Image"
                         className="!object-cover !size-full"
                         rootClassName="!object-cover !size-full"

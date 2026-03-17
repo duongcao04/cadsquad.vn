@@ -16,6 +16,11 @@ const configSchema = yup.object({
             pass: yup.string(),
         })
     }),
+    cloudinary: yup.object({
+        cloudName: yup.string(),
+        apiKey: yup.string(),
+        apiSecret: yup.string()
+    }),
     NEXT_PUBLIC_URL: yup.string(),
     NEXT_PUBLIC_CADSQUAD_EMAIL: yup.string(),
     NEXT_PUBLIC_NODEMAILER_PORT: yup.string(),
@@ -50,6 +55,11 @@ function configProject() {
                     user: process.env.NEXT_PUBLIC_MAIL_USER,
                     pass: process.env.NEXT_PUBLIC_MAIL_PASS,
                 }
+            },
+            cloudinary: {
+                cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+                apiKey: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+                apiSecret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
             },
             NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
             NEXT_PUBLIC_CADSQUAD_EMAIL: process.env.NEXT_PUBLIC_CADSQUAD_EMAIL,

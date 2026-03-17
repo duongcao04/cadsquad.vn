@@ -1,6 +1,6 @@
 import { getLocale } from 'next-intl/server'
 
-import { CADServiceDetailClient } from './client-page'
+import { DetailClientPage } from '@/features/service-details'
 
 export default async function CADServiceDetailPage({
     params,
@@ -83,7 +83,7 @@ export default async function CADServiceDetailPage({
 
     return (
         <div className="min-h-screen pb-20 max-w-screen">
-            <CADServiceDetailClient slug={slug} locale={locale} />
+            <DetailClientPage slug={slug} locale={locale} />
         </div>
     )
 }

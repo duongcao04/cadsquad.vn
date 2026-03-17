@@ -1,4 +1,5 @@
 import { Language } from "./_language.type"
+import { TServiceBackgroundCover } from "./_service-background-cover.type"
 import { TServiceThumbnail } from "./_service-thumbnail.type"
 import { TServiceType } from "./_service-type.type"
 
@@ -10,17 +11,23 @@ export type TService = {
 
 	serviceTypeId?: string
 
-	// Thumbnail Keys
-	verticalThumbnailId?: string | null
-	horizontalThumbnailId?: string | null
+	thumbnailId?: string | null
+
+	thumbnail?: TServiceThumbnail | null
+
+	serviceBackgroundCoverId?: string | null
+
+	backgroundCoverId?: string | null
+
+	backgroundCover?: TServiceBackgroundCover | null
 
 	// Relations
 	serviceType?: TServiceType
-	verticalThumbnail?: TServiceThumbnail
-	horizontalThumbnail?: TServiceThumbnail
+
 	translations: TServiceTranslation[]
 
 	createdAt: string | Date
+
 	updatedAt: string | Date
 }
 

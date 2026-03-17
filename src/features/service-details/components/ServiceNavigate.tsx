@@ -19,7 +19,7 @@ const getServiceTranstaltion = (
 }
 
 type Props = { service: TService }
-export default function ServiceNavigate({ service }: Props) {
+export function ServiceNavigate({ service }: Props) {
     const locale = useLocale().toUpperCase()
 
     const {

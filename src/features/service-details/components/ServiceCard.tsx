@@ -16,10 +16,12 @@ type Props = {
     data: TService
 }
 
-export default function ServiceCard({ data }: Props) {
+export function ServiceCard({ data }: Props) {
     const locale = useLocale().toUpperCase()
     const tButton = useTranslations('button')
     const { isMobile } = useDevice()
+
+    console.log(data)
 
     const cadServiceTranslations = (data?.translations.find(
         (it) => it.language === locale
@@ -63,7 +65,7 @@ export default function ServiceCard({ data }: Props) {
                     title={cadServiceTranslations.title}
                 >
                     <Image
-                        src={data?.horizontalThumbnail?.url}
+                        src={data?.thumbnail?.url}
                         alt={cadServiceTranslations.title}
                         className="object-cover h-full aspect-video"
                         preview={false}

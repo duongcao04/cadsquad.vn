@@ -1,21 +1,45 @@
 'use client'
 
-import React from 'react'
-
+import { useSuspenseQueries } from '@tanstack/react-query'
 import { Breadcrumb } from 'antd'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
+
+import ButtonDownloadBrochure from '@/components/ButtonDownloadBrochure'
+
+import { ServiceCard } from '@/features/service-details'
 
 import ImgCadService from '@/assets/images/cad-services.webp'
 import { Link } from '@/i18n/navigation'
-import { CAD_SERVICES } from '@/shared/database/cadServices'
+import { serviceListOptions, serviceTypesListOptions } from '@/queires'
 
-import ButtonDownloadBrochure from '../../../../../components/ButtonDownloadBrochure'
-import ServiceCard from './_components/cards/ServiceCard'
-
-export default function DigitalServices() {
+export default function DigitalServicesPage() {
+    const locale = useLocale().toUpperCase()
     const tBreadcrumb = useTranslations('breadcrumbs')
     const tCadServices = useTranslations('landing.digitalServices')
+
+    const [
+        {
+            data: { serviceTypes },
+        },
+        {
+            data: { services },
+        },
+    ] = useSuspenseQueries({
+        queries: [serviceTypesListOptions, serviceListOptions],
+    })
+
+    const CAD_SERVICE_CODE = 'WEB_DEV'
+    const cadServiceType = serviceTypes.find(
+        (it) => it.code === CAD_SERVICE_CODE
+    )
+    const serviceTranslation =
+        cadServiceType?.translations.find((it) => it.language === locale) ??
+        cadServiceType?.translations.find((it) => it.language === 'EN')
+
+    const digitalServices = services.filter(
+        (s) => s.serviceType?.code === CAD_SERVICE_CODE
+    )
 
     return (
         <div className="min-h-screen pb-16 max-w-screen">
@@ -48,7 +72,7 @@ export default function DigitalServices() {
                                             style={{ color: 'hsl(0,0%,97%)' }}
                                             className="font-medium"
                                         >
-                                            {tBreadcrumb('cadService')}
+                                            {serviceTranslation?.displayName}
                                         </p>
                                     ),
                                 },
@@ -64,12 +88,14 @@ export default function DigitalServices() {
                         <p className="mt-5 leading-normal max-w-[95%] lg:max-w-[85%] text-justify">
                             {tCadServices('heading.description')}
                         </p>
-                        <ButtonDownloadBrochure />
+                        {serviceTranslation?.brochureUrl && (
+                            <ButtonDownloadBrochure />
+                        )}
                     </div>
                 </div>
             </section>
             <section className="container space-y-10 mt-14">
-                {CAD_SERVICES.map((service) => (
+                {digitalServices.map((service) => (
                     <ServiceCard key={service.id} data={service} />
                 ))}
             </section>

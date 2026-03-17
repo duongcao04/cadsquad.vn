@@ -7,12 +7,12 @@ import Image from 'next/image'
 
 import ButtonDownloadBrochure from '@/components/ButtonDownloadBrochure'
 
+import { ServiceCard } from '@/features/service-details'
+
 import ImgCadService from '@/assets/images/cad-services.webp'
 import { Link } from '@/i18n/navigation'
 import { INTERNAL_URLS } from '@/lib'
 import { serviceListOptions, serviceTypesListOptions } from '@/queires'
-
-import ServiceCard from './_components/cards/ServiceCard'
 
 export default function CADServices() {
     const locale = useLocale().toUpperCase()
