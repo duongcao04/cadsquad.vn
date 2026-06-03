@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Image from 'next/image'
-
 import ImgFounderBanner from '@/assets/images/founder-banner.webp'
 
 // import InformationTable from '../_components/tables/InformationTable'
@@ -20,7 +18,7 @@ export default function OverviewPage() {
             </section>
             <section className="mt-32">
                 <p>Câu chuyện người sáng lập</p>
-                <Image src={ImgFounderBanner} alt="Founder Banner Image" />
+                <img src={ImgFounderBanner as unknown as string} alt="Founder Banner Image" />
             </section>
         </div>
     )

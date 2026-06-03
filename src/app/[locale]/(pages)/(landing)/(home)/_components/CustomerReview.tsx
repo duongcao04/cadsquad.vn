@@ -5,25 +5,22 @@ import React, { useEffect, useRef } from 'react'
 import { Button } from '@heroui/react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
-import { TESTIMONIALS, VI_TESTIMONIALS } from '@/shared/database/testimonials'
+import { TESTIMONIALS } from '@/shared/database/testimonials'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 import HeadingSection from './HeadingSection'
 import CustomerReviewCard from './cards/CustomerReviewCard'
 
 export default function CustomerReview() {
-    const locale = useLocale()
-    const tHome = useTranslations('landing.home')
     const { isMobile } = useDevice()
 
     const [emblaRef, emblaApi] = useEmblaCarousel()
     const prevButtonRef = useRef<HTMLButtonElement | null>(null)
     const nextButtonRef = useRef<HTMLButtonElement | null>(null)
 
-    const testimonials = locale === 'vi' ? VI_TESTIMONIALS : TESTIMONIALS
+    const testimonials = TESTIMONIALS
 
     useEffect(() => {
         if (emblaApi) {
@@ -45,11 +42,7 @@ export default function CustomerReview() {
         <div className="container space-y-5 lg:space-y-8">
             <div className="flex items-center justify-between">
                 <HeadingSection>
-                    {tHome.rich('sections.customerReview.title', {
-                        highlight: (chunk) => (
-                            <span className="text-primary">{chunk}</span>
-                        ),
-                    })}
+                    Customer <span className="text-primary">Review</span>
                 </HeadingSection>
                 <div className="flex items-center justify-end gap-3">
                     <Button

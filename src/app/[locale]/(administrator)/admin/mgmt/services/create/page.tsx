@@ -30,8 +30,7 @@ import {
     Search,
     Settings2,
 } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { Link, useNavigate } from '@tanstack/react-router'
 
 import RichTextEditor from '@/components/RichTextEditor'
 
@@ -61,20 +60,13 @@ const SUPPORTED_LANGUAGES: { key: Language; label: string }[] = [
     { key: 'VI', label: 'Tiếng Việt (VI)' },
 ]
 
-export default function CreateServicePage() {
-    const router = useRouter()
-    const searchParams = useSearchParams()
+interface Props {
+    mode: 'create' | 'edit'
+    id: string
+}
 
-    // Logic: Read URL params. Fallback to create if edit lacks an ID.
-    const propMode = searchParams.get('mode')
-    const propId = searchParams.get('id')
-    const mode =
-        propMode === 'edit' && !propId
-            ? 'create'
-            : propMode === 'edit'
-              ? 'edit'
-              : 'create'
-    const id = propId || ''
+export default function CreateServicePage({ mode, id }: Props) {
+    const navigate = useNavigate()
 
     const [step, setStep] = useState<Step>('general')
     const [activeLang, setActiveLang] = useState<Language>('EN')
@@ -254,17 +246,20 @@ export default function CreateServicePage() {
             translations: activeLanguages.map((lang) => ({
                 language: lang,
                 ...formData.translations[lang],
+                seoKeywords: formData.translations[lang].seoKeywords
+                    ? formData.translations[lang].seoKeywords.split(',').map((k) => k.trim()).filter(Boolean)
+                    : [],
             })),
         }
 
         const mutationArgs = {
             onSuccess: () => {
-                router.push('/admin/mgmt/services')
+                navigate({ to: '/admin/mgmt/services' })
             },
         }
 
         if (mode === 'edit') {
-            updateService(payload, mutationArgs)
+            updateService({ ...payload, id: id! }, mutationArgs)
         } else {
             createService(payload, mutationArgs)
         }
@@ -292,7 +287,7 @@ export default function CreateServicePage() {
                     <div className="flex items-center gap-4">
                         <Button
                             as={Link}
-                            href="/admin/mgmt/services"
+                            to="/admin/mgmt/services"
                             isIconOnly
                             variant="light"
                             radius="full"

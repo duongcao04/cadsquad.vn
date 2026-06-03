@@ -249,7 +249,7 @@ const IndentExtension = Extension.create({
         ]
     },
     addCommands() {
-        return {
+        return ({
             indent:
                 () =>
                 ({ tr, state, dispatch }: any) => {
@@ -294,7 +294,7 @@ const IndentExtension = Extension.create({
                     )
                     return applied
                 },
-        }
+        }) as any
     },
 })
 
@@ -396,11 +396,11 @@ export default function RichTextEditor({
     })
 
     // ✅ FIX: Subscribe to editor selection/transaction events to keep toolbar in sync
-    useEditorState(editor)
+    useEditorState(editor!)
 
     useEffect(() => {
         if (editor && value !== editor.getHTML()) {
-            editor.commands.setContent(value, false)
+            editor.commands.setContent(value, false as any)
         }
     }, [value, editor])
 

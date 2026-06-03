@@ -3,10 +3,7 @@
 import React from 'react'
 
 import { Variants } from 'motion'
-import { useLocale, useTranslations } from 'next-intl'
 
-import { Link } from '@/i18n/navigation'
-import { SupportLanguages } from '@/i18n/routing'
 import { MotionDiv, MotionP } from '@/lib/motion'
 import Logo from '@/shared/components/Logo'
 import { CONTACT_INFORMATIONS, SOCIALS } from '@/shared/constants/appConstant'
@@ -16,21 +13,12 @@ import Decorate from './Decorate'
 import SocialButton from './SocialButton'
 
 export default function Footer() {
-    const locale = useLocale()
     const currentYear = new Date().getFullYear()
 
-    const tLanding = useTranslations('landing')
-
     const groupTitleLineVariants: Variants = {
-        init: {
-            width: 0,
-        },
-        animate: {
-            width: '40%',
-        },
-        hover: {
-            width: '100%',
-        },
+        init: { width: 0 },
+        animate: { width: '40%' },
+        hover: { width: '100%' },
     }
 
     return (
@@ -43,19 +31,15 @@ export default function Footer() {
                     <div className="xl:flex items-end justify-start gap-5">
                         <Logo
                             logoTheme="white"
-                            classNames={{
-                                logo: 'max-w-[150px] xl:max-w-[200px]',
-                            }}
+                            classNames={{ logo: 'max-w-[150px] xl:max-w-[200px]' }}
                         />
                         <div className="hidden xl:block h-20 w-[1px] bg-border opacity-30" />
                         <p className="mt-4 xl:mt-0 text-base xl:text-2xl font-semibold font-saira">
-                            {tLanding('home.slogan')}
+                            Precision in Every Line, Innovation in Every Design
                         </p>
                     </div>
                     <div className="mt-5 flex items-end md:items-center justify-start xl:justify-end gap-3 xl:gap-5">
-                        <p className="hidden md:block">
-                            {tLanding('layout.followUsOn')}:
-                        </p>
+                        <p className="hidden md:block">Follow us on:</p>
                         <ul className="flex items-center justify-start gap-3 xl:gap-4">
                             {SOCIALS.map((soc, idx) => (
                                 <li key={idx}>
@@ -74,83 +58,56 @@ export default function Footer() {
                             >
                                 <contact.icon />
                                 <MotionP
-                                    initial={{
-                                        opacity: 0,
-                                    }}
-                                    animate={{
-                                        opacity: 1,
-                                    }}
-                                    whileHover={{
-                                        opacity: 1,
-                                        textDecoration: 'underline',
-                                    }}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    whileHover={{ opacity: 1, textDecoration: 'underline' }}
                                 >
-                                    <Link
+                                    <a
                                         href={contact.path}
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                         className="overflow-hidden text-base"
                                         title={contact.name}
                                     >
                                         {contact.name}
-                                    </Link>
+                                    </a>
                                 </MotionP>
                             </li>
                         ))}
                     </ul>
                     <div className="mt-10 lg:mt-0 col-span-3">
                         <div className="lg:grid grid-cols-3 space-y-10 xl:space-y-0">
-                            {FOOTER_LINKS.map((item, index) => {
-                                const groupName =
-                                    item[
-                                        `${locale as SupportLanguages}GroupName`
-                                    ]
-
-                                return (
-                                    <MotionDiv
-                                        key={index}
-                                        initial="init"
-                                        animate="animate"
-                                        whileHover="hover"
-                                        className="pb-2 h-fit"
-                                    >
-                                        <div className="relative pb-1 w-fit">
-                                            <p className="text-lg font-semibold cursor-default">
-                                                {groupName}
-                                            </p>
-                                            <MotionDiv
-                                                variants={
-                                                    groupTitleLineVariants
-                                                }
-                                                className="absolute bottom-0 h-[2px] w-[40%] bg-white"
-                                            />
-                                        </div>
-                                        <ul className="mt-5 space-y-3">
-                                            {item.children &&
-                                                item.children.map(
-                                                    (child, index) => {
-                                                        const label =
-                                                            child[
-                                                                `${locale as SupportLanguages}Label`
-                                                            ]
-
-                                                        return (
-                                                            <Link
-                                                                key={index}
-                                                                title={label}
-                                                                href={
-                                                                    child.href
-                                                                }
-                                                                className="block hover:underline underline-offset-2 text-sm w-fit"
-                                                            >
-                                                                {label}
-                                                            </Link>
-                                                        )
-                                                    }
-                                                )}
-                                        </ul>
-                                    </MotionDiv>
-                                )
-                            })}
+                            {FOOTER_LINKS.map((item, index) => (
+                                <MotionDiv
+                                    key={index}
+                                    initial="init"
+                                    animate="animate"
+                                    whileHover="hover"
+                                    className="pb-2 h-fit"
+                                >
+                                    <div className="relative pb-1 w-fit">
+                                        <p className="text-lg font-semibold cursor-default">
+                                            {item.enGroupName}
+                                        </p>
+                                        <MotionDiv
+                                            variants={groupTitleLineVariants}
+                                            className="absolute bottom-0 h-[2px] w-[40%] bg-white"
+                                        />
+                                    </div>
+                                    <ul className="mt-5 space-y-3">
+                                        {item.children?.map((child, idx) => (
+                                            <a
+                                                key={idx}
+                                                title={child.enLabel}
+                                                href={child.href}
+                                                className="block hover:underline underline-offset-2 text-sm w-fit"
+                                            >
+                                                {child.enLabel}
+                                            </a>
+                                        ))}
+                                    </ul>
+                                </MotionDiv>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -161,12 +118,12 @@ export default function Footer() {
             >
                 <p>
                     Copyright @ {currentYear} by{' '}
-                    <Link
-                        href={'https://www.cadsquad.vn'}
+                    <a
+                        href="https://www.cadsquad.vn"
                         className="hover:underline underline-offset-2"
                     >
                         CADSQUAD
-                    </Link>{' '}
+                    </a>{' '}
                     - All Right Reserved
                 </p>
             </div>

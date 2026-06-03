@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react'
 
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
 import { AnimatePresence } from 'motion/react'
-import Image from 'next/image'
-
 import { MotionDiv, MotionP, MotionSpan } from '@/lib/motion'
 import { Testimonial } from '@/shared/database/testimonials'
 
@@ -82,11 +80,9 @@ export const AnimatedTestimonials = ({
                                     className="absolute inset-0 origin-bottom"
                                     suppressHydrationWarning
                                 >
-                                    <Image
+                                    <img
                                         src={testimonial.src}
                                         alt={testimonial.name}
-                                        width={500}
-                                        height={500}
                                         draggable={false}
                                         className="object-cover object-center size-full rounded-3xl"
                                     />

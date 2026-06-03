@@ -6,7 +6,6 @@ import { Button } from '@heroui/react'
 import { Carousel } from 'antd'
 import { CarouselRef } from 'antd/es/carousel'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
@@ -19,18 +18,13 @@ const services = CAD_SERVICES
 
 export default function OurServices() {
     const carouselRef: RefObject<CarouselRef | null> = createRef<CarouselRef>()
-    const tHome = useTranslations('landing.home')
     const { isMobile, isTablet, isDesktop } = useDevice()
 
     return (
         <div className="container space-y-5 lg:space-y-8">
             <div className="flex items-center justify-between">
                 <HeadingSection>
-                    {tHome.rich('sections.ourServices.title', {
-                        highlight: (chunk) => (
-                            <span className="text-primary">{chunk}</span>
-                        ),
-                    })}
+                    Our <span className="text-primary">Services</span>
                 </HeadingSection>
                 <div className="flex items-center justify-end gap-3">
                     <Button

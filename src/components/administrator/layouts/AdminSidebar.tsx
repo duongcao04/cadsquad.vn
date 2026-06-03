@@ -10,6 +10,7 @@ import {
     Select,
     SelectItem,
 } from '@heroui/react'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import {
     BarChart2,
     Bell,
@@ -27,13 +28,11 @@ import {
     Sun,
     Users,
 } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
+import { supabase } from '@/lib/supabase'
 import { INTERNAL_URLS } from '../../../lib'
 import Logo from '../../../shared/components/Logo'
 
-// 1. Refactor into grouped sections
 const navGroups = [
     {
         title: 'Overview',
@@ -76,11 +75,16 @@ const navGroups = [
 ]
 
 export default function AdminSidebar() {
-    const pathname = usePathname()
+    const { pathname } = useLocation()
+    const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut()
+        navigate({ to: '/login' })
+    }
 
     return (
         <aside className="w-64 bg-[#0B0F19] text-slate-400 flex flex-col h-full overflow-y-auto">
-            {/* Logo Area */}
             <div className="w-full flex items-center justify-start">
                 <Logo
                     classNames={{
@@ -97,7 +101,6 @@ export default function AdminSidebar() {
 
             <Divider className="bg-border/30" />
 
-            {/* User Profile & Notifications Section */}
             <div className="px-4 py-5 flex items-center justify-between gap-2 border-b border-white/5">
                 <Dropdown
                     placement="bottom-start"
@@ -106,14 +109,14 @@ export default function AdminSidebar() {
                     <DropdownTrigger>
                         <button className="flex-1 flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-slate-800/50 transition-colors text-left outline-none">
                             <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm shrink-0">
-                                JD
+                                AD
                             </div>
                             <div className="flex-1 overflow-hidden">
                                 <p className="text-sm font-medium text-white truncate">
-                                    John Doe
+                                    Admin
                                 </p>
                                 <p className="text-xs text-slate-500 truncate">
-                                    Admin
+                                    Administrator
                                 </p>
                             </div>
                             <ChevronDown
@@ -124,7 +127,6 @@ export default function AdminSidebar() {
                     </DropdownTrigger>
 
                     <DropdownMenu aria-label="User Actions" variant="flat">
-                        {/* Theme Selector Item */}
                         <DropdownItem
                             key="theme"
                             isReadOnly
@@ -138,44 +140,32 @@ export default function AdminSidebar() {
                                 classNames={{
                                     base: 'items-center justify-between w-full',
                                     label: 'text-slate-600 text-xs font-medium',
-                                    trigger:
-                                        'w-[100px] shadow-none bg-default-100',
+                                    trigger: 'w-[100px] shadow-none bg-default-100',
                                 }}
                             >
-                                <SelectItem
-                                    key="light"
-                                    startContent={<Sun size={14} />}
-                                >
+                                <SelectItem key="light" startContent={<Sun size={14} />}>
                                     Light
                                 </SelectItem>
-                                <SelectItem
-                                    key="dark"
-                                    startContent={<Moon size={14} />}
-                                >
+                                <SelectItem key="dark" startContent={<Moon size={14} />}>
                                     Dark
                                 </SelectItem>
-                                <SelectItem
-                                    key="system"
-                                    startContent={<Monitor size={14} />}
-                                >
+                                <SelectItem key="system" startContent={<Monitor size={14} />}>
                                     System
                                 </SelectItem>
                             </Select>
                         </DropdownItem>
-
-                        {/* Logout Item */}
                         <DropdownItem
                             key="logout"
                             color="danger"
                             className="text-danger mt-1"
                             startContent={<LogOut size={16} />}
+                            onPress={handleLogout}
                         >
                             Log out
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
 
-                {/* Notification Bell */}
                 <Button
                     isIconOnly
                     variant="light"
@@ -183,21 +173,16 @@ export default function AdminSidebar() {
                     aria-label="Notifications"
                 >
                     <Bell size={18} />
-                    {/* Optional: Red notification dot */}
                     <span className="absolute top-2 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0B0F19]"></span>
                 </Button>
             </div>
 
-            {/* Main Navigation with Groups */}
             <nav className="flex-1 px-4 pt-6 pb-4 space-y-6">
                 {navGroups.map((group) => (
                     <div key={group.title} className="space-y-1">
-                        {/* Section Header */}
                         <h3 className="px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                             {group.title}
                         </h3>
-
-                        {/* Section Items */}
                         {group.items.map((item) => {
                             const Icon = item.icon
                             const isActive = pathname === item.href
@@ -205,7 +190,7 @@ export default function AdminSidebar() {
                             return (
                                 <Link
                                     key={item.name}
-                                    href={item.href}
+                                    to={item.href}
                                     className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
                                         isActive
                                             ? 'bg-slate-800 text-white font-medium'
@@ -214,9 +199,7 @@ export default function AdminSidebar() {
                                 >
                                     <Icon
                                         size={18}
-                                        className={
-                                            isActive ? 'text-blue-400' : ''
-                                        }
+                                        className={isActive ? 'text-blue-400' : ''}
                                     />
                                     {item.name}
                                 </Link>
@@ -226,20 +209,17 @@ export default function AdminSidebar() {
                 ))}
             </nav>
 
-            {/* Bottom Actions */}
             <div className="p-4 space-y-1 mt-auto border-t border-slate-800/50">
-                <Link
-                    href="/dashboard/settings"
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-slate-800/50 hover:text-white rounded-lg transition-colors"
+                <button
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-slate-800/50 hover:text-white rounded-lg transition-colors"
                 >
                     <Settings size={18} /> Settings
-                </Link>
-                <Link
-                    href="/dashboard/help"
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-slate-800/50 hover:text-white rounded-lg transition-colors"
+                </button>
+                <button
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-slate-800/50 hover:text-white rounded-lg transition-colors"
                 >
                     <HelpCircle size={18} /> Help
-                </Link>
+                </button>
             </div>
         </aside>
     )

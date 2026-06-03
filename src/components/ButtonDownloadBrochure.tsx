@@ -1,20 +1,17 @@
 import React from 'react'
 
 import { Button } from '@heroui/react'
+import { Link } from '@tanstack/react-router'
 import { Download } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import Link from 'next/link'
 
 export default function ButtonDownloadBrochure({
     downloadUrl,
 }: {
     downloadUrl?: string
 }) {
-    const tButton = useTranslations('button')
     return downloadUrl ? (
         <Link
-            href={downloadUrl}
-            passHref
+            to={downloadUrl}
             title="CSD- Profile 2025.pdf"
             target="_blank"
             className="block"
@@ -25,9 +22,7 @@ export default function ButtonDownloadBrochure({
                 startContent={<Download />}
                 color="secondary"
             >
-                <p className="text-sm lg:text-base">
-                    {tButton('downloadBrochure')}
-                </p>
+                <p className="text-sm lg:text-base">Download Brochure</p>
             </Button>
         </Link>
     ) : (

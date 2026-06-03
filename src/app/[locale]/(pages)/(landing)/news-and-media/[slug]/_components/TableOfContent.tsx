@@ -5,14 +5,15 @@ import React from 'react'
 import { Anchor, AnchorProps } from 'antd'
 import { AnchorLinkItemProps } from 'antd/es/anchor/Anchor'
 
-import { usePathname, useRouter } from '@/i18n/navigation'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 import { getHeadingId, getHeadings } from '@/lib/markdown'
 
 type Props = { source: string }
 
 export default function TableOfContent({ source }: Props) {
-    const currentPath = usePathname()
-    const router = useRouter()
+    const location = useLocation()
+    const navigate = useNavigate()
+    const currentPath = location.pathname
     const headings = getHeadings(source, {
         levels: [1, 2],
     })
@@ -25,7 +26,7 @@ export default function TableOfContent({ source }: Props) {
         }
     ) => {
         e.preventDefault()
-        router.push(`${currentPath}${link.href}`)
+        navigate({ to: `${currentPath}${link.href}` as string })
     }
 
     const toAnchorData = (items: { level: number; text: string }[]) => {

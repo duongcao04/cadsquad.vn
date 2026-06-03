@@ -1,9 +1,8 @@
 import React from 'react'
 
+import { Link } from '@tanstack/react-router'
 import { Variants } from 'motion/react'
-import Image from 'next/image'
 
-import { Link } from '@/i18n/navigation'
 import { MotionDiv } from '@/lib/motion'
 import { FLOAT_CONTACTS } from '@/shared/constants/appConstant'
 
@@ -15,9 +14,7 @@ export default function FABMenu({ isOpen }: Props) {
         show: {
             opacity: 1,
             x: 0,
-            transition: {
-                delayChildren: 1,
-            },
+            transition: { delayChildren: 1 },
         },
         hidden: {
             opacity: 0,
@@ -40,17 +37,16 @@ export default function FABMenu({ isOpen }: Props) {
                     initial={{ x: 0 }}
                 >
                     <Link
-                        href={contact.href}
+                        to={contact.href}
                         target="_blank"
                         className="flex items-center"
                     >
-                        <Image
-                            src={contact.icon}
+                        <img
+                            src={contact.icon as unknown as string}
                             alt={contact.title}
                             width="40"
                             height="40"
                             className="mr-3"
-                            quality={100}
                         />
                         <p className="dark:text-white">
                             <span className="group-hover:text-primary font-semibold">

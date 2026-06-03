@@ -4,16 +4,13 @@ import React from 'react'
 
 import { Button } from '@heroui/react'
 import { ChevronLeft } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-
-import { Link } from '@/i18n/navigation'
+import { Link } from '@tanstack/react-router'
 
 export default function ReturnBtn() {
-    const tNewMedia = useTranslations('landing.newsMedia')
     return (
-        <Link href={'/news-and-media'} passHref className="block">
+        <Link to={'/news-and-media'} className="block">
             <Button startContent={<ChevronLeft size={16} />} variant="light">
-                {tNewMedia('button.allPosts')}
+                All posts
             </Button>
         </Link>
     )

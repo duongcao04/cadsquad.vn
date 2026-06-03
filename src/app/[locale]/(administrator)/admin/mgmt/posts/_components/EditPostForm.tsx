@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useNavigate } from '@tanstack/react-router'
+import { supabase } from '@/lib/supabase'
 
 interface Post {
   id: string
@@ -20,9 +21,7 @@ interface EditPostFormProps {
 }
 
 export default function EditPostForm({ post }: EditPostFormProps) {
-  const router = useRouter()
-  const params = useParams()
-  const locale = params.locale as string
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     title: post.title,
     slug: post.slug,
@@ -42,19 +41,32 @@ export default function EditPostForm({ post }: EditPostFormProps) {
     setLoading(true)
 
     try {
-      const response = await fetch(`/api/admin/posts/${post.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+      const { error: postError } = await supabase
+        .from('posts')
+        .update({
+          thumbnail_url: formData.thumbnailUrl,
+          bg_cover_url: formData.bgCoverUrl || null,
+        })
+        .eq('id', post.id)
 
-      if (response.ok) {
-        router.push(`/${locale}/admin`)
-      } else {
-        console.error('Failed to update post')
-      }
+      if (postError) throw postError
+
+      const { error: translationError } = await supabase
+        .from('post_translations')
+        .update({
+          title: formData.title,
+          slug: formData.slug,
+          short_description: formData.shortDescription || null,
+          content: formData.content,
+          tags: formData.tags,
+          seo_keywords: formData.keywords,
+        })
+        .eq('post_id', post.id)
+        .eq('language', 'EN')
+
+      if (translationError) throw translationError
+
+      navigate({ to: '/admin' })
     } catch (error) {
       console.error('Error updating post:', error)
     } finally {
@@ -261,7 +273,7 @@ export default function EditPostForm({ post }: EditPostFormProps) {
       <div className="flex justify-end space-x-3">
         <button
           type="button"
-          onClick={() => router.back()}
+          onClick={() => window.history.back()}
           className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
         >
           Cancel

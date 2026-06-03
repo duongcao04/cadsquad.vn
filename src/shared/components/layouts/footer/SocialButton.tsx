@@ -3,8 +3,8 @@
 import React from 'react'
 
 import { Button } from '@heroui/react'
+import { Link } from '@tanstack/react-router'
 
-import { Link } from '@/i18n/navigation'
 import { Social } from '@/shared/constants/appConstant'
 import { useDevice } from '@/shared/hooks/useDevice'
 
@@ -15,7 +15,7 @@ type Props = {
 export default function SocialButton({ data }: Props) {
     const { isMobile } = useDevice()
     return (
-        <Link passHref href={data.href}>
+        <Link to={data.href} target="_blank">
             <Button
                 isIconOnly
                 className="rounded-full p-0 xl:p-2"

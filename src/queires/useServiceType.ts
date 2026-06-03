@@ -1,44 +1,31 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { serviceTypesApi } from './options/service-type-queries.option';
-import { TCreateServiceTypeFormValues, TUpdateServiceTypeFormValues } from '../validationSchemas';
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { serviceTypesApi } from '@/lib/supabase-api'
+import { TCreateServiceTypeFormValues, TUpdateServiceTypeFormValues } from '@/validationSchemas'
 
 export function useCreateServiceType() {
-	const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
 
-	return useMutation({
-		mutationFn: (data: TCreateServiceTypeFormValues) => serviceTypesApi.create(data),
-		onSuccess: () => {
-			// Invalidate the list query so the table refetches the new data
-			// Make sure the queryKey matches what you use in `useSuspenseQuery`
-			queryClient.invalidateQueries({ queryKey: ['serviceTypes'] });
-
-			// Optional: Show success message
-			// toast.success('Service Category created successfully!');
-		},
-		onError: (error) => {
-			console.error('Failed to create service type:', error);
-			// Optional: Show error message
-			// toast.error('Failed to create category. Please try again.');
-		}
-	});
+    return useMutation({
+        mutationFn: (data: TCreateServiceTypeFormValues) => serviceTypesApi.create(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['service-types'] })
+        },
+        onError: (error) => {
+            console.error('Failed to create service type:', error)
+        },
+    })
 }
+
 export function useUpdateServiceType() {
-	const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
 
-	return useMutation({
-		mutationFn: (data: TUpdateServiceTypeFormValues) => serviceTypesApi.update(data),
-		onSuccess: () => {
-			// Invalidate the list query so the table refetches the new data
-			// Make sure the queryKey matches what you use in `useSuspenseQuery`
-			queryClient.invalidateQueries({ queryKey: ['serviceTypes'] });
-
-			// Optional: Show success message
-			// toast.success('Service Category created successfully!');
-		},
-		onError: (error) => {
-			console.error('Failed to create service type:', error);
-			// Optional: Show error message
-			// toast.error('Failed to create category. Please try again.');
-		}
-	});
+    return useMutation({
+        mutationFn: (data: TUpdateServiceTypeFormValues) => serviceTypesApi.update(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['service-types'] })
+        },
+        onError: (error) => {
+            console.error('Failed to update service type:', error)
+        },
+    })
 }

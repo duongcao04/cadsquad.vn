@@ -4,27 +4,19 @@ import React from 'react'
 
 import { Accordion, AccordionItem } from '@heroui/react'
 import { Image } from 'antd'
-import { useLocale, useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
-import { VI_WORKFLOW, WORKFLOW } from '@/shared/constants/workflow'
+import { WORKFLOW } from '@/shared/constants/workflow'
 
 import HeadingSection from './HeadingSection'
 
 export default function Workflow() {
-    const locale = useLocale()
-    const tHome = useTranslations('landing.home')
-
-    const workflow = locale === 'vi' ? VI_WORKFLOW : WORKFLOW
+    const workflow = WORKFLOW
 
     return (
         <div className="container space-y-5 lg:space-y-8">
             <HeadingSection className="!text-center">
-                {tHome.rich('sections.workflow.title', {
-                    highlight: (chunk) => (
-                        <span className="text-primary">{chunk}</span>
-                    ),
-                })}
+                How do we <span className="text-primary">work</span> ?
             </HeadingSection>
             <div className="lg:grid grid-cols-2 gap-8">
                 <MotionDiv

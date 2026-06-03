@@ -1,29 +1,26 @@
 import React from 'react'
 
+import { Link } from '@tanstack/react-router'
 import { Breadcrumb } from 'antd'
-import { useTranslations } from 'next-intl'
-
-import { Link } from '@/i18n/navigation'
 
 export function PageBreadcumbs({ pageName }: { pageName: string }) {
-    const tBreadcrumb = useTranslations('breadcrumbs')
     return (
         <Breadcrumb
             items={[
                 {
                     title: (
-                        <Link href="/" style={{ color: 'hsl(0,0%,75%)' }}>
-                            {tBreadcrumb('home')}
+                        <Link to="/" style={{ color: 'hsl(0,0%,75%)' }}>
+                            Home
                         </Link>
                     ),
                 },
                 {
                     title: (
                         <Link
-                            href="/cad-services"
+                            to="/cad-services"
                             style={{ color: 'hsl(0,0%,75%)' }}
                         >
-                            {tBreadcrumb('cadService')}
+                            CAD Services
                         </Link>
                     ),
                 },
@@ -38,9 +35,7 @@ export function PageBreadcumbs({ pageName }: { pageName: string }) {
                     ),
                 },
             ]}
-            style={{
-                color: '#c4c4c4',
-            }}
+            style={{ color: '#c4c4c4' }}
             separator={<p className="text-gray-400">/</p>}
         />
     )

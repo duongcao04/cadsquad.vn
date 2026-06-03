@@ -1,14 +1,10 @@
 import { queryOptions } from '@tanstack/react-query'
-import { axiosClient } from '../../lib/axios'
-
-const postApi = {
-	list: async () => await axiosClient.get('/posts').then(res => res.data)
-}
+import { postsApi } from '@/lib/supabase-api'
 
 export const postsListOptions = queryOptions({
-	queryKey: ['posts'],
-	queryFn: async () => await postApi.list(),
-	select: (res) => {
-		return { posts: res }
-	}
+    queryKey: ['posts'],
+    queryFn: async () => await postsApi.list(),
+    select: (res) => {
+        return { posts: res }
+    },
 })

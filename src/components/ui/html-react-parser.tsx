@@ -5,7 +5,7 @@ import parse, {
     type HTMLReactParserOptions,
     domToReact,
 } from 'html-react-parser'
-import Link from 'next/link'
+import { Link } from '@tanstack/react-router'
 
 type HtmlReactParserProps = {
     htmlString: string
@@ -19,10 +19,10 @@ export function HtmlReactParser({ htmlString }: HtmlReactParserProps) {
                 if (domNode.name === 'a') {
                     const { href, class: className } = domNode.attribs
 
-                    // Ensure strictly internal links use Next Link
+                    // Ensure strictly internal links use TanStack Router Link
                     if (href && href.startsWith('/')) {
                         return (
-                            <Link href={href} className={className}>
+                            <Link to={href} className={className}>
                                 {domToReact(
                                     domNode.children as DOMNode[],
                                     options

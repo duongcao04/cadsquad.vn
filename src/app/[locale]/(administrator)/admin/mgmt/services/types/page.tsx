@@ -25,10 +25,8 @@ import {
     Save,
     Settings2,
 } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { Link, useNavigate } from '@tanstack/react-router'
 
-// Ensure both create and update mutations are imported
 import {
     serviceTypeOptions,
     useCreateServiceType,
@@ -47,26 +45,16 @@ const SUPPORTED_LANGUAGES: { key: Language; label: string }[] = [
     { key: 'VI', label: 'Tiếng Việt (VI)' },
 ]
 
-export default function CreateServiceTypePage() {
-    const router = useRouter()
-    const searchParams = useSearchParams()
+interface Props {
+    mode: 'create' | 'edit'
+    id: string
+}
 
-    // 1. Extract mode and id from URL
-    const propMode = searchParams.get('mode')
-    const propId = searchParams.get('id')
+export default function CreateServiceTypePage({ mode, id }: Props) {
+    const navigate = useNavigate()
 
-    const mode =
-        propMode === 'edit' && !propId
-            ? 'create'
-            : propMode === 'edit'
-              ? 'edit'
-              : 'create'
-    const id = propId || ''
-
-    // Guard to prevent infinite re-renders when hydratring form state from API
     const [hasInitialized, setHasInitialized] = useState(false)
 
-    // 2. Fetch data ONLY if we are in edit mode
     const { data, isLoading: isFetching } = useQuery({
         ...serviceTypeOptions(id),
         enabled: mode === 'edit' && !!id,
@@ -74,7 +62,6 @@ export default function CreateServiceTypePage() {
 
     const existingData = data?.serviceType
 
-    // 3. Mutation Hooks
     const { mutate: createServiceType, isPending: isCreating } =
         useCreateServiceType()
     const { mutate: updateServiceType, isPending: isUpdating } =
@@ -92,7 +79,6 @@ export default function CreateServiceTypePage() {
         },
     })
 
-    // 4. Populate form state on Edit
     useEffect(() => {
         if (mode === 'edit' && existingData && !hasInitialized) {
             const fetchedTranslations = existingData.translations || []
@@ -150,7 +136,7 @@ export default function CreateServiceTypePage() {
         e.preventDefault()
 
         const payload = {
-            ...(mode === 'edit' && { id }), // Critical: Include ID for updates
+            ...(mode === 'edit' ? { id: id! } : {}),
             code: formData.code,
             translations: activeLanguages.map((lang) => ({
                 language: lang,
@@ -160,13 +146,12 @@ export default function CreateServiceTypePage() {
 
         const mutationConfig = {
             onSuccess: () => {
-                router.push('/admin/mgmt/services')
+                navigate({ to: '/admin/mgmt/services' })
             },
         }
 
-        // 5. Logic FIX: Call the correct mutation based on mode
         if (mode === 'edit') {
-            updateServiceType(payload, mutationConfig)
+            updateServiceType({ ...payload, id: id! }, mutationConfig)
         } else {
             createServiceType(payload, mutationConfig)
         }
@@ -197,7 +182,7 @@ export default function CreateServiceTypePage() {
                     <div className="flex items-center gap-4">
                         <Button
                             as={Link}
-                            href={INTERNAL_URLS.admin.management.services.all}
+                            to={INTERNAL_URLS.admin.management.services.all}
                             isIconOnly
                             variant="light"
                             radius="full"
@@ -276,9 +261,7 @@ export default function CreateServiceTypePage() {
                 onSubmit={handleSubmit}
                 className="w-full max-w-[1200px] mx-auto flex flex-col gap-6 flex-1"
             >
-                {/* MAIN FORM AREA */}
                 <div className="flex flex-col xl:flex-row gap-6 animate-in fade-in duration-300 w-full flex-1">
-                    {/* Left Side: Localized Translation Fields */}
                     <Card
                         shadow="sm"
                         radius="lg"
@@ -366,7 +349,6 @@ export default function CreateServiceTypePage() {
                         </CardBody>
                     </Card>
 
-                    {/* Right Side: Global Settings */}
                     <Card
                         shadow="sm"
                         radius="lg"

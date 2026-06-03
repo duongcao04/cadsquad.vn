@@ -1,13 +1,10 @@
 import React, { Suspense } from 'react'
 
-import { Image, Skeleton } from 'antd'
+import { Skeleton } from 'antd'
 import { LinkIcon } from 'lucide-react'
-import { MDXRemote } from 'next-mdx-remote-client/rsc'
+import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import remarkHtml from 'remark-html'
-import remarkParse from 'remark-parse'
 
-import { Link } from '@/i18n/navigation'
 import { getHeadingId } from '@/lib/markdown'
 
 type Props = {
@@ -23,70 +20,42 @@ export default function Content({ source }: Props) {
             }
         >
             <div className="prose prose-img:rounded-2xl prose-img:my-0 prose-h1:text-3xl prose-h1:mb-3 prose-h1:font-bold prose-h2:text-2xl prose-h2:my-3 prose-h3:text-xl prose-h3:my-3 prose-a:text-blue-600 prose-a:underline-offset-2 !post_container">
-                <MDXRemote
-                    source={source.replaceAll('img', 'Image')}
-                    options={{
-                        mdxOptions: {
-                            remarkPlugins: [remarkParse, remarkGfm, remarkHtml],
-                        },
-                    }}
+                <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
                     components={{
-                        h1: (props) => {
+                        h1: ({ children, ...props }) => {
+                            const text = String(children)
                             return (
-                                <Link
-                                    href={`#${getHeadingId(props.children)}`}
+                                <a
+                                    href={`#${getHeadingId(text)}`}
                                     className="no-underline w-fit flex items-start justify-start gap-2 group"
                                 >
                                     <h1
-                                        id={getHeadingId(props.children)}
+                                        id={getHeadingId(text)}
                                         className="transition duration-150 hover:text-blue-600 cursor-pointer"
                                         {...props}
-                                    />
+                                    >
+                                        {children}
+                                    </h1>
                                     <LinkIcon className="mt-1.5 hidden group-hover:block" />
-                                </Link>
+                                </a>
                             )
                         },
-                        h2: (props) => (
-                            <h2 id={getHeadingId(props.children)} {...props} />
-                        ),
-                        Image: ({ src, alt, ...props }) => (
-                            <Image
+                        h2: ({ children, ...props }) => {
+                            const text = String(children)
+                            return <h2 id={getHeadingId(text)} {...props}>{children}</h2>
+                        },
+                        img: ({ src, alt }) => (
+                            <img
                                 src={src}
                                 alt={alt}
-                                {...props}
-                                preview={{
-                                    maskClassName: 'hover:!opacity-0',
-                                    classNames: {
-                                        wrapper: 'scale-125',
-                                    },
-                                }}
+                                className="rounded-2xl my-0 max-w-full"
                             />
                         ),
-                        img: ({ src, alt, ...props }) => (
-                            <Image
-                                src={src}
-                                alt={alt}
-                                {...props}
-                                preview={{
-                                    maskClassName: 'hover:!opacity-0',
-                                    classNames: {
-                                        wrapper: 'scale-125',
-                                    },
-                                }}
-                            />
-                        ),
-                        wrapper: ({ children }) => (
-                            <div suppressHydrationWarning>{children}</div>
-                        ),
                     }}
-                    onError={(err) => {
-                        console.log(err)
-
-                        return (
-                            <p>{`Couldn't load content!${JSON.stringify(err)}`}</p>
-                        )
-                    }}
-                />
+                >
+                    {source}
+                </ReactMarkdown>
             </div>
         </Suspense>
     )

@@ -1,8 +1,6 @@
 import React from 'react'
 
-import Image from 'next/image'
-
-import { Link } from '@/i18n/navigation'
+import { Link } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
 
 import CSDWhiteLogo from '../../../public/logo-white.webp'
@@ -24,25 +22,22 @@ export default function Logo({
     href = '/',
     classNames,
 }: Props) {
-    const Wrapper = ({ children }: { children: React.ReactNode }) => {
-        const wrapperClassName = cn('block w-fit', classNames?.root)
-        return canRedirect ? (
-            <Link href={href} className={cn('block', wrapperClassName)}>
-                {children}
-            </Link>
-        ) : (
-            <div className={wrapperClassName}>{children}</div>
-        )
-    }
+    const logoSrc = logoTheme === 'default' ? CSDLogo : CSDWhiteLogo
+    const wrapperClassName = cn('block w-fit', classNames?.root)
 
-    return (
-        <Wrapper>
-            <Image
-                src={logoTheme === 'default' ? CSDLogo : CSDWhiteLogo}
-                alt="CSD Logo"
-                className={cn('object-contain w-fit', classNames?.logo)}
-                quality={100}
-            />
-        </Wrapper>
+    const imgEl = (
+        <img
+            src={logoSrc as unknown as string}
+            alt="CSD Logo"
+            className={cn('object-contain w-fit', classNames?.logo)}
+        />
+    )
+
+    return canRedirect ? (
+        <Link to={href} className={cn('block', wrapperClassName)}>
+            {imgEl}
+        </Link>
+    ) : (
+        <div className={wrapperClassName}>{imgEl}</div>
     )
 }

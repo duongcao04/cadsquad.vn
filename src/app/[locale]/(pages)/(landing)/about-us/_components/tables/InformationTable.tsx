@@ -1,18 +1,12 @@
 import React from 'react'
 
-import { useLocale } from 'next-intl'
-
-import { Link } from '@/i18n/navigation'
+import { Link } from '@tanstack/react-router'
 import {
     ABOUT_CADSQUAD_INFO,
-    VI_ABOUT_CADSQUAD_INFO,
 } from '@/shared/constants/companyTable'
 
 export default function InformationTable() {
-    const locale = useLocale()
-
-    const aboutCadsquadInfo =
-        locale === 'vi' ? VI_ABOUT_CADSQUAD_INFO : ABOUT_CADSQUAD_INFO
+    const aboutCadsquadInfo = ABOUT_CADSQUAD_INFO
 
     return (
         <table className="w-full border border-gray-300 shadow-md text-sm lg:text-base">
@@ -41,7 +35,8 @@ export default function InformationTable() {
                                                     className="tracking-wide"
                                                 >
                                                     <Link
-                                                        href={`/cad-services/${item.href}`}
+                                                        to="/cad-services/$slug"
+                                                        params={{ slug: item.href }}
                                                         title={item.value}
                                                         className="block transition duration-200 hover:underline underline-offset-2"
                                                     >

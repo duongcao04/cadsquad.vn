@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useNavigate } from '@tanstack/react-router'
+import { supabase } from '@/lib/supabase'
 
 export default function NewPostPage() {
-  const router = useRouter()
-  const params = useParams()
-  const locale = params.locale as string
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -26,19 +25,34 @@ export default function NewPostPage() {
     setLoading(true)
 
     try {
-      const response = await fetch('/api/admin/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+      const { data: post, error: postError } = await supabase
+        .from('posts')
+        .insert({
+          thumbnail_url: formData.thumbnailUrl,
+          bg_cover_url: formData.bgCoverUrl || null,
+          count_view: 0,
+        })
+        .select()
+        .single()
 
-      if (response.ok) {
-        router.push(`/${locale}/admin`)
-      } else {
-        console.error('Failed to create post')
-      }
+      if (postError) throw postError
+
+      const { error: translationError } = await supabase
+        .from('post_translations')
+        .insert({
+          post_id: post.id,
+          language: 'EN',
+          title: formData.title,
+          slug: formData.slug,
+          short_description: formData.shortDescription || null,
+          content: formData.content,
+          tags: formData.tags,
+          seo_keywords: formData.keywords,
+        })
+
+      if (translationError) throw translationError
+
+      navigate({ to: '/admin' })
     } catch (error) {
       console.error('Error creating post:', error)
     } finally {
@@ -248,7 +262,7 @@ export default function NewPostPage() {
         <div className="flex justify-end space-x-3">
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={() => window.history.back()}
             className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
           >
             Cancel

@@ -1,20 +1,6 @@
-import { StaticImageData } from 'next/image'
-
 import ImgCsdHeart from '@/assets/images/cadsquad-heart.webp'
 import ImgTeam from '@/assets/images/teams.webp'
 import ImgVision from '@/assets/images/vision.webp'
-import { CAD_SERVICES } from '@/shared/database/cadServices'
-
-const getCadServiceMenu: () => NavigateItem['menus'] = () => {
-    return CAD_SERVICES.map((item) => {
-        return {
-            enLabel: item.title.original!,
-            viLabel: item.title.vi!,
-            href: `/cad-services/${item.slug!}`,
-            image: item.thumbnail.vertical!,
-        }
-    })
-}
 
 export type NavigateItem = {
     viLabel: string
@@ -24,11 +10,12 @@ export type NavigateItem = {
     menus?: {
         viLabel: string
         enLabel: string
-        image: string | StaticImageData
+        image: string
         href: string
         outSite?: boolean
     }[]
 }
+
 export const HEADER_NAVIGATES: NavigateItem[] = [
     {
         enLabel: 'About us',
@@ -38,19 +25,19 @@ export const HEADER_NAVIGATES: NavigateItem[] = [
             {
                 viLabel: 'Tổng quan',
                 enLabel: 'Overview',
-                image: ImgTeam,
+                image: ImgTeam as unknown as string,
                 href: '/about-us#overview',
             },
             {
                 viLabel: 'Tầm nhìn',
                 enLabel: 'Vision',
-                image: ImgVision,
+                image: ImgVision as unknown as string,
                 href: '/about-us/vision',
             },
             {
                 viLabel: 'Hành trình của chúng tôi',
                 enLabel: 'Our journey',
-                image: ImgCsdHeart,
+                image: ImgCsdHeart as unknown as string,
                 href: '/about-us#our-journey',
             },
         ],
@@ -59,13 +46,11 @@ export const HEADER_NAVIGATES: NavigateItem[] = [
         enLabel: 'CAD Services',
         viLabel: 'Dịch vụ CAD',
         href: '/cad-services',
-        menus: getCadServiceMenu(),
     },
     {
         enLabel: 'Digital Services',
         viLabel: 'Dịch vụ kỹ thuật số',
         href: '/digital-services',
-        menus: getCadServiceMenu(),
     },
     {
         enLabel: 'Academy',

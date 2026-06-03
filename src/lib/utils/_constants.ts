@@ -1,47 +1,47 @@
-import { envConfig } from "@/config"
+import { envConfig } from '@/config'
 
 export const INTERNAL_URLS = {
-	home: ['', ''].join('/'),
-	aboutUs: {
-		overview: ['', 'about-us'].join('/'),
-		vision: ['', 'about-us', 'vision'].join('/'),
-		ourJourney: ['', , 'about-us', 'our-journey'].join('/')
-	},
-	admin: {
-		dashboard: ['', 'admin'].join('/'),
-		management: {
-			posts: ['', 'admin', 'mgmt', 'posts'].join('/'),
-			services: {
-				all: ['', 'admin', 'mgmt', 'services'].join('/'),
-				createService: ['', 'admin', 'mgmt', 'services', 'create?mode=create'].join('/'),
-				editService: (id: string) => ['', 'admin', 'mgmt', 'services', `create?mode=edit&id=${id}`].join('/'),
-				types: ['', 'admin', 'mgmt', 'services', 'types'].join('/'),
-				createServiceType: ['', 'admin', 'mgmt', 'services', 'types?mode=create'].join('/'),
-				editServiceType: (id: string) => ['', 'admin', 'mgmt', 'services', `types?mode=edit&id=${id}`].join('/'),
-			},
-			email: ['', 'admin', 'mgmt', 'email'].join('/'),
-		}
-	},
-	cadServices: ['', 'cad-services'].join('/'),
-	cadServiceDetail: (slug: string) => ['', 'cad-services', slug].join('/'),
-	digitalServices: ['', 'digital-services'].join('/'),
-	digitalServiceDetail: (slug: string) => ['', 'digital-services', slug].join('/'),
-	academy: ['', 'academy'].join('/'),
-	newsAndMedia: ['', 'news-and-media'].join('/')
+    home: '/',
+    aboutUs: {
+        overview: '/about-us',
+        vision: '/about-us/vision',
+        ourJourney: '/about-us/our-journey',
+    },
+    admin: {
+        dashboard: '/admin',
+        management: {
+            posts: '/admin/mgmt/posts',
+            services: {
+                all: '/admin/mgmt/services',
+                createService: '/admin/mgmt/services/create?mode=create',
+                editService: (id: string) =>
+                    `/admin/mgmt/services/create?mode=edit&id=${id}`,
+                types: '/admin/mgmt/services/types',
+                createServiceType:
+                    '/admin/mgmt/services/types?mode=create',
+                editServiceType: (id: string) =>
+                    `/admin/mgmt/services/types?mode=edit&id=${id}`,
+            },
+            email: '/admin/mgmt/email',
+        },
+    },
+    cadServices: '/cad-services',
+    cadServiceDetail: (slug: string) => `/cad-services/${slug}`,
+    digitalServices: '/digital-services',
+    digitalServiceDetail: (slug: string) => `/digital-services/${slug}`,
+    academy: '/academy',
+    newsAndMedia: '/news-and-media',
 }
 
 export const EXTERNAL_URLS = {
-	academy: 'https://www.courses.cadsquad.vn/',
+    academy: 'https://www.courses.cadsquad.vn/',
 }
 
 export const CONTACT = {
-	email: 'contact@cadsquad.vn',
-	phone: '+84 765 279 228',
-	zalo: 'Zalo.me/0765279228',
-	fiverr: 'Fiverr.com/vietnamcsd'
+    email: 'contact@cadsquad.vn',
+    phone: '+84 765 279 228',
+    zalo: 'Zalo.me/0765279228',
+    fiverr: 'Fiverr.com/vietnamcsd',
 }
 
-export const baseUrl = envConfig.appUrl ?? 'http://localhost'
-export const apiBaseUrl = envConfig.apiEndpoint
-	? `${envConfig.apiEndpoint}`
-	: 'http://localhost/api'
+export const baseUrl = envConfig.appUrl

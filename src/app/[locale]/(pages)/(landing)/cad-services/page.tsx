@@ -2,21 +2,18 @@
 
 import { useSuspenseQueries } from '@tanstack/react-query'
 import { Breadcrumb } from 'antd'
-import { useLocale, useTranslations } from 'next-intl'
-import Image from 'next/image'
+import { Link } from '@tanstack/react-router'
 
 import ButtonDownloadBrochure from '@/components/ButtonDownloadBrochure'
 
 import { ServiceCard } from '@/features/service-details'
 
 import ImgCadService from '@/assets/images/cad-services.webp'
-import { Link } from '@/i18n/navigation'
 import { INTERNAL_URLS } from '@/lib'
 import { serviceListOptions, serviceTypesListOptions } from '@/queires'
 
 export default function CADServices() {
-    const locale = useLocale().toUpperCase()
-    const tBreadcrumb = useTranslations('breadcrumbs')
+    const locale = 'EN'
 
     const [
         {
@@ -45,8 +42,8 @@ export default function CADServices() {
         <div className="min-h-screen pb-16 max-w-screen">
             <section className="relative w-full overflow-hidden h-[760px] lg:h-[500px]">
                 <div className="relative size-full">
-                    <Image
-                        src={ImgCadService}
+                    <img
+                        src={ImgCadService as unknown as string}
                         alt="Image"
                         className="object-cover size-full"
                     />
@@ -59,10 +56,10 @@ export default function CADServices() {
                                 {
                                     title: (
                                         <Link
-                                            href={INTERNAL_URLS.home}
+                                            to={INTERNAL_URLS.home}
                                             style={{ color: 'hsl(0,0%,75%)' }}
                                         >
-                                            {tBreadcrumb('home')}
+                                            Home
                                         </Link>
                                     ),
                                 },

@@ -9,7 +9,7 @@ import {
     MoreHorizontal,
     TrendingUp,
 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@tanstack/react-router'
 
 import { postsListOptions } from '@/queires'
 
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
                             Top Posts
                         </h2>
                         <Link
-                            href="/admin/posts"
+                            to="/admin"
                             className="text-sm text-blue-600 font-medium hover:underline"
                         >
                             View All
@@ -160,7 +160,9 @@ export default function AdminDashboard() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
-                                {posts.map((post) => (
+                                {posts.map((post) => {
+                                    const enT = post.translations?.find((t: { language: string }) => t.language === 'EN') ?? post.translations?.[0]
+                                    return (
                                     <tr
                                         key={post.id}
                                         className="hover:bg-slate-50/80 transition-colors"
@@ -170,7 +172,7 @@ export default function AdminDashboard() {
                                                 {post.thumbnailUrl ? (
                                                     <img
                                                         src={post.thumbnailUrl}
-                                                        alt={post.title}
+                                                        alt={enT?.title ?? ''}
                                                         className="w-full h-full object-cover"
                                                     />
                                                 ) : (
@@ -178,11 +180,11 @@ export default function AdminDashboard() {
                                                 )}
                                             </div>
                                             <span className="truncate max-w-[200px]">
-                                                {post.title}
+                                                {enT?.title ?? '—'}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-slate-500 truncate max-w-[150px]">
-                                            /{post.slug}
+                                            /{enT?.slug ?? ''}
                                         </td>
                                         <td className="px-6 py-4 font-medium text-slate-900">
                                             {post.countView.toLocaleString()}
@@ -202,7 +204,8 @@ export default function AdminDashboard() {
                                             </button>
                                         </td>
                                     </tr>
-                                ))}
+                                    )
+                                })}
                                 {posts.length === 0 && (
                                     <tr>
                                         <td

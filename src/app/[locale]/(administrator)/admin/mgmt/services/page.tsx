@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Button, Tab, Tabs } from '@heroui/react'
 import { useSuspenseQueries } from '@tanstack/react-query'
 import { Edit, FileText, Globe, Layers, Plus, Trash2 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@tanstack/react-router'
 
 import {
     AdminPageBody,
@@ -40,7 +40,7 @@ export default function ServicesListPage() {
                 actions={
                     activeTab === 'services' ? (
                         <Link
-                            href={
+                            to={
                                 INTERNAL_URLS.admin.management.services
                                     .createService
                             }
@@ -50,7 +50,7 @@ export default function ServicesListPage() {
                         </Link>
                     ) : (
                         <Link
-                            href={
+                            to={
                                 INTERNAL_URLS.admin.management.services
                                     .createServiceType
                             }
@@ -180,7 +180,7 @@ export default function ServicesListPage() {
                                                     <div className="flex justify-end gap-3">
                                                         <div className="flex justify-end gap-3">
                                                             <Link
-                                                                href={INTERNAL_URLS.admin.management.services.editService(
+                                                                to={INTERNAL_URLS.admin.management.services.editService(
                                                                     service.id
                                                                 )}
                                                             >
@@ -277,7 +277,7 @@ export default function ServicesListPage() {
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex justify-end gap-3">
                                                         <Link
-                                                            href={INTERNAL_URLS.admin.management.services.editServiceType(
+                                                            to={INTERNAL_URLS.admin.management.services.editServiceType(
                                                                 type.id
                                                             )}
                                                         >

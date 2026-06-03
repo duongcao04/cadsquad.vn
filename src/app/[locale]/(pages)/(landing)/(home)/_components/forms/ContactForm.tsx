@@ -4,8 +4,6 @@ import { useState } from 'react'
 
 import { Button, Input, Textarea, addToast } from '@heroui/react'
 import { useFormik } from 'formik'
-import { useTranslations } from 'next-intl'
-
 import { ContactSchema } from '@/validationSchemas/contact.schema'
 
 export default function ContactForm() {
@@ -14,8 +12,6 @@ export default function ContactForm() {
      */
     const [isLoading, setLoading] = useState<boolean>(false)
 
-    const tButton = useTranslations('button')
-    const tSendEmail = useTranslations('toast.sendEmail')
 
     const formik = useFormik({
         validationSchema: ContactSchema,
@@ -40,13 +36,13 @@ export default function ContactForm() {
                 })
 
                 addToast({
-                    title: tSendEmail('success'),
+                    title: 'Email sent successfully!',
                     color: 'success',
                 })
                 formik.resetForm()
             } catch (error) {
                 addToast({
-                    title: tSendEmail('failed'),
+                    title: 'Failed to send email.',
                     description: `${error}`,
                     color: 'danger',
                 })
@@ -107,7 +103,7 @@ export default function ContactForm() {
                     isLoading={isLoading}
                     type="submit"
                 >
-                    {tButton('sendMessage')}
+                    Send Message
                 </Button>
             </div>
         </form>

@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 
 import { X } from 'lucide-react'
-import Image from 'next/image'
 
 import FabZalo from '@/shared/components/icons/fab/FabZalo.webp'
 
@@ -58,8 +57,8 @@ export default function ContactButton({ isOpen, onOpen, onClose }: Props) {
             title: 'Zalo',
             body: (
                 <div className="p-3 bg-white rounded-full text-[#ef4444]">
-                    <Image
-                        src={FabZalo}
+                    <img
+                        src={FabZalo as unknown as string}
                         width={32}
                         height={32}
                         className="size-[32px] hue-rotate-170"
@@ -110,7 +109,7 @@ export default function ContactButton({ isOpen, onOpen, onClose }: Props) {
 
     return (
         <div className="relative">
-            <style jsx>{`
+            <style>{`
                 /* Ring Pulse Animation */
                 @keyframes ringPulse {
                     0% {

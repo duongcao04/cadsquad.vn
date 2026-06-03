@@ -7,14 +7,12 @@ import { Image } from 'antd'
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useLocale } from 'next-intl'
 
 import { MotionDiv, MotionLi, MotionP } from '@/lib/motion'
-import { OUR_JOURNEY, VI_OUR_JOURNEY } from '@/shared/database/ourJourney'
+import { OUR_JOURNEY } from '@/shared/database/ourJourney'
 
 export default function OurJourneyCarousel() {
-    const locale = useLocale()
-    const ourJourneys = locale === 'vi' ? VI_OUR_JOURNEY : OUR_JOURNEY
+    const ourJourneys = OUR_JOURNEY
     const [focusedSlide, setFocusedSlide] = useState(0)
 
     const [emblaTimeRef, emblaTimeApi] = useEmblaCarousel()

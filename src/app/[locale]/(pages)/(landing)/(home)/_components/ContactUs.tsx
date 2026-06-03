@@ -3,9 +3,8 @@
 import { useRef } from 'react'
 
 import { Button } from '@heroui/react'
-import { useTranslations } from 'next-intl'
+import { Link } from '@tanstack/react-router'
 
-import { Link } from '@/i18n/navigation'
 import Decorate from '@/shared/components/layouts/footer/Decorate'
 import { CONTACT_INFORMATIONS } from '@/shared/constants/appConstant'
 import { useDevice } from '@/shared/hooks/useDevice'
@@ -14,7 +13,6 @@ import ContactForm from './forms/ContactForm'
 
 export default function ContactUs() {
     const { isMobile } = useDevice()
-    const tHome = useTranslations('landing.home')
     const ref = useRef(null)
 
     return (
@@ -28,21 +26,15 @@ export default function ContactUs() {
             <div className="container lg:grid grid-cols-[1fr_1.2fr] gap-3">
                 <div>
                     <h2 className="text-4xl lg:text-6xl font-bold text-white font-saira">
-                        {tHome.rich('sections.contactUs.title', {
-                            highlight: (chunk) => (
-                                <span className="text-primary">{chunk}</span>
-                            ),
-                        })}
+                        Get in <span className="text-primary">touch</span>
                     </h2>
                     <p className="mt-2 text-base lg:text-lg opacity-80 text-white">
-                        {tHome(
-                            'sections.contactUs.contactInformation.description'
-                        )}
+                        Say something to start a live chat!
                     </p>
                     <div className="mt-8 flex items-center justify-start gap-4 w-full text-white">
                         {CONTACT_INFORMATIONS.map((contact, index) => (
                             <Link
-                                href={contact.path}
+                                to={contact.path}
                                 key={index}
                                 target="_blank"
                             >

@@ -1,12 +1,11 @@
 'use client'
 
 import { Button, Skeleton } from '@heroui/react'
+import { Link } from '@tanstack/react-router'
 import { Image } from 'antd'
 import { ChevronRight } from 'lucide-react'
 import { Variants } from 'motion'
-import { useLocale, useTranslations } from 'next-intl'
 
-import { Link } from '@/i18n/navigation'
 import { INTERNAL_URLS } from '@/lib'
 import { MotionDiv } from '@/lib/motion'
 import { useDevice } from '@/shared/hooks/useDevice'
@@ -17,24 +16,14 @@ type Props = {
 }
 
 export function ServiceCard({ data }: Props) {
-    const locale = useLocale().toUpperCase()
-    const tButton = useTranslations('button')
     const { isMobile } = useDevice()
 
-    console.log(data)
-
     const cadServiceTranslations = (data?.translations.find(
-        (it) => it.language === locale
-    ) ??
-        data?.translations.find(
-            (it) => it.language === 'EN'
-        )) as TServiceTranslation
+        (it) => it.language === 'EN'
+    ) ?? data?.translations[0]) as TServiceTranslation
 
     const wrapperVariants: Variants = {
-        init: {
-            opacity: 0,
-            borderColor: 'transparent',
-        },
+        init: { opacity: 0, borderColor: 'transparent' },
         animate: {
             opacity: 1,
             borderColor: 'transparent',
@@ -57,10 +46,9 @@ export function ServiceCard({ data }: Props) {
         >
             <div className="h-full overflow-hidden rounded-lg aspect-video">
                 <Link
-                    href={INTERNAL_URLS.cadServiceDetail(
+                    to={INTERNAL_URLS.cadServiceDetail(
                         cadServiceTranslations.slug
                     )}
-                    passHref
                     className="block"
                     title={cadServiceTranslations.title}
                 >
@@ -74,7 +62,7 @@ export function ServiceCard({ data }: Props) {
             </div>
             <div className="mt-6 lg:mt-0 w-full">
                 <Link
-                    href={INTERNAL_URLS.cadServiceDetail(
+                    to={INTERNAL_URLS.cadServiceDetail(
                         cadServiceTranslations.slug
                     )}
                     className="text-2xl font-semibold line-clamp-1 hover:underline underline-offset-4"
@@ -86,7 +74,7 @@ export function ServiceCard({ data }: Props) {
                     {cadServiceTranslations.shortDescription}
                 </p>
                 <Link
-                    href={INTERNAL_URLS.cadServiceDetail(
+                    to={INTERNAL_URLS.cadServiceDetail(
                         cadServiceTranslations.slug
                     )}
                     className="block"
@@ -95,9 +83,9 @@ export function ServiceCard({ data }: Props) {
                         className="mt-8 capitalize rounded-full"
                         variant="bordered"
                         color="primary"
-                        title={tButton('getStartedNow')}
+                        title="Get started now"
                     >
-                        {tButton('getStartedNow')}
+                        Get started now
                         <ChevronRight />
                     </Button>
                 </Link>

@@ -3,11 +3,10 @@
 import React, { useState } from 'react'
 
 import { Button } from '@heroui/react'
+import { Link, useLocation } from '@tanstack/react-router'
 import { Drawer } from 'antd'
 import { ArrowUpRight, ChevronLeft, ChevronRight, HomeIcon } from 'lucide-react'
-import Image from 'next/image'
 
-import { Link, usePathname } from '@/i18n/navigation'
 import {
     HEADER_NAVIGATES,
     NavigateItem,
@@ -15,7 +14,6 @@ import {
 
 import Logo from '../../Logo'
 import CTAButton from './CTAButton'
-import ChangeLanguage from './ChangeLanguage'
 
 type Props = {
     isOpen: boolean
@@ -34,7 +32,6 @@ export default function MobileNav({ isOpen, onClose }: Props) {
                             logo: 'max-h-full',
                         }}
                     />
-                    <ChangeLanguage />
                 </div>
             }
             closable={false}
@@ -70,14 +67,14 @@ function RootNav({
     setCurrentNav: React.Dispatch<React.SetStateAction<NavigateItem | null>>
     onClose: () => void
 }) {
-    const pathname = usePathname()
+    const { pathname } = useLocation()
     const isHomePath = pathname === '/'
 
     return (
         <nav className="py-3 w-full">
             <ul className="w-full space-y-4">
                 <li className="mx-4 w-fit py-0.5 flex items-center justify-between border-b-2 border-danger cursor-pointer">
-                    <Link href="/" className="block">
+                    <Link to="/" className="block">
                         <Button isIconOnly variant="light">
                             <HomeIcon
                                 className={
@@ -96,9 +93,7 @@ function RootNav({
                             >
                                 <div
                                     className="mx-4 flex items-center justify-between"
-                                    onClick={() => {
-                                        setCurrentNav(item)
-                                    }}
+                                    onClick={() => setCurrentNav(item)}
                                 >
                                     <p className="uppercase font-semibold text-lg">
                                         {item.enLabel}
@@ -115,17 +110,16 @@ function RootNav({
                     } else {
                         return (
                             <Link
-                                href={item.href}
+                                to={item.href}
                                 key={idx}
                                 className="block py-2 border-b border-border cursor-pointer"
                                 onClick={onClose}
-                                target={item.outSite ? '_blank' : ''}
+                                target={item.outSite ? '_blank' : undefined}
                             >
                                 <div className="mx-4 flex items-center justify-between">
                                     <p className="!text-black uppercase font-semibold text-lg">
                                         {item.enLabel}
                                     </p>
-
                                     <div className="size-12 flex items-center justify-center">
                                         {item.outSite && (
                                             <ArrowUpRight
@@ -159,18 +153,14 @@ function NavItem({
     return (
         <div className="py-3">
             <div
-                onClick={() => {
-                    setCurrentNav(null)
-                }}
+                onClick={() => setCurrentNav(null)}
                 className="mx-4 flex items-center justify-start gap-6 cursor-pointer"
             >
                 <Button
                     isIconOnly
                     color="danger"
                     size="sm"
-                    onPress={() => {
-                        setCurrentNav(null)
-                    }}
+                    onPress={() => setCurrentNav(null)}
                 >
                     <ChevronLeft />
                 </Button>
@@ -179,31 +169,28 @@ function NavItem({
                 </p>
             </div>
             <ul className="mt-8 flex flex-col gap-5">
-                {data?.menus?.map((item, idx) => {
-                    return (
-                        <li key={idx}>
-                            <div className="py-2.5 border-b border-border cursor-pointer">
-                                <div className="max-w-full mx-4 grid grid-cols-[80px_1fr] items-center gap-5">
-                                    <div className="w-[80px] aspect-video overflow-hidden rounded-sm">
-                                        <Image
-                                            src={item.image}
-                                            alt={item.enLabel}
-                                            width={100}
-                                            height={100}
-                                        />
-                                    </div>
-                                    <Link
-                                        href={item.href}
-                                        className="!text-black w-fit font-semibold text-lg line-clamp-2"
-                                        onClick={onClose}
-                                    >
-                                        {item.enLabel}
-                                    </Link>
+                {data?.menus?.map((item, idx) => (
+                    <li key={idx}>
+                        <div className="py-2.5 border-b border-border cursor-pointer">
+                            <div className="max-w-full mx-4 grid grid-cols-[80px_1fr] items-center gap-5">
+                                <div className="w-[80px] aspect-video overflow-hidden rounded-sm">
+                                    <img
+                                        src={item.image}
+                                        alt={item.enLabel}
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
+                                <Link
+                                    to={item.href}
+                                    className="!text-black w-fit font-semibold text-lg line-clamp-2"
+                                    onClick={onClose}
+                                >
+                                    {item.enLabel}
+                                </Link>
                             </div>
-                        </li>
-                    )
-                })}
+                        </div>
+                    </li>
+                ))}
             </ul>
         </div>
     )

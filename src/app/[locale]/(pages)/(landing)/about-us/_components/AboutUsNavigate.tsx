@@ -2,20 +2,15 @@
 
 import React from 'react'
 
-import { useLocale } from 'next-intl'
-
 import {
     ABOUT_US_NAVIGATE,
-    VI_ABOUT_US_NAVIGATE,
 } from '@/shared/constants/aboutUsNavigate'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 export default function AboutUsNavigate() {
     const { isMobile } = useDevice()
-    const locale = useLocale()
 
-    const aboutUsNavigate =
-        locale === 'vi' ? VI_ABOUT_US_NAVIGATE : ABOUT_US_NAVIGATE
+    const aboutUsNavigate = ABOUT_US_NAVIGATE
 
     return (
         <nav className="bg-border">

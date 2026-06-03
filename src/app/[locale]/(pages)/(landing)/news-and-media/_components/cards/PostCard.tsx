@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Image, ImageProps } from 'antd'
 
-import { Link } from '@/i18n/navigation'
+import { Link } from '@tanstack/react-router'
 import { MotionDiv } from '@/lib/motion'
 import { Post } from '@/validationSchemas/post.schema'
 
@@ -85,7 +85,8 @@ const SmallPostCard = ({
     }
     return (
         <Link
-            href={`/news-and-media/${data.slug}`}
+            to="/news-and-media/$slug"
+            params={{ slug: data.slug ?? '' }}
             className="block"
             title={data.title}
         >
@@ -142,7 +143,8 @@ const MediumPostCard = ({
     return (
         <div className="w-full space-y-3">
             <Link
-                href={`/news-and-media/${data.slug}`}
+                to="/news-and-media/$slug"
+                params={{ slug: data.slug ?? '' }}
                 className="group block w-full aspect-[4/3]"
                 title={data.title}
             >
@@ -162,7 +164,8 @@ const MediumPostCard = ({
             </Link>
             <div>
                 <Link
-                    href={`/news-and-media/${data.slug}`}
+                    to="/news-and-media/$slug"
+                    params={{ slug: data.slug ?? '' }}
                     className={cn(
                         'text-black font-semibold line-clamp-2 text-xl leading-normal hover:text-blue-500 transition duration-200',
                         classNames?.title
@@ -210,7 +213,8 @@ const LargePostCard = ({ data, classNames }: VariantProps) => {
             className="group h-full relative overflow-hidden rounded-2xl"
         >
             <Link
-                href={`/news-and-media/${data.slug}`}
+                to="/news-and-media/$slug"
+                params={{ slug: data.slug ?? '' }}
                 className="block size-full"
                 title={data.title}
             >
@@ -230,7 +234,8 @@ const LargePostCard = ({ data, classNames }: VariantProps) => {
             </Link>
             <div className="rounded-b-2xl absolute bottom-0 backdrop-blur-2xl w-full py-3 px-6 md:py-6 xl:py-12 md:px-10">
                 <Link
-                    href={`/news-and-media/${data.slug}`}
+                    to="/news-and-media/$slug"
+                    params={{ slug: data.slug ?? '' }}
                     className={cn(
                         'w-fit text-xl md:text-3xl font-medium text-white line-clamp-2 leading-normal',
                         classNames?.title
