@@ -14,32 +14,32 @@ import {
 export const servicesApi = {
     list: async () => {
         const { data, error } = await supabase
-            .from('services')
+            .from('Service')
             .select(
-                `id, order_number, service_type_id, thumbnail_id, background_cover_id, created_at, updated_at,
-                service_type:service_types(id, code, created_at, updated_at,
-                    translations:service_type_translations(id, service_type_id, language, display_name, description, brochure_url)
+                `id, orderNumber, serviceTypeId, thumbnailId, backgroundCoverId, createdAt, updatedAt,
+                service_type:ServiceType(id, code, createdAt, updatedAt,
+                    translations:ServiceTypeTranslation(id, serviceTypeId, language, displayName, description, brochureUrl)
                 ),
-                thumbnail:service_thumbnails(id, url, type),
-                background_cover:service_background_covers(id, url, type),
-                translations:service_translations(id, service_id, language, slug, title, description, short_description, content, seo_title, seo_description, seo_keywords)`
+                thumbnail:ServiceThumbnail(id, url, type),
+                background_cover:ServiceBackgroundCover(id, url, type),
+                translations:ServiceTranslation(id, serviceId, language, slug, title, description, shortDescription, content, seoTitle, seoDescription, seoKeywords)`
             )
-            .order('order_number', { ascending: true })
+            .order('orderNumber', { ascending: true })
         if (error) throw error
         return data.map(mapService)
     },
 
     getById: async (id: string) => {
         const { data, error } = await supabase
-            .from('services')
+            .from('Service')
             .select(
-                `id, order_number, service_type_id, thumbnail_id, background_cover_id, created_at, updated_at,
-                service_type:service_types(id, code, created_at, updated_at,
-                    translations:service_type_translations(id, service_type_id, language, display_name, description, brochure_url)
+                `id, orderNumber, serviceTypeId, thumbnailId, backgroundCoverId, createdAt, updatedAt,
+                service_type:ServiceType(id, code, createdAt, updatedAt,
+                    translations:ServiceTypeTranslation(id, serviceTypeId, language, displayName, description, brochureUrl)
                 ),
-                thumbnail:service_thumbnails(id, url, type),
-                background_cover:service_background_covers(id, url, type),
-                translations:service_translations(id, service_id, language, slug, title, description, short_description, content, seo_title, seo_description, seo_keywords)`
+                thumbnail:ServiceThumbnail(id, url, type),
+                background_cover:ServiceBackgroundCover(id, url, type),
+                translations:ServiceTranslation(id, serviceId, language, slug, title, description, shortDescription, content, seoTitle, seoDescription, seoKeywords)`
             )
             .eq('id', id)
             .single()
@@ -49,17 +49,17 @@ export const servicesApi = {
 
     getBySlug: async (slug: string) => {
         const { data, error } = await supabase
-            .from('service_translations')
+            .from('ServiceTranslation')
             .select(
-                `id, service_id, language, slug, title, description, short_description, content, seo_title, seo_description, seo_keywords,
-                service:services(
-                    id, order_number, service_type_id, thumbnail_id, background_cover_id, created_at, updated_at,
-                    service_type:service_types(id, code, created_at, updated_at,
-                        translations:service_type_translations(id, service_type_id, language, display_name, description, brochure_url)
+                `id, serviceId, language, slug, title, description, shortDescription, content, seoTitle, seoDescription, seoKeywords,
+                service:Service(
+                    id, orderNumber, serviceTypeId, thumbnailId, backgroundCoverId, createdAt, updatedAt,
+                    service_type:ServiceType(id, code, createdAt, updatedAt,
+                        translations:ServiceTypeTranslation(id, serviceTypeId, language, displayName, description, brochureUrl)
                     ),
-                    thumbnail:service_thumbnails(id, url, type),
-                    background_cover:service_background_covers(id, url, type),
-                    translations:service_translations(id, service_id, language, slug, title, description, short_description, content, seo_title, seo_description, seo_keywords)
+                    thumbnail:ServiceThumbnail(id, url, type),
+                    background_cover:ServiceBackgroundCover(id, url, type),
+                    translations:ServiceTranslation(id, serviceId, language, slug, title, description, shortDescription, content, seoTitle, seoDescription, seoKeywords)
                 )`
             )
             .eq('slug', slug)
@@ -77,19 +77,17 @@ export const servicesApi = {
             translations,
         } = payload
 
-        // Validate order number uniqueness
         const { data: existingOrder } = await supabase
-            .from('services')
+            .from('Service')
             .select('id')
-            .eq('order_number', orderNumber)
+            .eq('orderNumber', orderNumber)
             .maybeSingle()
         if (existingOrder) throw new Error('Order number already exists')
 
-        // Find or create thumbnail
         let thumbnailId: string | null = null
         if (thumbnailUrl) {
             const { data: existingThumb } = await supabase
-                .from('service_thumbnails')
+                .from('ServiceThumbnail')
                 .select('id')
                 .eq('url', thumbnailUrl)
                 .maybeSingle()
@@ -97,7 +95,7 @@ export const servicesApi = {
                 thumbnailId = existingThumb.id
             } else {
                 const { data: newThumb, error } = await supabase
-                    .from('service_thumbnails')
+                    .from('ServiceThumbnail')
                     .insert({ url: thumbnailUrl })
                     .select('id')
                     .single()
@@ -106,11 +104,10 @@ export const servicesApi = {
             }
         }
 
-        // Find or create background cover
         let backgroundCoverId: string | null = null
         if (backgroundCoverUrl) {
             const { data: existingCover } = await supabase
-                .from('service_background_covers')
+                .from('ServiceBackgroundCover')
                 .select('id')
                 .eq('url', backgroundCoverUrl)
                 .maybeSingle()
@@ -118,7 +115,7 @@ export const servicesApi = {
                 backgroundCoverId = existingCover.id
             } else {
                 const { data: newCover, error } = await supabase
-                    .from('service_background_covers')
+                    .from('ServiceBackgroundCover')
                     .insert({ url: backgroundCoverUrl })
                     .select('id')
                     .single()
@@ -127,10 +124,9 @@ export const servicesApi = {
             }
         }
 
-        // Check slug uniqueness
         const slugs = translations.map((t) => t.slug)
         const { data: existingSlugs } = await supabase
-            .from('service_translations')
+            .from('ServiceTranslation')
             .select('slug')
             .in('slug', slugs)
         if (existingSlugs && existingSlugs.length > 0) {
@@ -139,34 +135,32 @@ export const servicesApi = {
             )
         }
 
-        // Create service
         const { data: service, error: serviceError } = await supabase
-            .from('services')
+            .from('Service')
             .insert({
-                order_number: orderNumber,
-                service_type_id: serviceTypeId ?? null,
-                thumbnail_id: thumbnailId,
-                background_cover_id: backgroundCoverId,
+                orderNumber,
+                serviceTypeId: serviceTypeId ?? null,
+                thumbnailId,
+                backgroundCoverId,
             })
             .select('id')
             .single()
         if (serviceError) throw serviceError
 
-        // Create translations
         const { error: translationsError } = await supabase
-            .from('service_translations')
+            .from('ServiceTranslation')
             .insert(
                 translations.map((t) => ({
-                    service_id: service.id,
+                    serviceId: service.id,
                     language: t.language,
                     slug: t.slug,
                     title: t.title,
                     description: t.description,
-                    short_description: t.shortDescription,
+                    shortDescription: t.shortDescription,
                     content: t.content,
-                    seo_title: t.seoTitle ?? null,
-                    seo_description: t.seoDescription ?? null,
-                    seo_keywords: t.seoKeywords ?? [],
+                    seoTitle: t.seoTitle ?? null,
+                    seoDescription: t.seoDescription ?? null,
+                    seoKeywords: t.seoKeywords ?? [],
                 }))
             )
         if (translationsError) throw translationsError
@@ -184,20 +178,18 @@ export const servicesApi = {
             translations,
         } = payload
 
-        // Check order number not taken by another service
         const { data: existingOrder } = await supabase
-            .from('services')
+            .from('Service')
             .select('id')
-            .eq('order_number', orderNumber)
+            .eq('orderNumber', orderNumber)
             .neq('id', id)
             .maybeSingle()
         if (existingOrder) throw new Error('Order number is used by another service')
 
-        // Find or create thumbnail
         let thumbnailId: string | null = null
         if (thumbnailUrl) {
             const { data: existingThumb } = await supabase
-                .from('service_thumbnails')
+                .from('ServiceThumbnail')
                 .select('id')
                 .eq('url', thumbnailUrl)
                 .maybeSingle()
@@ -205,7 +197,7 @@ export const servicesApi = {
                 thumbnailId = existingThumb.id
             } else {
                 const { data: newThumb, error } = await supabase
-                    .from('service_thumbnails')
+                    .from('ServiceThumbnail')
                     .insert({ url: thumbnailUrl })
                     .select('id')
                     .single()
@@ -214,11 +206,10 @@ export const servicesApi = {
             }
         }
 
-        // Find or create background cover
         let backgroundCoverId: string | null = null
         if (backgroundCoverUrl) {
             const { data: existingCover } = await supabase
-                .from('service_background_covers')
+                .from('ServiceBackgroundCover')
                 .select('id')
                 .eq('url', backgroundCoverUrl)
                 .maybeSingle()
@@ -226,7 +217,7 @@ export const servicesApi = {
                 backgroundCoverId = existingCover.id
             } else {
                 const { data: newCover, error } = await supabase
-                    .from('service_background_covers')
+                    .from('ServiceBackgroundCover')
                     .insert({ url: backgroundCoverUrl })
                     .select('id')
                     .single()
@@ -235,45 +226,42 @@ export const servicesApi = {
             }
         }
 
-        // Check slug uniqueness (exclude current service's slugs)
         const slugs = translations.map((t) => t.slug)
         const { data: existingSlugs } = await supabase
-            .from('service_translations')
+            .from('ServiceTranslation')
             .select('slug')
             .in('slug', slugs)
-            .neq('service_id', id)
+            .neq('serviceId', id)
         if (existingSlugs && existingSlugs.length > 0) {
             throw new Error('One or more slugs are already in use')
         }
 
-        // Update service
         const { error: serviceError } = await supabase
-            .from('services')
+            .from('Service')
             .update({
-                order_number: orderNumber,
-                service_type_id: serviceTypeId ?? null,
-                thumbnail_id: thumbnailId,
-                background_cover_id: backgroundCoverId,
+                orderNumber,
+                serviceTypeId: serviceTypeId ?? null,
+                thumbnailId,
+                backgroundCoverId,
             })
             .eq('id', id)
         if (serviceError) throw serviceError
 
-        // Replace translations
-        await supabase.from('service_translations').delete().eq('service_id', id)
+        await supabase.from('ServiceTranslation').delete().eq('serviceId', id)
         const { error: translationsError } = await supabase
-            .from('service_translations')
+            .from('ServiceTranslation')
             .insert(
                 translations.map((t) => ({
-                    service_id: id,
+                    serviceId: id,
                     language: t.language,
                     slug: t.slug,
                     title: t.title,
                     description: t.description,
-                    short_description: t.shortDescription,
+                    shortDescription: t.shortDescription,
                     content: t.content,
-                    seo_title: t.seoTitle ?? null,
-                    seo_description: t.seoDescription ?? null,
-                    seo_keywords: t.seoKeywords ?? [],
+                    seoTitle: t.seoTitle ?? null,
+                    seoDescription: t.seoDescription ?? null,
+                    seoKeywords: t.seoKeywords ?? [],
                 }))
             )
         if (translationsError) throw translationsError
@@ -282,7 +270,7 @@ export const servicesApi = {
     },
 
     delete: async (id: string) => {
-        const { error } = await supabase.from('services').delete().eq('id', id)
+        const { error } = await supabase.from('Service').delete().eq('id', id)
         if (error) throw error
     },
 }
@@ -293,24 +281,24 @@ export const servicesApi = {
 export const serviceTypesApi = {
     list: async () => {
         const { data, error } = await supabase
-            .from('service_types')
+            .from('ServiceType')
             .select(
-                `id, code, created_at, updated_at,
-                translations:service_type_translations(id, service_type_id, language, display_name, description, brochure_url),
-                services:services(id)`
+                `id, code, createdAt, updatedAt,
+                translations:ServiceTypeTranslation(id, serviceTypeId, language, displayName, description, brochureUrl),
+                services:Service(id)`
             )
-            .order('created_at', { ascending: false })
+            .order('createdAt', { ascending: false })
         if (error) throw error
         return data.map(mapServiceType)
     },
 
     getById: async (id: string) => {
         const { data, error } = await supabase
-            .from('service_types')
+            .from('ServiceType')
             .select(
-                `id, code, created_at, updated_at,
-                translations:service_type_translations(id, service_type_id, language, display_name, description, brochure_url),
-                services:services(id)`
+                `id, code, createdAt, updatedAt,
+                translations:ServiceTypeTranslation(id, serviceTypeId, language, displayName, description, brochureUrl),
+                services:Service(id)`
             )
             .eq('id', id)
             .single()
@@ -320,21 +308,21 @@ export const serviceTypesApi = {
 
     create: async (payload: TCreateServiceTypeFormValues) => {
         const { data: serviceType, error } = await supabase
-            .from('service_types')
+            .from('ServiceType')
             .insert({ code: payload.code })
             .select('id')
             .single()
         if (error) throw error
 
         const { error: translationsError } = await supabase
-            .from('service_type_translations')
+            .from('ServiceTypeTranslation')
             .insert(
                 payload.translations.map((t) => ({
-                    service_type_id: serviceType.id,
+                    serviceTypeId: serviceType.id,
                     language: t.language,
-                    display_name: t.displayName,
+                    displayName: t.displayName,
                     description: t.description ?? null,
-                    brochure_url: t.brochureUrl ?? null,
+                    brochureUrl: t.brochureUrl ?? null,
                 }))
             )
         if (translationsError) throw translationsError
@@ -346,25 +334,25 @@ export const serviceTypesApi = {
         const { id, translations } = payload
 
         const { error } = await supabase
-            .from('service_types')
+            .from('ServiceType')
             .update({ code: payload.code })
             .eq('id', id)
         if (error) throw error
 
         await supabase
-            .from('service_type_translations')
+            .from('ServiceTypeTranslation')
             .delete()
-            .eq('service_type_id', id)
+            .eq('serviceTypeId', id)
 
         const { error: translationsError } = await supabase
-            .from('service_type_translations')
+            .from('ServiceTypeTranslation')
             .insert(
                 translations.map((t) => ({
-                    service_type_id: id,
+                    serviceTypeId: id,
                     language: t.language,
-                    display_name: t.displayName,
+                    displayName: t.displayName,
                     description: t.description ?? null,
-                    brochure_url: t.brochureUrl ?? null,
+                    brochureUrl: t.brochureUrl ?? null,
                 }))
             )
         if (translationsError) throw translationsError
@@ -374,7 +362,7 @@ export const serviceTypesApi = {
 
     delete: async (id: string) => {
         const { error } = await supabase
-            .from('service_types')
+            .from('ServiceType')
             .delete()
             .eq('id', id)
         if (error) throw error
@@ -387,22 +375,22 @@ export const serviceTypesApi = {
 export const postsApi = {
     list: async () => {
         const { data, error } = await supabase
-            .from('posts')
+            .from('Post')
             .select(
-                `id, thumbnail_url, bg_cover_url, count_view, created_at, updated_at,
-                translations:post_translations(id, post_id, language, slug, title, short_description, content, tags, seo_title, seo_description, seo_keywords)`
+                `id, thumbnailUrl, bgCoverUrl, countView, createdAt, updatedAt,
+                translations:PostTranslation(id, postId, language, slug, title, shortDescription, content, tags, seoTitle, seoDescription, seoKeywords)`
             )
-            .order('created_at', { ascending: false })
+            .order('createdAt', { ascending: false })
         if (error) throw error
         return data.map(mapPost)
     },
 
     getById: async (id: string) => {
         const { data, error } = await supabase
-            .from('posts')
+            .from('Post')
             .select(
-                `id, thumbnail_url, bg_cover_url, count_view, created_at, updated_at,
-                translations:post_translations(id, post_id, language, slug, title, short_description, content, tags, seo_title, seo_description, seo_keywords)`
+                `id, thumbnailUrl, bgCoverUrl, countView, createdAt, updatedAt,
+                translations:PostTranslation(id, postId, language, slug, title, shortDescription, content, tags, seoTitle, seoDescription, seoKeywords)`
             )
             .eq('id', id)
             .single()
@@ -412,24 +400,24 @@ export const postsApi = {
 }
 
 // ==========================================
-// MAPPERS: snake_case → camelCase
+// MAPPERS: DB columns → app shape
 // ==========================================
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapServiceType(row: Record<string, any>) {
     return {
         id: row.id,
         code: row.code,
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
         services: (row.services ?? []).map((s: Record<string, unknown>) => ({ id: s.id })),
         translations: (row.translations ?? []).map(
             (t: Record<string, unknown>) => ({
                 id: t.id,
-                serviceTypeId: t.service_type_id,
+                serviceTypeId: t.serviceTypeId,
                 language: t.language,
-                displayName: t.display_name,
+                displayName: t.displayName,
                 description: t.description ?? null,
-                brochureUrl: t.brochure_url ?? null,
+                brochureUrl: t.brochureUrl ?? null,
                 code: row.code,
             })
         ),
@@ -440,40 +428,32 @@ function mapServiceType(row: Record<string, any>) {
 function mapService(row: Record<string, any>) {
     return {
         id: row.id,
-        orderNumber: row.order_number,
-        serviceTypeId: row.service_type_id ?? null,
-        thumbnailId: row.thumbnail_id ?? null,
-        backgroundCoverId: row.background_cover_id ?? null,
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
+        orderNumber: row.orderNumber,
+        serviceTypeId: row.serviceTypeId ?? null,
+        thumbnailId: row.thumbnailId ?? null,
+        backgroundCoverId: row.backgroundCoverId ?? null,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
         serviceType: row.service_type ? mapServiceType(row.service_type) : undefined,
         thumbnail: row.thumbnail
-            ? {
-                  id: row.thumbnail.id,
-                  url: row.thumbnail.url,
-                  type: row.thumbnail.type,
-              }
+            ? { id: row.thumbnail.id, url: row.thumbnail.url, type: row.thumbnail.type }
             : null,
         backgroundCover: row.background_cover
-            ? {
-                  id: row.background_cover.id,
-                  url: row.background_cover.url,
-                  type: row.background_cover.type,
-              }
+            ? { id: row.background_cover.id, url: row.background_cover.url, type: row.background_cover.type }
             : null,
         translations: (row.translations ?? []).map(
             (t: Record<string, unknown>) => ({
                 id: t.id,
-                serviceId: t.service_id,
+                serviceId: t.serviceId,
                 language: t.language,
                 slug: t.slug,
                 title: t.title,
                 description: t.description,
-                shortDescription: t.short_description,
+                shortDescription: t.shortDescription,
                 content: t.content,
-                seoTitle: t.seo_title ?? null,
-                seoDescription: t.seo_description ?? null,
-                seoKeywords: t.seo_keywords ?? [],
+                seoTitle: t.seoTitle ?? null,
+                seoDescription: t.seoDescription ?? null,
+                seoKeywords: t.seoKeywords ?? [],
             })
         ),
     }
@@ -483,24 +463,24 @@ function mapService(row: Record<string, any>) {
 function mapPost(row: Record<string, any>) {
     return {
         id: row.id,
-        thumbnailUrl: row.thumbnail_url,
-        bgCoverUrl: row.bg_cover_url ?? null,
-        countView: row.count_view,
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
+        thumbnailUrl: row.thumbnailUrl,
+        bgCoverUrl: row.bgCoverUrl ?? null,
+        countView: row.countView,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
         translations: (row.translations ?? []).map(
             (t: Record<string, unknown>) => ({
                 id: t.id,
-                postId: t.post_id,
+                postId: t.postId,
                 language: t.language,
                 slug: t.slug,
                 title: t.title,
-                shortDescription: t.short_description ?? null,
+                shortDescription: t.shortDescription ?? null,
                 content: t.content,
                 tags: t.tags ?? [],
-                seoTitle: t.seo_title ?? null,
-                seoDescription: t.seo_description ?? null,
-                seoKeywords: t.seo_keywords ?? [],
+                seoTitle: t.seoTitle ?? null,
+                seoDescription: t.seoDescription ?? null,
+                seoKeywords: t.seoKeywords ?? [],
             })
         ),
     }

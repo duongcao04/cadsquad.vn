@@ -3,8 +3,8 @@ import React from 'react'
 import { Link } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
 
-import CSDWhiteLogo from '../../../public/logo-white.webp'
-import CSDLogo from '../../../public/logo.webp'
+import CSDWhiteLogo from '/logo-white.webp'
+import CSDLogo from '/logo.webp'
 
 type Props = {
     canRedirect?: boolean
