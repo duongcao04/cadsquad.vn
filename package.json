@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
     "@heroui/react": "^3.1.0",
+    "@heroui/styles": "^3.1.0",
     "@react-three/drei": "^10.3.0",
     "@react-three/fiber": "^9.1.2",
     "@supabase/auth-ui-react": "^0.4.7",

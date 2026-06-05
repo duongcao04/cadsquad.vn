@@ -1,12 +1,8 @@
 @import 'tailwindcss';
 @import './css/theme.css';
-@plugin "@tailwindcss/typography";
+@import '@heroui/styles';
 
-/*
-** Import heroui v3
-*/
-@import "@heroui/styles";
-@source '../../node_modules/@heroui/react/dist/**/*.{js,ts,jsx,tsx}';
+@plugin "@tailwindcss/typography";
 
 @font-face {
     font-family: 'inter';
