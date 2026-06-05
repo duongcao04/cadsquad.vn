@@ -1,10 +1,9 @@
 import { HTMLProps } from 'react'
 
-import { Badge, Card, CardBody, CardProps } from '@heroui/react'
+import { Badge, Card } from '@heroui/react'
 
 import { cn } from '@/lib'
 
-// Note: HTMLProps<HTMLDivElement> is usually preferred over HTMLProps<'div'> for strict TS
 type AdminPageContainerProps = HTMLProps<HTMLDivElement> & {
     children: React.ReactNode
 }
@@ -47,7 +46,8 @@ type AdminPageHeadingProps = {
         description?: string
     }
     isSticky?: boolean
-} & Omit<CardProps, 'title'>
+    className?: string
+}
 export function AdminPageHeading({
     title,
     description,
@@ -56,7 +56,7 @@ export function AdminPageHeading({
     actions,
     classNames,
     isSticky = false,
-    ...props
+    className,
 }: AdminPageHeadingProps) {
     let titleComp = (
         <h1
@@ -70,38 +70,31 @@ export function AdminPageHeading({
     )
     if (showBadge) {
         titleComp = (
-            <Badge
-                content={badgeCount > 99 ? '99+' : badgeCount}
-                size="lg"
-                color="danger"
-                variant="solid"
-                classNames={{
-                    badge: 'right-0 top-0 text-[10px]! font-bold!',
-                    base: 'pr-2',
-                }}
-            >
-                <h1
-                    className={cn(
-                        'text-2xl font-bold text-text-default',
-                        classNames?.title
-                    )}
-                >
-                    {title}
-                </h1>
+            <Badge color="danger" size="lg" placement="top-right">
+                <Badge.Anchor>
+                    <h1
+                        className={cn(
+                            'text-2xl font-bold text-text-default pr-2',
+                            classNames?.title
+                        )}
+                    >
+                        {title}
+                    </h1>
+                </Badge.Anchor>
+                <Badge.Label>{badgeCount > 99 ? '99+' : badgeCount}</Badge.Label>
             </Badge>
         )
     }
     return (
         <Card
-            {...props}
-            shadow={props.shadow ?? 'none'}
             className={cn(
                 'border border-border m-4 bg-background dark:bg-background/40',
                 isSticky && 'sticky top-0 z-30',
-                classNames?.wrapper
+                classNames?.wrapper,
+                className
             )}
         >
-            <CardBody
+            <Card.Content
                 className={cn(
                     'flex flex-row justify-between items-center px-6 py-5',
                     classNames?.base
@@ -119,7 +112,7 @@ export function AdminPageHeading({
                     </p>
                 </div>
                 <>{actions}</>
-            </CardBody>
+            </Card.Content>
         </Card>
     )
 }

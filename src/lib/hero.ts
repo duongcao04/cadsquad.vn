@@ -1,3 +1,2 @@
-import { heroui } from '@heroui/react'
-
-export default heroui()
+// HeroUI v3 - no Tailwind plugin needed; CSS is imported via @heroui/styles in globals.css
+export {}

@@ -94,7 +94,7 @@ export default function MediaUploader({
                 >
                     {isUploading ? (
                         <>
-                            <Spinner size="sm" color="secondary" />{' '}
+                            <Spinner size="sm" color="accent" />{' '}
                             <span className="text-xs text-default-400">
                                 {uploadProgress}%
                             </span>

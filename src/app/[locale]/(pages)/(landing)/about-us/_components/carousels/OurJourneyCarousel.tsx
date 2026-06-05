@@ -103,11 +103,10 @@ export default function OurJourneyCarousel() {
                 <Button
                     isIconOnly
                     variant="ghost"
-                    className="absolute top-[210px] left-[120px] rounded-full z-10 size-14 bg-white"
+                    className="absolute top-[210px] left-[120px] rounded-full z-10 size-14 bg-white text-danger"
                     onPress={() => {
                         emblaMainApi?.scrollPrev()
                     }}
-                    color="danger"
                     isDisabled={!emblaMainApi?.canScrollPrev()}
                 >
                     <ChevronLeft size={26} />
@@ -115,11 +114,10 @@ export default function OurJourneyCarousel() {
                 <Button
                     isIconOnly
                     variant="ghost"
-                    className="absolute top-[210px] right-[120px] rounded-full z-10 size-14 bg-white"
+                    className="absolute top-[210px] right-[120px] rounded-full z-10 size-14 bg-white text-danger"
                     onPress={() => {
                         emblaMainApi?.scrollNext()
                     }}
-                    color="danger"
                     isDisabled={!emblaMainApi?.canScrollNext()}
                 >
                     <ChevronRight />

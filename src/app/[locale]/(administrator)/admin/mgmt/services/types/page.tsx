@@ -5,17 +5,13 @@ import { useEffect, useState } from 'react'
 import {
     Button,
     Card,
-    CardBody,
-    Divider,
     Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Input,
+    ListBox,
+    Select,
+    Separator,
     Spinner,
-    Tab,
     Tabs,
-    Textarea,
+    TextArea,
 } from '@heroui/react'
 import { useQuery } from '@tanstack/react-query'
 import {
@@ -162,9 +158,8 @@ export default function CreateServiceTypePage({ mode, id }: Props) {
             <AdminPageContainer>
                 <div className="flex flex-1 items-center justify-center min-h-[500px]">
                     <Spinner
-                        color="secondary"
+                        color="accent"
                         size="lg"
-                        label="Loading category data..."
                     />
                 </div>
             </AdminPageContainer>
@@ -180,15 +175,14 @@ export default function CreateServiceTypePage({ mode, id }: Props) {
             <AdminPageHeading
                 title={
                     <div className="flex items-center gap-4">
-                        <Button
-                            as={Link}
-                            to={INTERNAL_URLS.admin.management.services.all}
-                            isIconOnly
-                            variant="light"
-                            radius="full"
-                        >
-                            <ArrowLeft size={20} className="text-slate-500" />
-                        </Button>
+                        <Link to={INTERNAL_URLS.admin.management.services.all}>
+                            <Button
+                                isIconOnly
+                                variant="ghost"
+                            >
+                                <ArrowLeft size={20} className="text-slate-500" />
+                            </Button>
+                        </Link>
                         <div>
                             <h1 className="text-xl font-semibold text-slate-900">
                                 {mode === 'edit'
@@ -210,48 +204,46 @@ export default function CreateServiceTypePage({ mode, id }: Props) {
                             onSelectionChange={(key) =>
                                 setActiveLang(key as Language)
                             }
-                            color="secondary"
-                            radius="full"
-                            size="sm"
                         >
-                            {activeLanguages.map((langKey) => (
-                                <Tab
-                                    key={langKey}
-                                    title={
-                                        SUPPORTED_LANGUAGES.find(
-                                            (l) => l.key === langKey
-                                        )?.label
-                                    }
-                                />
-                            ))}
+                            <Tabs.List>
+                                {activeLanguages.map((langKey) => (
+                                    <Tabs.Tab key={langKey} id={langKey}>
+                                        {
+                                            SUPPORTED_LANGUAGES.find(
+                                                (l) => l.key === langKey
+                                            )?.label
+                                        }
+                                    </Tabs.Tab>
+                                ))}
+                            </Tabs.List>
                         </Tabs>
 
                         {unselectedLanguages.length > 0 && (
-                            <Dropdown placement="bottom-end">
-                                <DropdownTrigger>
+                            <Dropdown>
+                                <Dropdown.Trigger>
                                     <Button
                                         isIconOnly
                                         size="sm"
-                                        variant="light"
-                                        color="secondary"
-                                        radius="full"
+                                        variant="ghost"
                                         className="ml-1"
                                     >
                                         <Plus size={16} />
                                     </Button>
-                                </DropdownTrigger>
-                                <DropdownMenu
-                                    aria-label="Add Translation"
-                                    onAction={(key) =>
-                                        handleAddLanguage(key as Language)
-                                    }
-                                >
-                                    {unselectedLanguages.map((lang) => (
-                                        <DropdownItem key={lang.key}>
-                                            {lang.label}
-                                        </DropdownItem>
-                                    ))}
-                                </DropdownMenu>
+                                </Dropdown.Trigger>
+                                <Dropdown.Popover>
+                                    <Dropdown.Menu
+                                        aria-label="Add Translation"
+                                        onAction={(key) =>
+                                            handleAddLanguage(key as Language)
+                                        }
+                                    >
+                                        {unselectedLanguages.map((lang) => (
+                                            <Dropdown.Item key={lang.key} id={lang.key}>
+                                                {lang.label}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown.Popover>
                             </Dropdown>
                         )}
                     </div>
@@ -262,12 +254,8 @@ export default function CreateServiceTypePage({ mode, id }: Props) {
                 className="w-full max-w-[1200px] mx-auto flex flex-col gap-6 flex-1"
             >
                 <div className="flex flex-col xl:flex-row gap-6 animate-in fade-in duration-300 w-full flex-1">
-                    <Card
-                        shadow="sm"
-                        radius="lg"
-                        className="flex-1 border-none h-fit"
-                    >
-                        <CardBody className="p-8 space-y-6">
+                    <Card className="flex-1 border-none h-fit">
+                        <Card.Content className="p-8 space-y-6">
                             <div className="flex items-center justify-between mb-2">
                                 <h2 className="text-lg font-semibold text-slate-900">
                                     Localized Details ({activeLang})
@@ -280,115 +268,83 @@ export default function CreateServiceTypePage({ mode, id }: Props) {
                             </div>
 
                             <div className="flex flex-col gap-6">
-                                <Input
-                                    label="Display Name"
-                                    placeholder="e.g. Web Development"
-                                    variant="flat"
-                                    labelPlacement="outside"
-                                    value={
-                                        formData.translations[activeLang]
-                                            .displayName
-                                    }
-                                    onChange={(e) =>
-                                        handleTranslationChange(
-                                            'displayName',
-                                            e.target.value
-                                        )
-                                    }
-                                    isRequired={activeLang === 'EN'}
-                                    radius="lg"
-                                    size="lg"
-                                />
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-sm font-medium text-foreground">
+                                        Display Name{activeLang === 'EN' && <span className="text-danger"> *</span>}
+                                    </label>
+                                    <input
+                                        placeholder="e.g. Web Development"
+                                        value={formData.translations[activeLang].displayName}
+                                        onChange={(e) =>
+                                            handleTranslationChange('displayName', e.target.value)
+                                        }
+                                        className="w-full px-3 py-3 rounded-lg border border-default-200 bg-default-100 outline-none focus:border-secondary text-base"
+                                    />
+                                </div>
 
-                                <Textarea
-                                    label="Description"
-                                    placeholder="Briefly describe what this category entails..."
-                                    variant="flat"
-                                    labelPlacement="outside"
-                                    minRows={4}
-                                    value={
-                                        formData.translations[activeLang]
-                                            .description
-                                    }
-                                    onChange={(e) =>
-                                        handleTranslationChange(
-                                            'description',
-                                            e.target.value
-                                        )
-                                    }
-                                    radius="lg"
-                                    size="lg"
-                                />
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-sm font-medium text-foreground">Description</label>
+                                    <TextArea
+                                        placeholder="Briefly describe what this category entails..."
+                                        value={formData.translations[activeLang].description}
+                                        onChange={(e) =>
+                                            handleTranslationChange('description', e.target.value)
+                                        }
+                                        className="w-full px-3 py-3 rounded-lg border border-default-200 bg-default-100 outline-none focus:border-secondary min-h-[100px] text-base"
+                                    />
+                                </div>
 
-                                <Input
-                                    label="Brochure URL (Optional)"
-                                    placeholder="https://..."
-                                    variant="flat"
-                                    labelPlacement="outside"
-                                    startContent={
-                                        <LinkIcon
-                                            size={16}
-                                            className="text-slate-400 mr-2"
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-sm font-medium text-foreground">Brochure URL (Optional)</label>
+                                    <div className="relative flex items-center">
+                                        <LinkIcon size={16} className="absolute left-3 text-slate-400" />
+                                        <input
+                                            placeholder="https://..."
+                                            value={formData.translations[activeLang].brochureUrl}
+                                            onChange={(e) =>
+                                                handleTranslationChange('brochureUrl', e.target.value)
+                                            }
+                                            className="w-full pl-8 pr-3 py-3 rounded-lg border border-default-200 bg-default-100 outline-none focus:border-secondary text-base"
                                         />
-                                    }
-                                    value={
-                                        formData.translations[activeLang]
-                                            .brochureUrl
-                                    }
-                                    onChange={(e) =>
-                                        handleTranslationChange(
-                                            'brochureUrl',
-                                            e.target.value
-                                        )
-                                    }
-                                    radius="lg"
-                                    size="lg"
-                                    description="Link to a PDF or external brochure specific to this language."
-                                />
+                                    </div>
+                                    <p className="text-xs text-default-400">Link to a PDF or external brochure specific to this language.</p>
+                                </div>
                             </div>
-                        </CardBody>
+                        </Card.Content>
                     </Card>
 
-                    <Card
-                        shadow="sm"
-                        radius="lg"
-                        className="xl:w-[380px] shrink-0 border-none h-fit"
-                    >
-                        <CardBody className="p-0">
+                    <Card className="xl:w-[380px] shrink-0 border-none h-fit">
+                        <Card.Content className="p-0">
                             <div className="p-6 border-b border-divider bg-default-50">
                                 <h3 className="text-sm font-semibold flex items-center gap-2 text-slate-800">
-                                    <Settings2
-                                        size={16}
-                                        className="text-slate-500"
-                                    />{' '}
+                                    <Settings2 size={16} className="text-slate-500" />{' '}
                                     Global Settings
                                 </h3>
                             </div>
 
                             <div className="p-6 space-y-6">
-                                <Input
-                                    label="Category Code"
-                                    placeholder="e.g. WEB_DEV"
-                                    variant="flat"
-                                    labelPlacement="outside"
-                                    value={formData.code}
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            code: e.target.value.toUpperCase(),
-                                        })
-                                    }
-                                    isRequired
-                                    isReadOnly={mode === 'edit'}
-                                    radius="lg"
-                                    description={
-                                        mode === 'edit'
-                                            ? 'Code cannot be changed.'
-                                            : 'Uppercase identifier.'
-                                    }
-                                />
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-sm font-medium text-foreground">
+                                        Category Code <span className="text-danger">*</span>
+                                    </label>
+                                    <input
+                                        placeholder="e.g. WEB_DEV"
+                                        value={formData.code}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                code: e.target.value.toUpperCase(),
+                                            })
+                                        }
+                                        readOnly={mode === 'edit'}
+                                        className="w-full px-3 py-3 rounded-lg border border-default-200 bg-default-100 outline-none focus:border-secondary text-base"
+                                    />
+                                    <p className="text-xs text-default-400">
+                                        {mode === 'edit' ? 'Code cannot be changed.' : 'Uppercase identifier.'}
+                                    </p>
+                                </div>
 
-                                <Divider className="my-2" />
+                                <Separator className="my-2" />
 
                                 <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-4 flex flex-col gap-2">
                                     <h4 className="text-xs font-semibold text-blue-800 uppercase tracking-wider">
@@ -396,12 +352,8 @@ export default function CreateServiceTypePage({ mode, id }: Props) {
                                     </h4>
                                     <p className="text-xs text-blue-600/80 leading-relaxed">
                                         You are{' '}
-                                        {mode === 'edit'
-                                            ? 'updating'
-                                            : 'creating'}{' '}
-                                        <strong>
-                                            {activeLanguages.length}
-                                        </strong>{' '}
+                                        {mode === 'edit' ? 'updating' : 'creating'}{' '}
+                                        <strong>{activeLanguages.length}</strong>{' '}
                                         localized version(s).
                                     </p>
                                 </div>
@@ -410,21 +362,19 @@ export default function CreateServiceTypePage({ mode, id }: Props) {
                             <div className="p-6 pt-0 mt-2">
                                 <Button
                                     type="submit"
-                                    color="secondary"
+                                    variant="secondary"
                                     size="lg"
-                                    radius="lg"
                                     className="w-full font-medium shadow-md shadow-secondary/20"
-                                    startContent={
-                                        !isPending && <Save size={18} />
-                                    }
-                                    isLoading={isPending}
+                                    isDisabled={isPending}
                                 >
-                                    {mode === 'edit'
-                                        ? 'Update Category'
-                                        : 'Save Category'}
+                                    {isPending ? (
+                                        <><Spinner size="sm" color="current" /> Saving...</>
+                                    ) : (
+                                        <><Save size={18} /> {mode === 'edit' ? 'Update Category' : 'Save Category'}</>
+                                    )}
                                 </Button>
                             </div>
-                        </CardBody>
+                        </Card.Content>
                     </Card>
                 </div>
             </form>

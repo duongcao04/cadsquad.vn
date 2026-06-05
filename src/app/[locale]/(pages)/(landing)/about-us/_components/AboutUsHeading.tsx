@@ -1,4 +1,4 @@
-import { BreadcrumbItem, Breadcrumbs } from '@heroui/react'
+import { Breadcrumbs } from '@heroui/react'
 import { Link } from '@tanstack/react-router'
 
 import ButtonDownloadBrochure from '@/components/ButtonDownloadBrochure'
@@ -49,16 +49,9 @@ export default function AboutUsHeading() {
 
 function PageBreadcrumbs() {
     return (
-        <Breadcrumbs
-            itemClasses={{
-                item: 'text-white/70 data-[current=true]:text-white font-medium hover:text-white transition-colors',
-                separator: 'text-white/50',
-            }}
-        >
-            <BreadcrumbItem>
-                <Link to={INTERNAL_URLS.home}>Home</Link>
-            </BreadcrumbItem>
-            <BreadcrumbItem>About us</BreadcrumbItem>
+        <Breadcrumbs className="[&_a]:text-white/70 [&_[aria-current=page]]:text-white [&_a:hover]:text-white">
+            <Breadcrumbs.Item href={INTERNAL_URLS.home}>Home</Breadcrumbs.Item>
+            <Breadcrumbs.Item>About us</Breadcrumbs.Item>
         </Breadcrumbs>
     )
 }

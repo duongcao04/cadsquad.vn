@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { Accordion, AccordionItem } from '@heroui/react'
+import { Accordion } from '@heroui/react'
 import { Image } from 'antd'
 
 import { MotionDiv } from '@/lib/motion'
@@ -45,13 +45,11 @@ export default function Workflow() {
                     />
                 </MotionDiv>
                 <div>
-                    <Accordion defaultSelectedKeys={['0']}>
-                        {workflow.map((item, idx) => {
-                            return (
-                                <AccordionItem
-                                    key={idx}
-                                    aria-label={item.title}
-                                    title={
+                    <Accordion defaultExpandedKeys={['0']}>
+                        {workflow.map((item, idx) => (
+                            <Accordion.Item key={idx} id={String(idx)}>
+                                <Accordion.Heading>
+                                    <Accordion.Trigger>
                                         <MotionDiv
                                             initial={{ opacity: 0, y: 20 }}
                                             whileInView={{
@@ -81,14 +79,15 @@ export default function Workflow() {
                                                 {item.title}
                                             </p>
                                         </MotionDiv>
-                                    }
-                                >
+                                    </Accordion.Trigger>
+                                </Accordion.Heading>
+                                <Accordion.Panel>
                                     <p className="pb-2 text-sm lg:text-base tracking-wide">
                                         {item.description}
                                     </p>
-                                </AccordionItem>
-                            )
-                        })}
+                                </Accordion.Panel>
+                            </Accordion.Item>
+                        ))}
                     </Accordion>
                 </div>
             </div>

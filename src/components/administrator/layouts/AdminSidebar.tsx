@@ -2,13 +2,10 @@
 
 import {
     Button,
-    Divider,
     Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
+    ListBox,
     Select,
-    SelectItem,
+    Separator,
 } from '@heroui/react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import {
@@ -99,14 +96,11 @@ export default function AdminSidebar() {
                 </div>
             </div>
 
-            <Divider className="bg-border/30" />
+            <Separator className="bg-border/30" />
 
             <div className="px-4 py-5 flex items-center justify-between gap-2 border-b border-white/5">
-                <Dropdown
-                    placement="bottom-start"
-                    classNames={{ content: 'min-w-[200px]' }}
-                >
-                    <DropdownTrigger>
+                <Dropdown>
+                    <Dropdown.Trigger>
                         <button className="flex-1 flex items-center gap-3 p-2 -ml-2 rounded-lg hover:bg-slate-800/50 transition-colors text-left outline-none">
                             <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm shrink-0">
                                 AD
@@ -124,51 +118,49 @@ export default function AdminSidebar() {
                                 className="text-slate-500 shrink-0"
                             />
                         </button>
-                    </DropdownTrigger>
+                    </Dropdown.Trigger>
 
-                    <DropdownMenu aria-label="User Actions" variant="flat">
-                        <DropdownItem
-                            key="theme"
-                            isReadOnly
-                            className="cursor-default py-2"
-                        >
-                            <Select
-                                size="sm"
-                                label="Theme"
-                                labelPlacement="outside-left"
-                                defaultSelectedKeys={['system']}
-                                classNames={{
-                                    base: 'items-center justify-between w-full',
-                                    label: 'text-slate-600 text-xs font-medium',
-                                    trigger: 'w-[100px] shadow-none bg-default-100',
-                                }}
+                    <Dropdown.Popover>
+                        <Dropdown.Menu aria-label="User Actions">
+                            <Dropdown.Item id="theme" className="cursor-default py-2">
+                                <div className="flex items-center justify-between w-full gap-2">
+                                    <span className="text-slate-600 text-xs font-medium">Theme</span>
+                                    <Select defaultSelectedKey="system" className="w-[120px]">
+                                        <Select.Trigger className="w-[120px] bg-default-100 shadow-none">
+                                            <Select.Value />
+                                            <Select.Indicator />
+                                        </Select.Trigger>
+                                        <Select.Popover>
+                                            <ListBox>
+                                                <ListBox.Item id="light">
+                                                    <Sun size={14} className="mr-1 inline" /> Light
+                                                </ListBox.Item>
+                                                <ListBox.Item id="dark">
+                                                    <Moon size={14} className="mr-1 inline" /> Dark
+                                                </ListBox.Item>
+                                                <ListBox.Item id="system">
+                                                    <Monitor size={14} className="mr-1 inline" /> System
+                                                </ListBox.Item>
+                                            </ListBox>
+                                        </Select.Popover>
+                                    </Select>
+                                </div>
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                                id="logout"
+                                className="text-danger mt-1"
+                                onPress={handleLogout}
                             >
-                                <SelectItem key="light" startContent={<Sun size={14} />}>
-                                    Light
-                                </SelectItem>
-                                <SelectItem key="dark" startContent={<Moon size={14} />}>
-                                    Dark
-                                </SelectItem>
-                                <SelectItem key="system" startContent={<Monitor size={14} />}>
-                                    System
-                                </SelectItem>
-                            </Select>
-                        </DropdownItem>
-                        <DropdownItem
-                            key="logout"
-                            color="danger"
-                            className="text-danger mt-1"
-                            startContent={<LogOut size={16} />}
-                            onPress={handleLogout}
-                        >
-                            Log out
-                        </DropdownItem>
-                    </DropdownMenu>
+                                <LogOut size={16} className="mr-2 inline" />
+                                Log out
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown.Popover>
                 </Dropdown>
 
                 <Button
                     isIconOnly
-                    variant="light"
+                    variant="ghost"
                     className="text-slate-400 hover:text-white shrink-0 relative"
                     aria-label="Notifications"
                 >

@@ -1,4 +1,4 @@
-import { HeroUIProvider, ToastProvider } from '@heroui/react'
+import { Toast } from '@heroui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient({
@@ -15,17 +15,8 @@ type Props = { children: React.ReactNode }
 export function AppProvider({ children }: Props) {
     return (
         <QueryClientProvider client={queryClient}>
-            <HeroUIProvider>
-                <ToastProvider
-                    placement="bottom-center"
-                    regionProps={{
-                        classNames: {
-                            base: '!z-[10000]',
-                        },
-                    }}
-                />
-                {children}
-            </HeroUIProvider>
+            <Toast.Provider placement="bottom-center" />
+            {children}
         </QueryClientProvider>
     )
 }

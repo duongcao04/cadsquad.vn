@@ -1,12 +1,7 @@
 import {
     Button,
     Card,
-    CardBody,
     Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-    Tab,
     Tabs,
 } from '@heroui/react'
 import { Plus } from 'lucide-react'
@@ -22,20 +17,14 @@ export function ServiceHeader({
     SUPPORTED_LANGUAGES,
 }: any) {
     return (
-        <Card shadow="sm" radius="lg" className="border-none w-full shrink-0">
-            <CardBody className="flex-row items-center justify-between px-6 py-4">
+        <Card className="border-none w-full shrink-0">
+            <Card.Content className="flex-row items-center justify-between px-6 py-4">
                 <Tabs
                     selectedKey={step}
                     onSelectionChange={(key) => setStep(key)}
-                    color="secondary"
-                    variant="light"
-                    classNames={{
-                        cursor: 'bg-secondary-100 text-secondary-600',
-                    }}
                 >
-                    <Tab
-                        key="general"
-                        title={
+                    <Tabs.List>
+                        <Tabs.Tab id="general">
                             <div className="flex items-center gap-2">
                                 <div
                                     className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${step === 'general' ? 'bg-secondary text-white' : 'bg-default-200'}`}
@@ -44,11 +33,8 @@ export function ServiceHeader({
                                 </div>
                                 General Info
                             </div>
-                        }
-                    />
-                    <Tab
-                        key="content"
-                        title={
+                        </Tabs.Tab>
+                        <Tabs.Tab id="content">
                             <div className="flex items-center gap-2">
                                 <div
                                     className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${step === 'content' ? 'bg-secondary text-white' : 'bg-default-200'}`}
@@ -57,55 +43,56 @@ export function ServiceHeader({
                                 </div>
                                 Write Content
                             </div>
-                        }
-                    />
+                        </Tabs.Tab>
+                    </Tabs.List>
                 </Tabs>
 
                 <div className="flex items-center gap-1 bg-default-100 p-1 rounded-full">
                     <Tabs
                         selectedKey={activeLang}
                         onSelectionChange={(key) => setActiveLang(key)}
-                        color="secondary"
-                        radius="full"
-                        size="sm"
                     >
-                        {activeLanguages.map((langKey: string) => {
-                            const langConfig = SUPPORTED_LANGUAGES.find(
-                                (l: any) => l.key === langKey
-                            )
-                            return (
-                                <Tab key={langKey} title={langConfig?.label} />
-                            )
-                        })}
+                        <Tabs.List>
+                            {activeLanguages.map((langKey: string) => {
+                                const langConfig = SUPPORTED_LANGUAGES.find(
+                                    (l: any) => l.key === langKey
+                                )
+                                return (
+                                    <Tabs.Tab key={langKey} id={langKey}>
+                                        {langConfig?.label}
+                                    </Tabs.Tab>
+                                )
+                            })}
+                        </Tabs.List>
                     </Tabs>
                     {unselectedLanguages.length > 0 && (
-                        <Dropdown placement="bottom-end">
-                            <DropdownTrigger>
+                        <Dropdown>
+                            <Dropdown.Trigger>
                                 <Button
                                     isIconOnly
                                     size="sm"
-                                    variant="light"
-                                    color="secondary"
-                                    radius="full"
+                                    variant="ghost"
                                     className="ml-1"
                                 >
                                     <Plus size={16} />
                                 </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                aria-label="Add Translation"
-                                onAction={(key) => handleAddLanguage(key)}
-                            >
-                                {unselectedLanguages.map((lang: any) => (
-                                    <DropdownItem key={lang.key}>
-                                        {lang.label}
-                                    </DropdownItem>
-                                ))}
-                            </DropdownMenu>
+                            </Dropdown.Trigger>
+                            <Dropdown.Popover>
+                                <Dropdown.Menu
+                                    aria-label="Add Translation"
+                                    onAction={(key) => handleAddLanguage(key)}
+                                >
+                                    {unselectedLanguages.map((lang: any) => (
+                                        <Dropdown.Item key={lang.key} id={lang.key}>
+                                            {lang.label}
+                                        </Dropdown.Item>
+                                    ))}
+                                </Dropdown.Menu>
+                            </Dropdown.Popover>
                         </Dropdown>
                     )}
                 </div>
-            </CardBody>
+            </Card.Content>
         </Card>
     )
 }

@@ -75,7 +75,7 @@ function RootNav({
             <ul className="w-full space-y-4">
                 <li className="mx-4 w-fit py-0.5 flex items-center justify-between border-b-2 border-danger cursor-pointer">
                     <Link to="/" className="block">
-                        <Button isIconOnly variant="light">
+                        <Button isIconOnly variant="ghost">
                             <HomeIcon
                                 className={
                                     isHomePath ? 'text-danger' : 'text-black'
@@ -158,7 +158,7 @@ function NavItem({
             >
                 <Button
                     isIconOnly
-                    color="danger"
+                    variant="danger"
                     size="sm"
                     onPress={() => setCurrentNav(null)}
                 >

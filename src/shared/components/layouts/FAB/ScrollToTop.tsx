@@ -16,15 +16,18 @@ export default function ScrollToTop({ onScroll }: Props) {
             initial={{ y: 5 }}
             animate={{ y: 0 }}
         >
-            <Tooltip content="Scroll to top" placement="left">
-                <MotionButton
-                    className="p-2 rounded-full bg-danger text-white cursor-pointer"
-                    onClick={onScroll}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                >
-                    <ArrowUpFromLine size={20} />
-                </MotionButton>
+            <Tooltip placement="left">
+                <Tooltip.Trigger>
+                    <MotionButton
+                        className="p-2 rounded-full bg-danger text-white cursor-pointer"
+                        onClick={onScroll}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <ArrowUpFromLine size={20} />
+                    </MotionButton>
+                </Tooltip.Trigger>
+                <Tooltip.Content>Scroll to top</Tooltip.Content>
             </Tooltip>
         </MotionDiv>
     )

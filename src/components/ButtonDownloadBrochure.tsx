@@ -19,9 +19,9 @@ export default function ButtonDownloadBrochure({
             <Button
                 size="lg"
                 className="mt-5 rounded-sm border-3 border-transparent hover:border-white duration-150"
-                startContent={<Download />}
-                color="secondary"
+                variant="secondary"
             >
+                <Download />
                 <p className="text-sm lg:text-base">Download Brochure</p>
             </Button>
         </Link>

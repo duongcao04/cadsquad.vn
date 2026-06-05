@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-import { Button, Input, addToast } from '@heroui/react'
+import { Button, Spinner, toast } from '@heroui/react'
 import { Modal } from 'antd'
 import { Mail } from 'lucide-react'
 
@@ -20,7 +20,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
         try {
             setLoading(true)
             await navigator.clipboard.writeText(mailAddress)
-            addToast({ title: 'Copied to clipboard!', color: 'success' })
+            toast.success('Copied to clipboard!')
         } catch (err) {
             console.error('Failed to copy text: ', err)
         } finally {
@@ -52,10 +52,10 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                         title="Contact with mail"
                     >
                         <Button
-                            startContent={<Mail size={16} />}
                             className="rounded-full"
-                            color="danger"
+                            variant="danger"
                         >
+                            <Mail size={16} />
                             Send us an email
                         </Button>
                     </a>
@@ -84,26 +84,22 @@ export default function ContactModal({ isOpen, onClose }: Props) {
                     ))}
                 </ul>
                 <div className="mt-7">
-                    <Input
-                        value={mailAddress}
-                        startContent={<Mail style={{ color: 'hsl(0,0%,40%)' }} />}
-                        variant="bordered"
-                        endContent={
-                            <Button
-                                isLoading={isLoading}
-                                size="sm"
-                                className="px-8 rounded-xl bg-secondary text-white"
-                                onPress={async () => {
-                                    await copyToClipboard()
-                                }}
-                            >
-                                Copy
-                            </Button>
-                        }
-                        style={{ caretColor: 'transparent' }}
-                        classNames={{ inputWrapper: 'border-[1px] bg-[#ffffff]' }}
-                        size="lg"
-                    />
+                    <div className="flex items-center border border-gray-300 rounded-xl bg-white px-3 gap-2">
+                        <Mail style={{ color: 'hsl(0,0%,40%)', flexShrink: 0 }} size={16} />
+                        <input
+                            value={mailAddress}
+                            readOnly
+                            style={{ caretColor: 'transparent', outline: 'none', flex: 1, background: 'transparent', padding: '12px 0', fontSize: '16px' }}
+                        />
+                        <Button
+                            size="sm"
+                            className="px-8 rounded-xl bg-secondary text-white shrink-0"
+                            onPress={copyToClipboard}
+                            isDisabled={isLoading}
+                        >
+                            {isLoading ? <Spinner size="sm" color="current" /> : 'Copy'}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </Modal>

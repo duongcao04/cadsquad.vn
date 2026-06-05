@@ -202,7 +202,7 @@ function NavbarItem({ data, index }: { data: NavigateItem; index: number }) {
                             <Button
                                 isIconOnly
                                 className="rounded-full size-14 text-primary border-primary"
-                                variant="bordered"
+                                variant="outline"
                             >
                                 <ChevronRight size={30} />
                             </Button>

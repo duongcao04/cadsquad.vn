@@ -4,13 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 
 import {
     Button,
-    Divider,
-    Input,
+    ListBox,
     Popover,
-    PopoverContent,
-    PopoverTrigger,
     Select,
-    SelectItem,
+    Separator,
     Spinner,
 } from '@heroui/react'
 import { Color } from '@tiptap/extension-color'
@@ -102,7 +99,7 @@ const ResizableImageComponent = (props: any) => {
 
                 {isUploading && (
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg z-10">
-                        <Spinner size="sm" color="secondary" />
+                        <Spinner size="sm" color="accent" />
                     </div>
                 )}
             </div>
@@ -301,13 +298,6 @@ const IndentExtension = Extension.create({
 // ==========================================
 // HOOK: Subscribe to editor state changes to force re-renders
 // ==========================================
-/**
- * This hook is the core fix. It listens to both `selectionUpdate` and
- * `transaction` events on the editor, and bumps a counter to trigger a
- * React re-render whenever the cursor moves or content changes.
- * Without this, `editor.isActive()` / `editor.getAttributes()` calls in
- * the toolbar read stale state and don't reflect the current cursor position.
- */
 function useEditorState(editor: ReturnType<typeof useEditor>) {
     const [, forceUpdate] = useState(0)
 
@@ -395,7 +385,6 @@ export default function RichTextEditor({
         },
     })
 
-    // ✅ FIX: Subscribe to editor selection/transaction events to keep toolbar in sync
     useEditorState(editor!)
 
     useEffect(() => {
@@ -404,9 +393,6 @@ export default function RichTextEditor({
         }
     }, [value, editor])
 
-    // ==========================================
-    // OPTIMISTIC UI IMAGE UPLOAD LOGIC
-    // ==========================================
     const handleInstantImage = async (
         file: File,
         coordinates?: { pos: number }
@@ -478,16 +464,10 @@ export default function RichTextEditor({
 
     if (!editor) return null
 
-    const getBtnProps = (isActive: boolean) => ({
-        variant: isActive ? ('flat' as const) : ('light' as const),
-        color: isActive ? ('secondary' as const) : ('default' as const),
-        size: 'sm' as const,
-        isIconOnly: true,
-        radius: 'md' as const,
-    })
+    const getBtnVariant = (isActive: boolean) =>
+        isActive ? ('secondary' as const) : ('ghost' as const)
 
     const openLinkPopover = () => {
-        // Save selection NOW before the popover causes the editor to lose focus
         const { from, to } = editor.state.selection
         savedSelectionRef.current = { from, to }
 
@@ -505,7 +485,6 @@ export default function RichTextEditor({
         if (!linkUrl) {
             editor.chain().focus().extendMarkRange('link').unsetLink().run()
         } else if (saved && saved.from !== saved.to) {
-            // Restore the saved selection, then apply the link
             editor
                 .chain()
                 .focus()
@@ -524,11 +503,6 @@ export default function RichTextEditor({
         setIsLinkOpen(false)
     }
 
-    // ==========================================
-    // ✅ FIXED: These now read live state on every re-render triggered by
-    //    useEditorState, so they accurately reflect the cursor position.
-    // ==========================================
-
     const activeTextStyle = editor.isActive('heading', { level: 1 })
         ? 'h1'
         : editor.isActive('heading', { level: 2 })
@@ -537,8 +511,6 @@ export default function RichTextEditor({
             ? 'h3'
             : 'p'
 
-    // ✅ FIX: Also check orderedList and bulletList as they are block-level
-    //    nodes that don't map to heading/paragraph, so they need their own key.
     const activeLineHeight =
         editor.getAttributes('paragraph')?.lineHeight ||
         editor.getAttributes('heading')?.lineHeight ||
@@ -558,9 +530,7 @@ export default function RichTextEditor({
                 className="hidden"
             />
 
-            {/* TOOLBAR — onMouseDown preventDefault stops the toolbar from stealing
-                focus away from the editor, which is what caused the double-click issue
-                on Select, Popover, and any other non-button toolbar element. */}
+            {/* TOOLBAR */}
             <div
                 className="flex flex-col gap-2 bg-default-50 border-b border-default-200 p-2 shrink-0"
                 onMouseDown={(e) => e.preventDefault()}
@@ -568,21 +538,27 @@ export default function RichTextEditor({
                 {/* Top Row */}
                 <div className="flex items-center gap-1 flex-wrap">
                     <Button
-                        {...getBtnProps(false)}
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
                         onClick={() => editor.chain().focus().undo().run()}
                         isDisabled={!editor.can().undo()}
                     >
                         <Undo size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(false)}
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
                         onClick={() => editor.chain().focus().redo().run()}
                         isDisabled={!editor.can().redo()}
                     >
                         <Redo size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(false)}
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
                         onClick={() =>
                             editor
                                 .chain()
@@ -595,108 +571,101 @@ export default function RichTextEditor({
                         <PaintRoller size={16} />
                     </Button>
 
-                    <Divider orientation="vertical" className="h-5 mx-1" />
+                    <Separator orientation="vertical" className="h-5 mx-1" />
 
-                    {/* TEXT STYLE DROPDOWN — updates on cursor move */}
+                    {/* TEXT STYLE SELECT */}
                     <Select
-                        size="sm"
-                        variant="flat"
-                        aria-label="Text Style"
-                        className="w-32"
-                        selectedKeys={new Set([activeTextStyle])}
-                        onSelectionChange={(keys) => {
-                            const val = Array.from(keys)[0] as string
-                            editor.chain().focus()
+                        selectedKey={activeTextStyle}
+                        onSelectionChange={(key) => {
+                            const val = key as string
                             if (val === 'p')
                                 editor.chain().focus().setParagraph().run()
                             else if (val === 'h1')
-                                editor
-                                    .chain()
-                                    .focus()
-                                    .setHeading({ level: 1 })
-                                    .run()
+                                editor.chain().focus().setHeading({ level: 1 }).run()
                             else if (val === 'h2')
-                                editor
-                                    .chain()
-                                    .focus()
-                                    .setHeading({ level: 2 })
-                                    .run()
+                                editor.chain().focus().setHeading({ level: 2 }).run()
                             else if (val === 'h3')
-                                editor
-                                    .chain()
-                                    .focus()
-                                    .setHeading({ level: 3 })
-                                    .run()
+                                editor.chain().focus().setHeading({ level: 3 }).run()
                         }}
                     >
-                        <SelectItem key="p">Paragraph</SelectItem>
-                        <SelectItem key="h1">Heading 1</SelectItem>
-                        <SelectItem key="h2">Heading 2</SelectItem>
-                        <SelectItem key="h3">Heading 3</SelectItem>
+                        <Select.Trigger className="w-32 h-8 text-sm bg-default-100">
+                            <Select.Value />
+                            <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover>
+                            <ListBox>
+                                <ListBox.Item id="p">Paragraph</ListBox.Item>
+                                <ListBox.Item id="h1">Heading 1</ListBox.Item>
+                                <ListBox.Item id="h2">Heading 2</ListBox.Item>
+                                <ListBox.Item id="h3">Heading 3</ListBox.Item>
+                            </ListBox>
+                        </Select.Popover>
                     </Select>
 
-                    {/* LINE HEIGHT DROPDOWN — updates on cursor move */}
+                    {/* LINE HEIGHT SELECT */}
                     <Select
-                        size="sm"
-                        variant="flat"
-                        aria-label="Line Height"
-                        className="w-36"
-                        selectedKeys={new Set([activeLineHeight])}
-                        onSelectionChange={(keys) => {
-                            const val = Array.from(keys)[0] as string
+                        selectedKey={activeLineHeight}
+                        onSelectionChange={(key) => {
+                            const val = key as string
                             if (val === 'default')
-                                (editor.chain().focus() as any)
-                                    .unsetLineHeight()
-                                    .run()
+                                (editor.chain().focus() as any).unsetLineHeight().run()
                             else
-                                (editor.chain().focus() as any)
-                                    .setLineHeight(val)
-                                    .run()
+                                (editor.chain().focus() as any).setLineHeight(val).run()
                         }}
                     >
-                        <SelectItem key="default">Default</SelectItem>
-                        <SelectItem key="1">1 (Single)</SelectItem>
-                        <SelectItem key="1.25">1.25 (Tight)</SelectItem>
-                        <SelectItem key="1.5">1.5</SelectItem>
-                        <SelectItem key="2">2 (Double)</SelectItem>
+                        <Select.Trigger className="w-36 h-8 text-sm bg-default-100">
+                            <Select.Value />
+                            <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover>
+                            <ListBox>
+                                <ListBox.Item id="default">Default</ListBox.Item>
+                                <ListBox.Item id="1">1 (Single)</ListBox.Item>
+                                <ListBox.Item id="1.25">1.25 (Tight)</ListBox.Item>
+                                <ListBox.Item id="1.5">1.5</ListBox.Item>
+                                <ListBox.Item id="2">2 (Double)</ListBox.Item>
+                            </ListBox>
+                        </Select.Popover>
                     </Select>
 
-                    <Divider orientation="vertical" className="h-5 mx-1" />
+                    <Separator orientation="vertical" className="h-5 mx-1" />
 
                     <Button
-                        {...getBtnProps(editor.isActive('bold'))}
-                        onClick={() =>
-                            editor.chain().focus().toggleBold().run()
-                        }
+                        variant={getBtnVariant(editor.isActive('bold'))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().toggleBold().run()}
                     >
                         <Bold size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(editor.isActive('italic'))}
-                        onClick={() =>
-                            editor.chain().focus().toggleItalic().run()
-                        }
+                        variant={getBtnVariant(editor.isActive('italic'))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().toggleItalic().run()}
                     >
                         <Italic size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(editor.isActive('underline'))}
-                        onClick={() =>
-                            editor.chain().focus().toggleUnderline().run()
-                        }
+                        variant={getBtnVariant(editor.isActive('underline'))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().toggleUnderline().run()}
                     >
                         <UnderlineIcon size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(editor.isActive('strike'))}
-                        onClick={() =>
-                            editor.chain().focus().toggleStrike().run()
-                        }
+                        variant={getBtnVariant(editor.isActive('strike'))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().toggleStrike().run()}
                     >
                         <Strikethrough size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(editor.isActive('highlight'))}
+                        variant={getBtnVariant(editor.isActive('highlight'))}
+                        size="sm"
+                        isIconOnly
                         onClick={() =>
                             editor
                                 .chain()
@@ -708,66 +677,70 @@ export default function RichTextEditor({
                         <Highlighter size={16} />
                     </Button>
 
-                    <Divider orientation="vertical" className="h-5 mx-1" />
+                    <Separator orientation="vertical" className="h-5 mx-1" />
 
                     {/* Link Popover */}
-                    <Popover
-                        isOpen={isLinkOpen}
-                        onOpenChange={setIsLinkOpen}
-                        placement="bottom"
-                    >
-                        <PopoverTrigger>
+                    <Popover isOpen={isLinkOpen} onOpenChange={setIsLinkOpen} placement="bottom">
+                        <Popover.Trigger>
                             <Button
-                                {...getBtnProps(editor.isActive('link'))}
+                                variant={getBtnVariant(editor.isActive('link'))}
+                                size="sm"
+                                isIconOnly
                                 onClick={openLinkPopover}
                             >
                                 <Link2 size={16} />
                             </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-80">
-                            <div className="flex flex-col gap-4 p-4 w-full">
-                                <h3 className="text-sm font-semibold">
-                                    Insert Link
-                                </h3>
-                                <Input
-                                    label="URL"
-                                    placeholder="https://..."
-                                    value={linkUrl}
-                                    onValueChange={setLinkUrl}
-                                    size="sm"
-                                    variant="flat"
-                                />
-                                <Input
-                                    label="Display Text"
-                                    placeholder="Click here..."
-                                    value={linkText}
-                                    onValueChange={setLinkText}
-                                    size="sm"
-                                    variant="flat"
-                                />
-                                <div className="flex justify-end gap-2 mt-2">
-                                    <Button
-                                        size="sm"
-                                        variant="light"
-                                        onClick={() => setIsLinkOpen(false)}
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        color="secondary"
-                                        onClick={saveLink}
-                                    >
-                                        Save
-                                    </Button>
+                        </Popover.Trigger>
+                        <Popover.Content className="w-80">
+                            <Popover.Dialog>
+                                <div className="flex flex-col gap-4 p-4 w-full">
+                                    <h3 className="text-sm font-semibold">
+                                        Insert Link
+                                    </h3>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-medium">URL</label>
+                                        <input
+                                            placeholder="https://..."
+                                            value={linkUrl}
+                                            onChange={(e) => setLinkUrl(e.target.value)}
+                                            className="w-full px-2 py-1.5 text-sm rounded border border-default-200 bg-default-100 outline-none focus:border-secondary"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-medium">Display Text</label>
+                                        <input
+                                            placeholder="Click here..."
+                                            value={linkText}
+                                            onChange={(e) => setLinkText(e.target.value)}
+                                            className="w-full px-2 py-1.5 text-sm rounded border border-default-200 bg-default-100 outline-none focus:border-secondary"
+                                        />
+                                    </div>
+                                    <div className="flex justify-end gap-2 mt-2">
+                                        <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            onPress={() => setIsLinkOpen(false)}
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="secondary"
+                                            onPress={saveLink}
+                                        >
+                                            Save
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        </PopoverContent>
+                            </Popover.Dialog>
+                        </Popover.Content>
                     </Popover>
 
                     {/* Image Upload Trigger */}
                     <Button
-                        {...getBtnProps(false)}
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
                         onClick={() => fileInputRef.current?.click()}
                     >
                         <ImageIcon size={16} />
@@ -777,88 +750,82 @@ export default function RichTextEditor({
                 {/* Bottom Row */}
                 <div className="flex items-center gap-1 flex-wrap">
                     <Button
-                        {...getBtnProps(editor.isActive('bulletList'))}
-                        onClick={() =>
-                            editor.chain().focus().toggleBulletList().run()
-                        }
+                        variant={getBtnVariant(editor.isActive('bulletList'))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().toggleBulletList().run()}
                     >
                         <List size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(editor.isActive('orderedList'))}
-                        onClick={() =>
-                            editor.chain().focus().toggleOrderedList().run()
-                        }
+                        variant={getBtnVariant(editor.isActive('orderedList'))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().toggleOrderedList().run()}
                     >
                         <ListOrdered size={16} />
                     </Button>
 
-                    <Divider orientation="vertical" className="h-5 mx-1" />
+                    <Separator orientation="vertical" className="h-5 mx-1" />
 
-                    {/* Indent / Outdent */}
                     <Button
-                        {...getBtnProps(false)}
-                        onClick={() =>
-                            (editor.chain().focus() as any).outdent().run()
-                        }
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => (editor.chain().focus() as any).outdent().run()}
                     >
                         <OutdentIcon size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(false)}
-                        onClick={() =>
-                            (editor.chain().focus() as any).indent().run()
-                        }
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => (editor.chain().focus() as any).indent().run()}
                     >
                         <IndentIcon size={16} />
                     </Button>
 
-                    <Divider orientation="vertical" className="h-5 mx-1" />
+                    <Separator orientation="vertical" className="h-5 mx-1" />
 
                     <Button
-                        {...getBtnProps(editor.isActive({ textAlign: 'left' }))}
-                        onClick={() =>
-                            editor.chain().focus().setTextAlign('left').run()
-                        }
+                        variant={getBtnVariant(editor.isActive({ textAlign: 'left' }))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().setTextAlign('left').run()}
                     >
                         <AlignLeft size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(
-                            editor.isActive({ textAlign: 'center' })
-                        )}
-                        onClick={() =>
-                            editor.chain().focus().setTextAlign('center').run()
-                        }
+                        variant={getBtnVariant(editor.isActive({ textAlign: 'center' }))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().setTextAlign('center').run()}
                     >
                         <AlignCenter size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(
-                            editor.isActive({ textAlign: 'right' })
-                        )}
-                        onClick={() =>
-                            editor.chain().focus().setTextAlign('right').run()
-                        }
+                        variant={getBtnVariant(editor.isActive({ textAlign: 'right' }))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().setTextAlign('right').run()}
                     >
                         <AlignRight size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(
-                            editor.isActive({ textAlign: 'justify' })
-                        )}
-                        onClick={() =>
-                            editor.chain().focus().setTextAlign('justify').run()
-                        }
+                        variant={getBtnVariant(editor.isActive({ textAlign: 'justify' }))}
+                        size="sm"
+                        isIconOnly
+                        onClick={() => editor.chain().focus().setTextAlign('justify').run()}
                     >
                         <AlignJustify size={16} />
                     </Button>
 
-                    <Divider orientation="vertical" className="h-5 mx-1" />
+                    <Separator orientation="vertical" className="h-5 mx-1" />
 
-                    {/* Columns */}
                     <Button
-                        {...getBtnProps(false)}
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
                         title="2 Columns"
                         onClick={() =>
                             editor
@@ -873,7 +840,9 @@ export default function RichTextEditor({
                         <Columns2 size={16} />
                     </Button>
                     <Button
-                        {...getBtnProps(false)}
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
                         title="3 Columns"
                         onClick={() =>
                             editor
@@ -888,10 +857,12 @@ export default function RichTextEditor({
                         <Columns3 size={16} />
                     </Button>
 
-                    <Divider orientation="vertical" className="h-5 mx-1" />
+                    <Separator orientation="vertical" className="h-5 mx-1" />
 
                     <Button
-                        {...getBtnProps(false)}
+                        variant={getBtnVariant(false)}
+                        size="sm"
+                        isIconOnly
                         onClick={() =>
                             editor
                                 .chain()

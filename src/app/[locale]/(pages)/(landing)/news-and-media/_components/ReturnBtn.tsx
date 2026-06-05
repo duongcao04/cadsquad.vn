@@ -9,7 +9,8 @@ import { Link } from '@tanstack/react-router'
 export default function ReturnBtn() {
     return (
         <Link to={'/news-and-media'} className="block">
-            <Button startContent={<ChevronLeft size={16} />} variant="light">
+            <Button variant="ghost">
+                <ChevronLeft size={16} />
                 All posts
             </Button>
         </Link>

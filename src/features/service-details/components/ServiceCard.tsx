@@ -81,8 +81,7 @@ export function ServiceCard({ data }: Props) {
                 >
                     <Button
                         className="mt-8 capitalize rounded-full"
-                        variant="bordered"
-                        color="primary"
+                        variant="outline"
                         title="Get started now"
                     >
                         Get started now
@@ -97,7 +96,7 @@ export function ServiceCard({ data }: Props) {
 export function ServiceCardSkeleton() {
     return (
         <div className="grid grid-cols-[600px_1fr] gap-10 p-4 rounded-lg">
-            <Skeleton className="h-full overflow-hidden rounded-lg aspect-video"></Skeleton>
+            <Skeleton className="h-full overflow-hidden rounded-lg aspect-video" />
             <div className="w-full">
                 <Skeleton className="w-full h-10 rounded-lg" />
                 <Skeleton className="w-full h-4 mt-5 rounded-lg" />

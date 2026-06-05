@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { Tooltip, useDisclosure } from '@heroui/react'
+import { Tooltip, useOverlayState } from '@heroui/react'
 
 import ContactButton from './ContactButton'
 import FABMenu from './FABMenu'
 import ScrollToTop from './ScrollToTop'
 
 export default function FAB() {
-    const { isOpen, onOpen, onClose } = useDisclosure({ id: 'FAB' })
+    const { isOpen, open, close } = useOverlayState()
     const [canScroll, setCanScroll] = useState(false)
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function FAB() {
                     onScroll={() => {
                         window.scrollTo(0, 0)
                         if (isOpen) {
-                            onClose()
+                            close()
                         }
                     }}
                 />
@@ -46,15 +46,17 @@ export default function FAB() {
                         : 'bottom-4 md:bottom-10'
                 } fixed right-2 md:right-6 z-10`}
             >
-                <Tooltip
-                    content={!isOpen ? 'Show social menu' : 'Close social menu'}
-                    placement="left"
-                >
-                    <ContactButton
-                        isOpen={isOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                    />
+                <Tooltip placement="left">
+                    <Tooltip.Trigger>
+                        <ContactButton
+                            isOpen={isOpen}
+                            onOpen={open}
+                            onClose={close}
+                        />
+                    </Tooltip.Trigger>
+                    <Tooltip.Content>
+                        {!isOpen ? 'Show social menu' : 'Close social menu'}
+                    </Tooltip.Content>
                 </Tooltip>
             </div>
 

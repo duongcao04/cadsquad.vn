@@ -89,23 +89,21 @@ export default function MobileHeader() {
                 </div>
                 <div />
                 <Button
-                    startContent={
-                        <Hamburger
-                            toggled={isOpen}
-                            onToggle={setOpen}
-                            direction="left"
-                            size={24}
-                            rounded
-                        />
-                    }
                     onPress={() => {
                         setOpen(!isOpen)
                     }}
-                    variant="light"
-                    color="secondary"
+                    variant="ghost"
                     isIconOnly
                     className="w-full"
-                />
+                >
+                    <Hamburger
+                        toggled={isOpen}
+                        onToggle={setOpen}
+                        direction="left"
+                        size={24}
+                        rounded
+                    />
+                </Button>
             </div>
         </MotionDiv>
     )
