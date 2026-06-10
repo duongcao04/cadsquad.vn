@@ -9,7 +9,7 @@ export default function ButtonDownloadBrochure() {
     const tButton = useTranslations('button')
     return (
         <Link
-            href={'/sites/default/files/CSD-%20Profile%202025.pdf'}
+            href={'/sites/default/files/CSD-%20Profile%202026.pdf'}
             passHref
             title="CSD- Profile 2025.pdf"
             target="_blank"
