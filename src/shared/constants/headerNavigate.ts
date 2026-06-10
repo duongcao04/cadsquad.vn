@@ -64,8 +64,7 @@ export const HEADER_NAVIGATES: NavigateItem[] = [
     {
         enLabel: 'Academy',
         viLabel: 'Khóa học',
-        href: 'https://courses.csdvietnam.com',
-        outSite: true,
+        href: '/academy',
     },
     {
         enLabel: 'News & Media',
