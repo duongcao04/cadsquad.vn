@@ -33,7 +33,7 @@ export default function AboutUsPage() {
             enLabel: 'Since',
             viLabel: 'Thành lập',
             enValue: 'Nov 10th, 2022',
-            viValue: '10/11/2022',
+            viValue: '10/11/2026',
         },
     ]
 

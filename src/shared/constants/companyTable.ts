@@ -17,7 +17,7 @@ export const ABOUT_CADSQUAD_INFO = [
     },
     {
         title: 'Establishment',
-        value: '10/11/2022',
+        value: '10/11/2026',
     },
     {
         title: 'Founder',
@@ -76,7 +76,7 @@ export const VI_ABOUT_CADSQUAD_INFO = [
     },
     {
         title: 'Năm thành lập',
-        value: '10/11/2022',
+        value: '10/11/2026',
     },
     {
         title: 'Nhà sáng lập',
