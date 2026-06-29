@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
-import { Section } from '@/shared/features/home/section'
+import { Section, fadeInUp } from '@/shared/features/home/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 import ServiceCard from './cards/service-card'
@@ -71,21 +71,7 @@ export default function OurServices() {
                 slidesToScroll={isDesktop ? 4 : isTablet ? 2 : 1}
             >
                 {services?.map((service, idx) => (
-                    <MotionDiv
-                        key={idx}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{
-                            opacity: 1,
-                            y: 0,
-                            transition: {
-                                delay: idx * 0.1,
-                                type: 'spring',
-                                stiffness: 120,
-                                damping: 20,
-                            },
-                        }}
-                        viewport={{ once: true }}
-                    >
+                    <MotionDiv key={idx} {...fadeInUp(idx * 0.1)}>
                         <ServiceCard data={service} />
                     </MotionDiv>
                 ))}

@@ -8,6 +8,7 @@ import Image from 'next/image'
 import BannerImg from '@/assets/images/banner.webp'
 import MobileBannerImg from '@/assets/images/mobile-banner.webp'
 import { MotionSpan } from '@/lib/motion'
+import { smoothTransition } from '@/shared/features/home/section'
 
 export default function Banner() {
     const tHome = useTranslations('landing.home')
@@ -43,10 +44,8 @@ export default function Banner() {
                                             opacity: 1,
                                             y: 0,
                                             transition: {
+                                                ...smoothTransition,
                                                 delay: (idx + 1) * 0.1,
-                                                type: 'spring',
-                                                stiffness: 120,
-                                                damping: 20,
                                             },
                                         }}
                                         className="pr-2 lg:pr-5"
@@ -68,10 +67,8 @@ export default function Banner() {
                                             opacity: 1,
                                             y: 0,
                                             transition: {
+                                                ...smoothTransition,
                                                 delay: idx * 0.03,
-                                                type: 'spring',
-                                                stiffness: 120,
-                                                damping: 20,
                                             },
                                         }}
                                         className="pr-1"

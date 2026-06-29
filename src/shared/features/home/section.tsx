@@ -4,22 +4,38 @@ import { MotionDiv, MotionH2, MotionP } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 
 /**
- * Shared fade-in spring used across the home sections.
- * Mirrors the animation in `WhyChooseUs` / `HeadingSection`.
+ * Smooth ease-out curve shared across the home sections.
+ * A gentle "easeOutExpo"-style bezier — fluid, no spring bounce.
  */
-const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
+export const SMOOTH_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
+
+export const smoothTransition = {
+    duration: 0.7,
+    ease: SMOOTH_EASE,
+}
+
+/**
+ * Fade + rise on scroll into view. Pass a `delay` to stagger list items.
+ * Spread it onto any motion component: `<MotionDiv {...fadeInUp(idx * 0.1)} />`.
+ */
+export const fadeInUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 24 },
     whileInView: {
         opacity: 1,
         y: 0,
-        transition: {
-            delay: 0.1,
-            type: 'spring' as const,
-            stiffness: 120,
-            damping: 20,
-        },
+        transition: { ...smoothTransition, delay },
     },
-    viewport: { once: true },
+    viewport: { once: true, amount: 0.2 } as const,
+})
+
+/**
+ * Scroll-in motion options shared by the section primitives.
+ */
+type MotionOptions = {
+    /** Play the smooth fade-in when scrolled into view. */
+    animate?: boolean
+    /** Delay before the fade-in starts, in seconds — handy for staggering. */
+    delay?: number
 }
 
 /**
@@ -90,7 +106,7 @@ function resolveCols(cols?: Responsive<number>): string {
  * Centered, responsive container for a landing section.
  * Supports a `grid` or `flex` layout out of the box.
  */
-type WrapperProps = {
+type WrapperProps = MotionOptions & {
     children: React.ReactNode
     className?: string
     /** Inner layout. Defaults to `flex` column (heading + body stack). */
@@ -107,8 +123,6 @@ type WrapperProps = {
     justify?: 'start' | 'center' | 'end' | 'between'
     /** Disable the default `container` utility (full-bleed sections). */
     fluid?: boolean
-    /** Animate the wrapper on scroll into view. */
-    animate?: boolean
 }
 
 const ALIGN_MAP = {
@@ -136,6 +150,7 @@ function Wrapper({
     justify,
     fluid = false,
     animate = false,
+    delay = 0,
 }: WrapperProps) {
     const layoutClass = cn(
         layout === 'grid' && cn('grid', resolveCols(cols)),
@@ -149,7 +164,7 @@ function Wrapper({
 
     return (
         <Comp
-            {...(animate ? fadeInUp : {})}
+            {...(animate ? fadeInUp(delay) : {})}
             className={cn(
                 !fluid && 'container',
                 layoutClass,
@@ -165,15 +180,15 @@ function Wrapper({
 /**
  * Section.Title
  */
-type TitleProps = {
+type TitleProps = MotionOptions & {
     children: React.ReactNode
     className?: string
 }
 
-function Title({ children, className }: TitleProps) {
+function Title({ children, className, animate = true, delay = 0 }: TitleProps) {
     return (
         <MotionH2
-            {...fadeInUp}
+            {...(animate ? fadeInUp(delay) : {})}
             className={cn(
                 'text-3xl lg:text-5xl font-bold font-saira',
                 className
@@ -187,15 +202,20 @@ function Title({ children, className }: TitleProps) {
 /**
  * Section.Description
  */
-type DescriptionProps = {
+type DescriptionProps = MotionOptions & {
     children: React.ReactNode
     className?: string
 }
 
-function Description({ children, className }: DescriptionProps) {
+function Description({
+    children,
+    className,
+    animate = true,
+    delay = 0,
+}: DescriptionProps) {
     return (
         <MotionP
-            {...fadeInUp}
+            {...(animate ? fadeInUp(delay) : {})}
             className={cn(
                 'text-base lg:text-lg text-muted-foreground max-w-2xl',
                 className
@@ -209,15 +229,15 @@ function Description({ children, className }: DescriptionProps) {
 /**
  * Section.CTA
  */
-type CTAProps = {
+type CTAProps = MotionOptions & {
     children: React.ReactNode
     className?: string
 }
 
-function CTA({ children, className }: CTAProps) {
+function CTA({ children, className, animate = true, delay = 0 }: CTAProps) {
     return (
         <MotionDiv
-            {...fadeInUp}
+            {...(animate ? fadeInUp(delay) : {})}
             className={cn('flex flex-wrap items-center gap-4', className)}
         >
             {children}

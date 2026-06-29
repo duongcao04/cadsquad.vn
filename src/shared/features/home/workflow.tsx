@@ -8,7 +8,7 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { VI_WORKFLOW, WORKFLOW } from '@/shared/constants/workflow'
-import { Section } from '@/shared/features/home/section'
+import { Section, fadeInUp } from '@/shared/features/home/section'
 
 export default function Workflow() {
     const locale = useLocale()
@@ -27,18 +27,7 @@ export default function Workflow() {
             </Section.Title>
             <div className="lg:grid grid-cols-2 gap-8">
                 <MotionDiv
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                            delay: 0.15,
-                            type: 'spring',
-                            stiffness: 120,
-                            damping: 20,
-                        },
-                    }}
-                    viewport={{ once: true }}
+                    {...fadeInUp(0.15)}
                     className="size-full flex items-center justify-center"
                 >
                     <Image
@@ -60,18 +49,7 @@ export default function Workflow() {
                                     aria-label={item.title}
                                     title={
                                         <MotionDiv
-                                            initial={{ opacity: 0, y: 20 }}
-                                            whileInView={{
-                                                opacity: 1,
-                                                y: 0,
-                                                transition: {
-                                                    delay: (idx + 1) * 0.1,
-                                                    type: 'spring',
-                                                    stiffness: 120,
-                                                    damping: 20,
-                                                },
-                                            }}
-                                            viewport={{ once: true }}
+                                            {...fadeInUp((idx + 1) * 0.1)}
                                             className="flex items-center justify-start gap-5 w-full cursor-pointer"
                                         >
                                             <div

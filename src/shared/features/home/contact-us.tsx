@@ -35,12 +35,18 @@ export default function ContactUs() {
                             ),
                         })}
                     </Section.Title>
-                    <Section.Description className="mt-2 max-w-none text-white opacity-80">
+                    <Section.Description
+                        delay={0.1}
+                        className="mt-2 max-w-none text-white opacity-80"
+                    >
                         {tHome(
                             'sections.contactUs.contactInformation.description'
                         )}
                     </Section.Description>
-                    <Section.CTA className="mt-8 w-full justify-start text-white">
+                    <Section.CTA
+                        delay={0.2}
+                        className="mt-8 w-full justify-start text-white"
+                    >
                         {CONTACT_INFORMATIONS.map((contact, index) => (
                             <Link
                                 href={contact.path}

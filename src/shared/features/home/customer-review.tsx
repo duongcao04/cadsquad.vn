@@ -9,7 +9,7 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { TESTIMONIALS, VI_TESTIMONIALS } from '@/shared/database/testimonials'
-import { Section } from '@/shared/features/home/section'
+import { Section, fadeInUp } from '@/shared/features/home/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 import CustomerReviewCard from './cards/customer-review-card'
@@ -82,18 +82,7 @@ export default function CustomerReview() {
                         {testimonials.map((tes, idx) => (
                             <MotionDiv
                                 key={idx}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{
-                                    opacity: 1,
-                                    y: 0,
-                                    transition: {
-                                        delay: idx * 0.1,
-                                        type: 'spring',
-                                        stiffness: 120,
-                                        damping: 20,
-                                    },
-                                }}
-                                viewport={{ once: true }}
+                                {...fadeInUp(idx * 0.1)}
                                 className="flex-shrink-0 p-2"
                             >
                                 <CustomerReviewCard data={tes} />
