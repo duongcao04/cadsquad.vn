@@ -4,7 +4,7 @@ import { Carousel } from 'antd'
 
 import { TEAMS } from '@/shared/constants/teams'
 
-import MemberCard from './cards/MemberCard'
+import MemberCard from './cards/member-card'
 
 export default function TeamCarousels() {
     return (

@@ -1,12 +1,11 @@
 import React from 'react'
 
 import { POSTS } from '@/shared/database/posts'
-
-import ReturnBtn from '../_components/ReturnBtn'
-import AuthorCard from '../_components/cards/AuthorCard'
-import Content from './_components/Content'
-import RelatedPosts from './_components/RelatedPosts'
-import TableOfContent from './_components/TableOfContent'
+import ReturnBtn from '@/shared/features/news-and-media/return-btn'
+import AuthorCard from '@/shared/features/news-and-media/cards/author-card'
+import Content from '@/shared/features/news-and-media/detail/content'
+import RelatedPosts from '@/shared/features/news-and-media/detail/related-posts'
+import TableOfContent from '@/shared/features/news-and-media/detail/table-of-content'
 
 export default async function PostDetailPage({
     params,

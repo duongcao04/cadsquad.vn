@@ -8,8 +8,7 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { VI_WORKFLOW, WORKFLOW } from '@/shared/constants/workflow'
-
-import HeadingSection from './HeadingSection'
+import { Section } from '@/shared/features/home/section'
 
 export default function Workflow() {
     const locale = useLocale()
@@ -18,14 +17,14 @@ export default function Workflow() {
     const workflow = locale === 'vi' ? VI_WORKFLOW : WORKFLOW
 
     return (
-        <div className="container space-y-5 lg:space-y-8">
-            <HeadingSection className="!text-center">
+        <Section.Wrapper className="gap-5 lg:gap-8">
+            <Section.Title className="!text-center">
                 {tHome.rich('sections.workflow.title', {
                     highlight: (chunk) => (
                         <span className="text-primary">{chunk}</span>
                     ),
                 })}
-            </HeadingSection>
+            </Section.Title>
             <div className="lg:grid grid-cols-2 gap-8">
                 <MotionDiv
                     initial={{ opacity: 0, y: 20 }}
@@ -100,6 +99,6 @@ export default function Workflow() {
                     </Accordion>
                 </div>
             </div>
-        </div>
+        </Section.Wrapper>
     )
 }

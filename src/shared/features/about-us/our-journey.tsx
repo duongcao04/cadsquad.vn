@@ -2,8 +2,8 @@ import React from 'react'
 
 import { useTranslations } from 'next-intl'
 
-import MobileOurJourneyCarousel from './carousels/MobileOurJourneyCarousel'
-import OurJourneyCarousel from './carousels/OurJourneyCarousel'
+import MobileOurJourneyCarousel from './carousels/mobile-our-journey-carousel'
+import OurJourneyCarousel from './carousels/our-journey-carousel'
 
 export default function OurJourney() {
     const tOurJourney = useTranslations('landing.aboutUs.sections.ourJourney')

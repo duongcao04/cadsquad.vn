@@ -9,10 +9,10 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { TESTIMONIALS, VI_TESTIMONIALS } from '@/shared/database/testimonials'
+import { Section } from '@/shared/features/home/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
-import HeadingSection from './HeadingSection'
-import CustomerReviewCard from './cards/CustomerReviewCard'
+import CustomerReviewCard from './cards/customer-review-card'
 
 export default function CustomerReview() {
     const locale = useLocale()
@@ -42,15 +42,15 @@ export default function CustomerReview() {
         }
     }, [emblaApi])
     return (
-        <div className="container space-y-5 lg:space-y-8">
+        <Section.Wrapper className="gap-5 lg:gap-8">
             <div className="flex items-center justify-between">
-                <HeadingSection>
+                <Section.Title>
                     {tHome.rich('sections.customerReview.title', {
                         highlight: (chunk) => (
                             <span className="text-primary">{chunk}</span>
                         ),
                     })}
-                </HeadingSection>
+                </Section.Title>
                 <div className="flex items-center justify-end gap-3">
                     <Button
                         isIconOnly
@@ -102,6 +102,6 @@ export default function CustomerReview() {
                     </div>
                 </div>
             </div>
-        </div>
+        </Section.Wrapper>
     )
 }

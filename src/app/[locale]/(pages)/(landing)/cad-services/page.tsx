@@ -9,9 +9,9 @@ import Image from 'next/image'
 import ImgCadService from '@/assets/images/cad-services.webp'
 import { Link } from '@/i18n/navigation'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
+import ServiceCard from '@/shared/features/cad-services/cards/service-card'
 
 import ButtonDownloadBrochure from '../../../../../components/ButtonDownloadBrochure'
-import ServiceCard from './_components/cards/ServiceCard'
 
 export default function CADServices() {
     const tBreadcrumb = useTranslations('breadcrumbs')

@@ -8,9 +8,10 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import Decorate from '@/shared/components/layouts/footer/Decorate'
 import { CONTACT_INFORMATIONS } from '@/shared/constants/appConstant'
+import { Section } from '@/shared/features/home/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
-import ContactForm from './forms/ContactForm'
+import ContactForm from './forms/contact-form'
 
 export default function ContactUs() {
     const { isMobile } = useDevice()
@@ -27,19 +28,19 @@ export default function ContactUs() {
             </div>
             <div className="container lg:grid grid-cols-[1fr_1.2fr] gap-3">
                 <div>
-                    <h2 className="text-4xl lg:text-6xl font-bold text-white font-saira">
+                    <Section.Title className="text-4xl lg:text-6xl text-white">
                         {tHome.rich('sections.contactUs.title', {
                             highlight: (chunk) => (
                                 <span className="text-primary">{chunk}</span>
                             ),
                         })}
-                    </h2>
-                    <p className="mt-2 text-base lg:text-lg opacity-80 text-white">
+                    </Section.Title>
+                    <Section.Description className="mt-2 max-w-none text-white opacity-80">
                         {tHome(
                             'sections.contactUs.contactInformation.description'
                         )}
-                    </p>
-                    <div className="mt-8 flex items-center justify-start gap-4 w-full text-white">
+                    </Section.Description>
+                    <Section.CTA className="mt-8 w-full justify-start text-white">
                         {CONTACT_INFORMATIONS.map((contact, index) => (
                             <Link
                                 href={contact.path}
@@ -56,7 +57,7 @@ export default function ContactUs() {
                                 </Button>
                             </Link>
                         ))}
-                    </div>
+                    </Section.CTA>
                 </div>
                 <div className="mt-10 lg:mt-10">
                     <ContactForm />

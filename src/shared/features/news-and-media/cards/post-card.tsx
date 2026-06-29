@@ -8,7 +8,7 @@ import { Link } from '@/i18n/navigation'
 import { MotionDiv } from '@/lib/motion'
 import { Post } from '@/validationSchemas/post.schema'
 
-import { cn } from '../../../../../../../lib/utils'
+import { cn } from '@/lib/utils'
 
 type Props = {
     variant?: 'sm' | 'md' | 'lg'

@@ -8,10 +8,9 @@ import { MDXRemote } from 'next-mdx-remote-client/rsc'
 import { MotionSection } from '@/lib/motion'
 import { cleanMarkdownString } from '@/lib/utils'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
-
-import OurServices from '../../(home)/_components/OurServices'
-import PageBreadcumbs from './_components/PageBreadcumbs'
-import ServiceNavigate from './_components/ServiceNavigate'
+import PageBreadcumbs from '@/shared/features/cad-services/detail/page-breadcumbs'
+import ServiceNavigate from '@/shared/features/cad-services/detail/service-navigate'
+import OurServices from '@/shared/features/home/our-services'
 
 const cadServices = CAD_SERVICES
 export default async function CADServiceDetailPage({

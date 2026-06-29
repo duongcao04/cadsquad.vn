@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 
 import { Post } from '@/validationSchemas/post.schema'
 
-import PostCard from '../../_components/cards/PostCard'
+import PostCard from '@/shared/features/news-and-media/cards/post-card'
 
 type Props = {
     data: Post[]

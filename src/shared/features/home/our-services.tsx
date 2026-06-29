@@ -10,10 +10,10 @@ import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
+import { Section } from '@/shared/features/home/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
-import HeadingSection from './HeadingSection'
-import ServiceCard from './cards/ServiceCard'
+import ServiceCard from './cards/service-card'
 
 const services = CAD_SERVICES
 
@@ -23,15 +23,15 @@ export default function OurServices() {
     const { isMobile, isTablet, isDesktop } = useDevice()
 
     return (
-        <div className="container space-y-5 lg:space-y-8">
+        <Section.Wrapper className="gap-5 lg:gap-8">
             <div className="flex items-center justify-between">
-                <HeadingSection>
+                <Section.Title>
                     {tHome.rich('sections.ourServices.title', {
                         highlight: (chunk) => (
                             <span className="text-primary">{chunk}</span>
                         ),
                     })}
-                </HeadingSection>
+                </Section.Title>
                 <div className="flex items-center justify-end gap-3">
                     <Button
                         isIconOnly
@@ -90,6 +90,6 @@ export default function OurServices() {
                     </MotionDiv>
                 ))}
             </Carousel>
-        </div>
+        </Section.Wrapper>
     )
 }

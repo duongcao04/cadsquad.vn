@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useTranslations } from 'next-intl'
 
-import InformationTable from './tables/InformationTable'
+import InformationTable from './tables/information-table'
 
 export default function Overview() {
     const tOverview = useTranslations('landing.aboutUs.sections.overview')

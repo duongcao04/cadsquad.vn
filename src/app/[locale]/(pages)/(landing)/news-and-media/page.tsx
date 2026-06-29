@@ -7,9 +7,8 @@ import { useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/navigation'
 import { POSTS } from '@/shared/database/posts'
-
-import FeaturedPosts from './_components/FeaturedPosts'
-import RecentPosts from './_components/RecentPosts'
+import FeaturedPosts from '@/shared/features/news-and-media/featured-posts'
+import RecentPosts from '@/shared/features/news-and-media/recent-posts'
 
 export default function NewsAndMediaPage() {
     const tNewMedia = useTranslations('landing.newsMedia')

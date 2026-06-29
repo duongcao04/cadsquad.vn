@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Post } from '@/validationSchemas/post.schema'
 
-import PostCard from './cards/PostCard'
+import PostCard from './cards/post-card'
 
 type Props = {
     data: Post[]

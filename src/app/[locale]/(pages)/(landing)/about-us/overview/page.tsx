@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import ImgFounderBanner from '@/assets/images/founder-banner.webp'
 
-// import InformationTable from '../_components/tables/InformationTable'
+// import InformationTable from '@/shared/features/about-us/tables/information-table'
 
 export default function OverviewPage() {
     return (
