@@ -1,5 +1,9 @@
 export const ABOUT_CADSQUAD_INFO = [
     {
+        title: 'Tax identification number',
+        value: '0319622492',
+    },
+    {
         title: 'Company name',
         value: 'CADSQUAD VIETNAM',
     },
@@ -16,12 +20,12 @@ export const ABOUT_CADSQUAD_INFO = [
         value: 'Contact@cadsquad.vn',
     },
     {
-        title: 'Establishment',
-        value: '10/11/2026',
-    },
-    {
         title: 'Founder',
         value: 'Pham Tien Phong (Mr.)',
+    },
+    {
+        title: 'Address',
+        value: 'P.702A, 7th Floor, Centre Point Building, 106 Nguyen Van Troi Street, Phu Nhuan Ward, Ho Chi Minh City, Vietnam',
     },
     {
         title: 'Business activities',
@@ -59,6 +63,10 @@ export const ABOUT_CADSQUAD_INFO = [
 
 export const VI_ABOUT_CADSQUAD_INFO = [
     {
+        title: 'Mã số thuế',
+        value: '0319622492',
+    },
+    {
         title: 'Tên công ty',
         value: 'CADSQUAD VIỆT NAM',
     },
@@ -75,12 +83,12 @@ export const VI_ABOUT_CADSQUAD_INFO = [
         value: 'Contact@cadsquad.vn',
     },
     {
-        title: 'Năm thành lập',
-        value: '10/11/2026',
-    },
-    {
         title: 'Nhà sáng lập',
         value: 'Ông Phạm Tiền Phong',
+    },
+    {
+        title: 'Địa chỉ',
+        value: 'P.702A Tầng 7, Tòa nhà Centre Point, 106 Nguyễn Văn Trỗi, Phường Phú Nhuận, TP Hồ Chí Minh, Việt Nam',
     },
     {
         title: 'Sản phẩm & dịch vụ',
