@@ -1,110 +1,86 @@
 'use client'
 
-import { useState } from 'react'
-
 import { Button, Input, Textarea, addToast } from '@heroui/react'
-import { useFormik } from 'formik'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { useForm } from 'react-hook-form'
 
-import { ContactSchema } from '@/validationSchemas/contact.schema'
+import { Contact, ContactSchema } from '@/validationSchemas/contact.schema'
 
 export default function ContactForm() {
-    /**
-     * LOADING state for submit button
-     */
-    const [isLoading, setLoading] = useState<boolean>(false)
-
     const tButton = useTranslations('button')
     const tSendEmail = useTranslations('toast.sendEmail')
 
-    const formik = useFormik({
-        validationSchema: ContactSchema,
-        initialValues: {
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<Contact>({
+        resolver: zodResolver(ContactSchema),
+        defaultValues: {
             fullName: '',
             email: '',
             message: '',
         },
-        onSubmit: async (values) => {
-            try {
-                setLoading(true)
-                await fetch('/api/send', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        fullName: values.fullName,
-                        email: values.email,
-                        message: values.message,
-                    }),
-                })
+    })
 
-                addToast({
-                    title: tSendEmail('success'),
-                    color: 'success',
-                })
-                formik.resetForm()
-            } catch (error) {
-                addToast({
-                    title: tSendEmail('failed'),
-                    description: `${error}`,
-                    color: 'danger',
-                })
-            } finally {
-                setLoading(false)
-            }
-        },
+    const onSubmit = handleSubmit(async (values) => {
+        try {
+            await fetch('/api/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fullName: values.fullName,
+                    email: values.email,
+                    message: values.message,
+                }),
+            })
+
+            addToast({
+                title: tSendEmail('success'),
+                color: 'success',
+            })
+            reset()
+        } catch (error) {
+            addToast({
+                title: tSendEmail('failed'),
+                description: `${error}`,
+                color: 'danger',
+            })
+        }
     })
 
     return (
-        <form onSubmit={formik.handleSubmit} className="space-y-5 size-full">
+        <form onSubmit={onSubmit} className="space-y-5 size-full">
             <Input
                 id="fullName"
-                name="fullName"
                 label="Full name"
-                value={formik.values.fullName}
-                onChange={formik.handleChange}
-                errorMessage={
-                    Boolean(formik.touched.fullName) && formik.errors.fullName
-                }
-                isInvalid={
-                    Boolean(formik.errors.fullName) &&
-                    Boolean(formik.touched.fullName)
-                }
+                {...register('fullName')}
+                errorMessage={errors.fullName?.message}
+                isInvalid={Boolean(errors.fullName)}
             />
             <Input
                 id="email"
-                name="email"
                 label="Email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                errorMessage={
-                    Boolean(formik.touched.email) && formik.errors.email
-                }
-                isInvalid={
-                    Boolean(formik.errors.email) &&
-                    Boolean(formik.touched.email)
-                }
+                {...register('email')}
+                errorMessage={errors.email?.message}
+                isInvalid={Boolean(errors.email)}
             />
             <Textarea
                 id="message"
-                name="message"
                 label="Message"
-                value={formik.values.message}
-                onChange={formik.handleChange}
-                errorMessage={
-                    Boolean(formik.touched.message) && formik.errors.message
-                }
-                isInvalid={
-                    Boolean(formik.errors.message) &&
-                    Boolean(formik.touched.message)
-                }
+                {...register('message')}
+                errorMessage={errors.message?.message}
+                isInvalid={Boolean(errors.message)}
             />
             <div className="grid w-full mt-7 place-items-center">
                 <Button
                     className="px-10 py-6"
                     color="primary"
-                    isLoading={isLoading}
+                    isLoading={isSubmitting}
                     type="submit"
                 >
                     {tButton('sendMessage')}

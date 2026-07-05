@@ -5,13 +5,16 @@ import React, { useState } from 'react'
 import { Button } from '@heroui/react'
 import { Drawer } from 'antd'
 import { ArrowUpRight, ChevronLeft, ChevronRight, HomeIcon } from 'lucide-react'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 
 import { Link, usePathname } from '@/i18n/navigation'
+import { SupportLanguages } from '@/i18n/routing'
 import {
     HEADER_NAVIGATES,
     NavigateItem,
 } from '@/shared/constants/headerNavigate'
+import { resolveNavLabel } from '@/shared/utils/navLabel'
 
 import Logo from '../../Logo'
 import CTAButton from './CTAButton'
@@ -72,6 +75,8 @@ function RootNav({
 }) {
     const pathname = usePathname()
     const isHomePath = pathname === '/'
+    const locale = useLocale() as SupportLanguages
+    const t = useTranslations('landing.layout.header')
 
     return (
         <nav className="py-3 w-full">
@@ -101,7 +106,7 @@ function RootNav({
                                     }}
                                 >
                                     <p className="uppercase font-semibold text-lg">
-                                        {item.enLabel}
+                                        {resolveNavLabel(item, t, locale)}
                                     </p>
                                     <div className="size-12 flex items-center justify-center">
                                         <ChevronRight
@@ -123,7 +128,7 @@ function RootNav({
                             >
                                 <div className="mx-4 flex items-center justify-between">
                                     <p className="!text-black uppercase font-semibold text-lg">
-                                        {item.enLabel}
+                                        {resolveNavLabel(item, t, locale)}
                                     </p>
 
                                     <div className="size-12 flex items-center justify-center">
@@ -156,6 +161,9 @@ function NavItem({
     setCurrentNav: React.Dispatch<React.SetStateAction<NavigateItem | null>>
     onClose: () => void
 }) {
+    const locale = useLocale() as SupportLanguages
+    const t = useTranslations('landing.layout.header')
+
     return (
         <div className="py-3">
             <div
@@ -175,11 +183,12 @@ function NavItem({
                     <ChevronLeft />
                 </Button>
                 <p className="uppercase font-bold text-xl text-black">
-                    {data.enLabel}
+                    {resolveNavLabel(data, t, locale)}
                 </p>
             </div>
             <ul className="mt-8 flex flex-col gap-5">
                 {data?.menus?.map((item, idx) => {
+                    const itemLabel = resolveNavLabel(item, t, locale)
                     return (
                         <li key={idx}>
                             <div className="py-2.5 border-b border-border cursor-pointer">
@@ -187,7 +196,7 @@ function NavItem({
                                     <div className="w-[80px] aspect-video overflow-hidden rounded-sm">
                                         <Image
                                             src={item.image}
-                                            alt={item.enLabel}
+                                            alt={itemLabel}
                                             width={100}
                                             height={100}
                                         />
@@ -197,7 +206,7 @@ function NavItem({
                                         className="!text-black w-fit font-semibold text-lg line-clamp-2"
                                         onClick={onClose}
                                     >
-                                        {item.enLabel}
+                                        {itemLabel}
                                     </Link>
                                 </div>
                             </div>

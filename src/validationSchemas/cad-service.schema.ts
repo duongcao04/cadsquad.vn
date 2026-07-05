@@ -1,35 +1,35 @@
-import * as yup from 'yup'
+import { z } from 'zod'
 
-export const CadServiceSchema = yup.object().shape({
-    id: yup.number(),
-    order: yup.number(),
-    title: yup.object({
-        original: yup.string(),
-        vi: yup.string(),
+export const CadServiceSchema = z.object({
+    id: z.number().optional(),
+    order: z.number().optional(),
+    title: z.object({
+        original: z.string().optional(),
+        vi: z.string().optional(),
     }),
-    slug: yup.string(),
-    description: yup.object({
-        original: yup.string(),
-        vi: yup.string(),
+    slug: z.string().optional(),
+    description: z.object({
+        original: z.string().optional(),
+        vi: z.string().optional(),
     }),
-    plainDescription: yup.object({
-        original: yup.string(),
-        vi: yup.string(),
+    plainDescription: z.object({
+        original: z.string().optional(),
+        vi: z.string().optional(),
     }),
-    shortDescription: yup.object({
-        original: yup.string(),
-        vi: yup.string(),
+    shortDescription: z.object({
+        original: z.string().optional(),
+        vi: z.string().optional(),
     }),
-    thumbnail: yup.object({
-        vertical: yup.string(),
-        horizontal: yup.string(),
-        verticalType: yup.string(),
-        horizontalType: yup.string(),
+    thumbnail: z.object({
+        vertical: z.string().optional(),
+        horizontal: z.string().optional(),
+        verticalType: z.string().optional(),
+        horizontalType: z.string().optional(),
     }),
-    images: yup.array(yup.string().required()),
-    content: yup.object({
-        original: yup.string(),
-        vi: yup.string(),
+    images: z.array(z.string()).optional(),
+    content: z.object({
+        original: z.string().optional(),
+        vi: z.string().optional(),
     }),
 })
-export type CadService = yup.InferType<typeof CadServiceSchema>
+export type CadService = z.infer<typeof CadServiceSchema>

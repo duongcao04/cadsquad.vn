@@ -11,15 +11,17 @@ import { MotionDiv, MotionP } from '@/lib/motion'
 import Logo from '@/shared/components/Logo'
 import { CONTACT_INFORMATIONS, SOCIALS } from '@/shared/constants/appConstant'
 import { FOOTER_LINKS } from '@/shared/constants/footerLinks'
+import { resolveNavLabel } from '@/shared/utils/navLabel'
 
 import Decorate from './Decorate'
 import SocialButton from './SocialButton'
 
 export default function Footer() {
-    const locale = useLocale()
+    const locale = useLocale() as SupportLanguages
     const currentYear = new Date().getFullYear()
 
     const tLanding = useTranslations('landing')
+    const tFooter = useTranslations('landing.layout.footer')
 
     const groupTitleLineVariants: Variants = {
         init: {
@@ -100,10 +102,7 @@ export default function Footer() {
                     <div className="mt-10 lg:mt-0 col-span-3">
                         <div className="lg:grid grid-cols-3 space-y-10 xl:space-y-0">
                             {FOOTER_LINKS.map((item, index) => {
-                                const groupName =
-                                    item[
-                                        `${locale as SupportLanguages}GroupName`
-                                    ]
+                                const groupName = tFooter(item.groupNameKey)
 
                                 return (
                                     <MotionDiv
@@ -129,9 +128,11 @@ export default function Footer() {
                                                 item.children.map(
                                                     (child, index) => {
                                                         const label =
-                                                            child[
-                                                                `${locale as SupportLanguages}Label`
-                                                            ]
+                                                            resolveNavLabel(
+                                                                child,
+                                                                tFooter,
+                                                                locale
+                                                            )
 
                                                         return (
                                                             <Link

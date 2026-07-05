@@ -7,7 +7,6 @@ import { YoutubeIcon } from '@/shared/components/icons/YoutubeIcon'
 import { ZaloIcon } from '@/shared/components/icons/ZaloIcon'
 
 import { ABOUT_US_NAVIGATE } from './aboutUsNavigate'
-import { APP_LANGUAGES } from './appLanguages'
 import { FLOAT_CONTACTS } from './floatContact'
 import { HEADER_NAVIGATES } from './headerNavigate'
 import { WHY_CHOOSE_US } from './whyChooseUs'
@@ -19,11 +18,6 @@ export const ourSlogan = [
     'Reaching the world',
     'Shaping the Future of Mechanical Design',
 ]
-
-export const COMPANY_NAME = {
-    viName: 'Công ty dịch vụ CAD',
-    enName: 'CAD services company',
-}
 
 export const SOCIALS = [
     {
@@ -82,7 +76,6 @@ export type ContactInfor = (typeof CONTACT_INFORMATIONS)[0]
 export {
     ABOUT_US_NAVIGATE,
     HEADER_NAVIGATES,
-    APP_LANGUAGES,
     WHY_CHOOSE_US,
     FLOAT_CONTACTS,
     WORKFLOW,

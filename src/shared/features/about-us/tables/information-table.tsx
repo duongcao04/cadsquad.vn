@@ -1,51 +1,48 @@
 import React from 'react'
 
-import { useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/navigation'
-import {
-    ABOUT_CADSQUAD_INFO,
-    VI_ABOUT_CADSQUAD_INFO,
-} from '@/shared/constants/companyTable'
+import { ABOUT_CADSQUAD_INFO } from '@/shared/constants/companyTable'
 
 export default function InformationTable() {
-    const locale = useLocale()
-
-    const aboutCadsquadInfo =
-        locale === 'vi' ? VI_ABOUT_CADSQUAD_INFO : ABOUT_CADSQUAD_INFO
+    const t = useTranslations('landing.aboutUs.companyInfo')
 
     return (
         <table className="w-full border border-gray-300 shadow-md text-sm lg:text-base">
             <tbody>
-                {aboutCadsquadInfo.map((item, index) => {
+                {ABOUT_CADSQUAD_INFO.map((row) => {
                     return (
                         <tr
-                            key={item.title + index}
+                            key={row.key}
                             className="grid grid-cols-[100px_1fr] items-center lg:grid-cols-[360px_1fr] last:border-none border-b border-[#dee2e6a1]"
                         >
                             <th className="h-full text-left px-4 py-2 lg:py-5 lg:px-10 font-semibold uppercase align-middle bg-[#f6f6f6]">
-                                {item.title}
+                                {t(`${row.key}.label`)}
                             </th>
                             <td className="h-full px-4 py-2 lg:px-8 lg:py-5">
-                                {item.value && (
+                                {!row.items && (
                                     <p className="tracking-wide align-middle">
-                                        {item.value}
+                                        {t(`${row.key}.value`)}
                                     </p>
                                 )}
-                                {item.values && (
+                                {row.items && (
                                     <ul className="ml-8 space-y-2 list-disc">
-                                        {item.values?.map((item, index) => {
+                                        {row.items.map((item) => {
+                                            const value = t(
+                                                `${row.key}.items.${item.key}`
+                                            )
                                             return (
                                                 <li
-                                                    key={item.value + index}
+                                                    key={item.key}
                                                     className="tracking-wide"
                                                 >
                                                     <Link
                                                         href={`/cad-services/${item.href}`}
-                                                        title={item.value}
+                                                        title={value}
                                                         className="block transition duration-200 hover:underline underline-offset-2"
                                                     >
-                                                        {item.value}
+                                                        {value}
                                                     </Link>
                                                 </li>
                                             )

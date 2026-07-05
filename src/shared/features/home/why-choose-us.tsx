@@ -1,16 +1,14 @@
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
-import { VI_WHY_CHOOSE_US, WHY_CHOOSE_US } from '@/shared/constants/whyChooseUs'
+import { WHY_CHOOSE_US } from '@/shared/constants/whyChooseUs'
 import { Section, fadeInUp } from '@/shared/features/home/section'
 
 import ReasonCard from './cards/reason-card'
 
 export default function WhyChooseUs() {
     const tHome = useTranslations('landing.home')
-    const locale = useLocale()
-
-    const whyChooseCadsquad = locale === 'vi' ? VI_WHY_CHOOSE_US : WHY_CHOOSE_US
+    const tItems = useTranslations('landing.home.sections.whyChooseUs.items')
 
     return (
         <Section.Wrapper className="gap-5 lg:gap-8">
@@ -28,13 +26,17 @@ export default function WhyChooseUs() {
                 fluid
                 className="px-4 lg:px-3"
             >
-                {whyChooseCadsquad.map((reason, idx) => (
+                {WHY_CHOOSE_US.map((reason, idx) => (
                     <MotionDiv
-                        key={idx}
+                        key={reason.key}
                         {...fadeInUp(idx * 0.1)}
                         className="size-full"
                     >
-                        <ReasonCard data={reason} />
+                        <ReasonCard
+                            icon={reason.icon}
+                            title={tItems(`${reason.key}.title`)}
+                            description={tItems(`${reason.key}.description`)}
+                        />
                     </MotionDiv>
                 ))}
             </Section.Wrapper>

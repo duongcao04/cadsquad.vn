@@ -9,16 +9,20 @@ import {
     DropdownMenu,
     DropdownTrigger,
 } from '@heroui/react'
+import { Icon, addCollection } from '@iconify/react'
 import { PressEvent } from '@react-types/shared'
 import { ChevronDown } from 'lucide-react'
 import { useLocale } from 'next-intl'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
+import { AppLanguage, LANGUAGE_LIST } from '@/config/app.config'
+import { FLAG_ICONS } from '@/config/flag-icons'
 import { useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
-import { APP_LANGUAGES } from '@/shared/constants/appConstant'
-import { AppLanguage } from '@/shared/constants/appLanguages'
+
+// Register the offline flag icons once so <Icon icon="flagpack:vn" /> resolves
+// without hitting the Iconify API at runtime.
+addCollection(FLAG_ICONS)
 
 export default function ChangeLanguage() {
     const locale = useLocale()
@@ -43,10 +47,8 @@ export default function ChangeLanguage() {
     }
 
     useEffect(() => {
-        const findLanguage = APP_LANGUAGES?.find(
-            (lang) => lang.locale === locale
-        ) as AppLanguage
-        setCurrentLanguage(findLanguage)
+        const findLanguage = LANGUAGE_LIST.find((lang) => lang.code === locale)
+        setCurrentLanguage(findLanguage ?? null)
     }, [locale])
 
     return (
@@ -58,28 +60,28 @@ export default function ChangeLanguage() {
                     endContent={<ChevronDown size={15} />}
                 >
                     {currentLanguage && (
-                        <Image
-                            src={currentLanguage.flag}
-                            alt={currentLanguage.label}
+                        <Icon
+                            icon={currentLanguage.flag}
                             width={24}
                             height={24}
                             className="w-6"
+                            aria-label={currentLanguage.name}
                         />
                     )}
                 </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
-                {APP_LANGUAGES.map((lang) => (
-                    <DropdownItem key={lang.locale} onPress={onChangeLanguage}>
+                {LANGUAGE_LIST.map((lang) => (
+                    <DropdownItem key={lang.code} onPress={onChangeLanguage}>
                         <div className="flex items-center justify-start gap-3">
-                            <Image
-                                src={lang.flag}
-                                alt={lang.label}
+                            <Icon
+                                icon={lang.flag}
                                 width={24}
                                 height={24}
                                 className="w-6"
+                                aria-label={lang.name}
                             />
-                            <p>{lang.label}</p>
+                            <p>{lang.name}</p>
                         </div>
                     </DropdownItem>
                 ))}

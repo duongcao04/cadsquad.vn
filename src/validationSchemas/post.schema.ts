@@ -1,17 +1,17 @@
-import * as yup from 'yup'
+import { z } from 'zod'
 
-export const PostSchema = yup.object().shape({
-    id: yup.string(),
-    title: yup.string(),
-    slug: yup.string(),
-    shortDescription: yup.string().nullable(),
-    keywords: yup.array(yup.string().required()).nullable(),
-    thumbnailUrl: yup.string(),
-    bgCoverUrl: yup.string().nullable(),
-    content: yup.string(),
-    tags: yup.array(yup.string().required()),
-    countView: yup.number(),
-    createdAt: yup.string(),
-    updatedAt: yup.string(),
+export const PostSchema = z.object({
+    id: z.string().optional(),
+    title: z.string().optional(),
+    slug: z.string().optional(),
+    shortDescription: z.string().nullable().optional(),
+    keywords: z.array(z.string()).nullable().optional(),
+    thumbnailUrl: z.string().optional(),
+    bgCoverUrl: z.string().nullable().optional(),
+    content: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    countView: z.number().optional(),
+    createdAt: z.string().optional(),
+    updatedAt: z.string().optional(),
 })
-export type Post = yup.InferType<typeof PostSchema>
+export type Post = z.infer<typeof PostSchema>

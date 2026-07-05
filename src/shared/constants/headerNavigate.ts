@@ -3,72 +3,78 @@ import { StaticImageData } from 'next/image'
 import ImgCsdHeart from '@/assets/images/cadsquad-heart.webp'
 import ImgTeam from '@/assets/images/teams.webp'
 import ImgVision from '@/assets/images/vision.webp'
+import { SupportLanguages } from '@/i18n/routing'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
 
-const getCadServiceMenu: () => NavigateItem['menus'] = () => {
+/**
+ * A label is either an i18n key (`labelKey`, resolved against
+ * `landing.layout.header`) for static entries, or a per-locale map (`label`)
+ * for entries whose text comes from dynamic data such as CAD_SERVICES.
+ */
+type LocaleLabel = Record<SupportLanguages, string>
+
+export type NavigateMenuItem = {
+    labelKey?: string
+    label?: LocaleLabel
+    image: string | StaticImageData
+    href: string
+    outSite?: boolean
+}
+
+export type NavigateItem = {
+    labelKey?: string
+    label?: LocaleLabel
+    href: string
+    outSite?: boolean
+    menus?: NavigateMenuItem[]
+}
+
+const getCadServiceMenu: () => NavigateMenuItem[] = () => {
     return CAD_SERVICES.map((item) => {
         return {
-            enLabel: item.title.original!,
-            viLabel: item.title.vi!,
+            label: {
+                en: item.title.original!,
+                vi: item.title.vi!,
+            },
             href: `/cad-services/${item.slug!}`,
             image: item.thumbnail.vertical!,
         }
     })
 }
 
-export type NavigateItem = {
-    viLabel: string
-    enLabel: string
-    href: string
-    outSite?: boolean
-    menus?: {
-        viLabel: string
-        enLabel: string
-        image: string | StaticImageData
-        href: string
-        outSite?: boolean
-    }[]
-}
 export const HEADER_NAVIGATES: NavigateItem[] = [
     {
-        enLabel: 'About us',
-        viLabel: 'Về chúng tôi',
+        labelKey: 'aboutUs.label',
         href: '/about-us',
         menus: [
             {
-                viLabel: 'Tổng quan',
-                enLabel: 'Overview',
+                labelKey: 'aboutUs.menu.overview',
                 image: ImgTeam,
                 href: '/about-us#overview',
             },
             {
-                viLabel: 'Tầm nhìn',
-                enLabel: 'Vision',
+                labelKey: 'aboutUs.menu.vision',
                 image: ImgVision,
                 href: '/about-us/vision',
             },
             {
-                viLabel: 'Hành trình của chúng tôi',
-                enLabel: 'Our journey',
+                labelKey: 'aboutUs.menu.ourJourney',
                 image: ImgCsdHeart,
                 href: '/about-us#our-journey',
             },
         ],
     },
     {
-        enLabel: 'CAD Services',
-        viLabel: 'Dịch vụ CAD',
+        labelKey: 'cadServices',
         href: '/cad-services',
         menus: getCadServiceMenu(),
     },
     {
-        enLabel: 'Academy',
-        viLabel: 'Khóa học',
+        labelKey: 'academy',
         href: '/academy',
     },
     {
-        enLabel: 'News & Media',
-        viLabel: 'Tin tức',
+        labelKey: 'newsMedia',
         href: '/news-and-media',
     },
 ]

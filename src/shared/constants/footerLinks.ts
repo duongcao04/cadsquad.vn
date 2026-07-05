@@ -1,71 +1,66 @@
+import { SupportLanguages } from '@/i18n/routing'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
 
-const getCadServiceMenu: () => FooterLink['children'] = () => {
+/**
+ * A label is either an i18n key (`labelKey`, resolved against
+ * `landing.layout.footer`) for static entries, or a per-locale map (`label`)
+ * for entries whose text comes from dynamic data such as CAD_SERVICES.
+ */
+type LocaleLabel = Record<SupportLanguages, string>
+
+export type FooterChild = {
+    labelKey?: string
+    label?: LocaleLabel
+    href: string
+}
+
+export type FooterLink = {
+    /** i18n key under `landing.layout.footer.groups` (empty for no heading). */
+    groupNameKey: string
+    children?: FooterChild[]
+}
+
+const getCadServiceMenu: () => FooterChild[] = () => {
     return CAD_SERVICES.map((item) => {
         return {
-            enLabel: item.title.original!,
-            viLabel: item.title.vi!,
+            label: {
+                en: item.title.original!,
+                vi: item.title.vi!,
+            },
             href: `/cad-services/${item.slug!}`,
         }
     })
 }
 
-export type FooterLink = {
-    viGroupName: string
-    enGroupName: string
-    children?: { viLabel: string; enLabel: string; href: string }[]
-}
 export const FOOTER_LINKS: FooterLink[] = [
     {
-        viGroupName: '',
-        enGroupName: '',
+        groupNameKey: 'groups.company',
         children: [
-            {
-                viLabel: 'Về chúng tôi',
-                enLabel: 'About us',
-                href: '/about-us',
-            },
-            {
-                viLabel: 'Tổng quan',
-                enLabel: 'Overview',
-                href: '/about-us#overview',
-            },
-            {
-                viLabel: 'Tầm nhìn',
-                enLabel: 'Vision',
-                href: '/about-us/vision',
-            },
-            {
-                viLabel: 'Hành trình của chúng tôi',
-                enLabel: 'Our Journey',
-                href: '/about-us#our-journey',
-            },
+            { labelKey: 'company.aboutUs', href: '/about-us' },
+            { labelKey: 'company.overview', href: '/about-us#overview' },
+            { labelKey: 'company.vision', href: '/about-us/vision' },
+            { labelKey: 'company.ourJourney', href: '/about-us#our-journey' },
         ],
     },
     {
-        viGroupName: 'Khóa học',
-        enGroupName: 'Academy',
+        groupNameKey: 'groups.academy',
         children: [
             {
-                viLabel: 'Khóa học AutoCAD cơ bản',
-                enLabel: 'Autodesk Inventor Basic',
+                labelKey: 'academy.inventorBasic',
                 href: '/academy/autodesk-inventor-basic',
             },
             {
-                viLabel: 'Khóa học SolidWorks nâng cao',
-                enLabel: 'Autodesk Inventor Advance',
+                labelKey: 'academy.inventorAdvance',
                 href: '/academy/autodesk-inventor-advance',
             },
             {
-                viLabel: 'Thiết kế sản phẩm 3D',
-                enLabel: 'Autodesk AutoCAD',
+                labelKey: 'academy.autocad',
                 href: '/academy/autodesk-autoCAD',
             },
         ],
     },
     {
-        viGroupName: 'Dịch vụ CAD',
-        enGroupName: 'CAD services',
+        groupNameKey: 'groups.cadServices',
         children: getCadServiceMenu(),
     },
 ]

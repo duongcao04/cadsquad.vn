@@ -13,13 +13,13 @@ import ImgVision from '@/assets/images/vision-banner.webp'
 import TeamImg from '@/assets/images/team.webp'
 import { Link } from '@/i18n/navigation'
 import { SupportLanguages } from '@/i18n/routing'
-import { COMPANY_NAME } from '@/shared/constants/appConstant'
 
 export default function AboutUsPage() {
     const locale = useLocale()
     const tVision = useTranslations('landing.vision')
+    const tAboutUs = useTranslations('landing.aboutUs')
 
-    const companyName = COMPANY_NAME[`${locale as SupportLanguages}Name`]
+    const companyName = tAboutUs('companyName')
     const companyInfo = [
         {
             icon: IconMapPinFilled,

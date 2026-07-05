@@ -1,8 +1,9 @@
-import * as yup from 'yup'
+import { z } from 'zod'
 
-export const ContactSchema = yup.object().shape({
-    fullName: yup.string().required(),
-    email: yup.string().required(),
-    message: yup.string().required(),
+export const ContactSchema = z.object({
+    fullName: z.string().min(1),
+    email: z.string().min(1).email(),
+    message: z.string().min(1),
 })
-export type Contact = yup.InferType<typeof ContactSchema>
+
+export type Contact = z.infer<typeof ContactSchema>

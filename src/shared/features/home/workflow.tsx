@@ -4,17 +4,15 @@ import React from 'react'
 
 import { Accordion, AccordionItem } from '@heroui/react'
 import { Image } from 'antd'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
-import { VI_WORKFLOW, WORKFLOW } from '@/shared/constants/workflow'
+import { WORKFLOW } from '@/shared/constants/workflow'
 import { Section, fadeInUp } from '@/shared/features/home/section'
 
 export default function Workflow() {
-    const locale = useLocale()
     const tHome = useTranslations('landing.home')
-
-    const workflow = locale === 'vi' ? VI_WORKFLOW : WORKFLOW
+    const tItems = useTranslations('landing.home.sections.workflow.items')
 
     return (
         <Section.Wrapper className="gap-5 lg:gap-8">
@@ -42,11 +40,15 @@ export default function Workflow() {
                 </MotionDiv>
                 <div>
                     <Accordion defaultSelectedKeys={['0']}>
-                        {workflow.map((item, idx) => {
+                        {WORKFLOW.map((item, idx) => {
+                            const title = tItems(`${item.key}.title`)
+                            const description = tItems(
+                                `${item.key}.description`
+                            )
                             return (
                                 <AccordionItem
-                                    key={idx}
-                                    aria-label={item.title}
+                                    key={item.key}
+                                    aria-label={title}
                                     title={
                                         <MotionDiv
                                             {...fadeInUp((idx + 1) * 0.1)}
@@ -63,13 +65,13 @@ export default function Workflow() {
                                                 </p>
                                             </div>
                                             <p className="text-base lg:text-lg font-semibold capitalize">
-                                                {item.title}
+                                                {title}
                                             </p>
                                         </MotionDiv>
                                     }
                                 >
                                     <p className="pb-2 text-sm lg:text-base tracking-wide">
-                                        {item.description}
+                                        {description}
                                     </p>
                                 </AccordionItem>
                             )

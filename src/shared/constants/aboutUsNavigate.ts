@@ -1,23 +1,14 @@
-export const ABOUT_US_NAVIGATE = [
-    { title: 'Overview', href: '/about-us/#overview' },
-    {
-        title: 'Our journey',
-        href: '/about-us/#our-journey',
-    },
-    {
-        title: 'Client & Partner',
-        href: '/about-us/#client-partner',
-    },
-]
+/**
+ * About-us section anchors. Labels live in the message files under
+ * `landing.aboutUs.navigate.<key>`; only the anchor href is kept here.
+ */
+export type AboutUsNavItem = {
+    key: string
+    href: string
+}
 
-export const VI_ABOUT_US_NAVIGATE = [
-    { title: 'Tổng quan', href: '/about-us/#overview' },
-    {
-        title: 'Lịch sử phát triển',
-        href: '/about-us/#our-journey',
-    },
-    {
-        title: 'Khách hàng & Đối tác',
-        href: '/about-us/#client-partner',
-    },
+export const ABOUT_US_NAVIGATE: AboutUsNavItem[] = [
+    { key: 'overview', href: '/about-us/#overview' },
+    { key: 'ourJourney', href: '/about-us/#our-journey' },
+    { key: 'clientPartner', href: '/about-us/#client-partner' },
 ]
