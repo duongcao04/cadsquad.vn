@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 
 import envConfig from '@/config/config'
 import { transporter } from '@/lib/nodemailer'
-import EmailTemplate from '@/shared/components/EmailTemplate'
+import EmailTemplate from '@/shared/components/email-template'
 
 const EMAIL_SUBJECT = '[cadsquad.vn] Customer wants to connect'
 

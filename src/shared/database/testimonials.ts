@@ -1,12 +1,12 @@
 import { SVGProps } from 'react'
 
-import { AlgeriaFlag } from '@/shared/components/icons/flags/AlgeriaFlag'
-import { CanadaFlag } from '@/shared/components/icons/flags/CanadaFlag'
-import { ColombiaFlag } from '@/shared/components/icons/flags/ColombiaFlag'
-import { GermanyFlag } from '@/shared/components/icons/flags/GermanyFlag'
-import { IndiaFlag } from '@/shared/components/icons/flags/IndiaFlag'
-import { UKFlag } from '@/shared/components/icons/flags/UKFlag'
-import { USFlag } from '@/shared/components/icons/flags/USFlag'
+import { AlgeriaFlag } from '@/shared/components/icons/flags/algeria-flag'
+import { CanadaFlag } from '@/shared/components/icons/flags/canada-flag'
+import { ColombiaFlag } from '@/shared/components/icons/flags/colombia-flag'
+import { GermanyFlag } from '@/shared/components/icons/flags/germany-flag'
+import { IndiaFlag } from '@/shared/components/icons/flags/india-flag'
+import { UKFlag } from '@/shared/components/icons/flags/uk-flag'
+import { USFlag } from '@/shared/components/icons/flags/us-flag'
 
 export type Testimonial = {
     quote: string

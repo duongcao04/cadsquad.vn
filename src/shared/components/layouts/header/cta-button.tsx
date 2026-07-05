@@ -3,7 +3,7 @@
 import { Button, useDisclosure } from '@heroui/react'
 import { useTranslations } from 'next-intl'
 
-import { CallLoopIcon } from '@/shared/components/icons/CallLoopIcon'
+import { CallLoopIcon } from '@/shared/components/icons/call-loop-icon'
 
 import ContactModal from '../../ContactModal'
 

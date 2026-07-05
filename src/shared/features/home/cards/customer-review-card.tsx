@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Image } from 'antd'
 
-import { IconQuotes } from '@/shared/components/icons/IconQuotes'
+import { IconQuotes } from '@/shared/components/icons/icon-quotes'
 import { Testimonial } from '@/shared/database/testimonials'
 
 export default function CustomerReviewCard({ data }: { data: Testimonial }) {

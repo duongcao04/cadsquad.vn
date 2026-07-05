@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 
-import ButtonDownloadBrochure from '@/components/ButtonDownloadBrochure'
+import ButtonDownloadBrochure from '@/components/button-download-brochure'
 
 import AboutUsImage from '@/assets/images/about-us-banner.webp'
 import { MotionH1 } from '@/lib/motion'

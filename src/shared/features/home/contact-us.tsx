@@ -6,7 +6,7 @@ import { Button } from '@heroui/react'
 import { useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/navigation'
-import Decorate from '@/shared/components/layouts/footer/Decorate'
+import Decorate from '@/shared/components/layouts/footer/decorate'
 import { CONTACT_INFORMATIONS } from '@/shared/constants/appConstant'
 import { Section } from '@/shared/features/home/section'
 import { useDevice } from '@/shared/hooks/useDevice'

@@ -5,7 +5,7 @@ import React from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/vi'
 
-import Logo from '@/shared/components/Logo'
+import Logo from '@/shared/components/logo'
 
 dayjs.locale('vi')
 type Props = {

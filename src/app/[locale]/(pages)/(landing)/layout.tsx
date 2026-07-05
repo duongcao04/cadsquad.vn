@@ -1,4 +1,4 @@
-import FAB from '@/shared/components/layouts/FAB'
+import FAB from '@/shared/components/layouts/fab'
 import Footer from '@/shared/components/layouts/footer'
 import AppHeader from '@/shared/components/layouts/header'
 

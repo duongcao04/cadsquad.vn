@@ -6,7 +6,7 @@ import { useWindowScroll } from '@uidotdev/usehooks'
 import { Variants } from 'motion'
 
 import { MotionDiv, MotionHeader } from '@/lib/motion'
-import Logo from '@/shared/components/Logo'
+import Logo from '@/shared/components/logo'
 import Actions from '@/shared/components/layouts/header/Actions'
 import Navbar from '@/shared/components/layouts/header/Navbar'
 
