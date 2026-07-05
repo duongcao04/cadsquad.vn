@@ -29,15 +29,30 @@ export const LANGUAGE_LIST = [
 
 export type LanguageCode = (typeof LANGUAGE_LIST)[number]['code']
 
+const LANGUAGE_CONFIG = {
+    isEnable: true,
+    useUrl: true,
+    default: 'en' as LanguageCode,
+    available: LANGUAGE_LIST.map((language) => language.code) as LanguageCode[],
+}
+
+const enabledLanguageCodes = LANGUAGE_CONFIG.isEnable
+    ? LANGUAGE_CONFIG.available
+    : [LANGUAGE_CONFIG.default]
+
+const enabledLanguageList = LANGUAGE_LIST.filter((language) =>
+    enabledLanguageCodes.includes(language.code)
+)
+
 const appConfig = {
     language: {
-        isEnable: true,
-        useUrl: true,
-        availableUrls: LANGUAGE_LIST.map((l) => l.urlCode),
-        available: LANGUAGE_LIST.map((l) => l.code) as LanguageCode[],
+        isEnable: LANGUAGE_CONFIG.isEnable,
+        useUrl: LANGUAGE_CONFIG.useUrl,
+        availableUrls: enabledLanguageList.map((language) => language.urlCode),
+        available: enabledLanguageCodes,
         /** Fallback language for content + default URL locale. */
-        default: 'en' as LanguageCode,
-        list: LANGUAGE_LIST as readonly AppLanguage[],
+        default: LANGUAGE_CONFIG.default,
+        list: enabledLanguageList as readonly AppLanguage[],
     },
 }
 

@@ -1,10 +1,12 @@
 import createIntlMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
 
+import appConfig from '@/config/app.config'
 import {
     type SupportLanguages,
     defaultLocale,
     getLocaleFromPathname,
+    removeLocaleFromPathname,
     isValidLocale,
     routing,
 } from '@/i18n/routing'
@@ -51,6 +53,20 @@ function hasLocalePrefix(pathname: string): boolean {
 
 export default async function middleware(req: NextRequest) {
     const path = req.nextUrl.pathname
+    const useLocalePrefix =
+        appConfig.language.isEnable && appConfig.language.useUrl
+
+    if (!useLocalePrefix) {
+        const pathnameWithoutLocale = removeLocaleFromPathname(path)
+
+        if (pathnameWithoutLocale !== path) {
+            const newUrl = new URL(pathnameWithoutLocale, req.url)
+            newUrl.search = req.nextUrl.search
+            return NextResponse.redirect(newUrl)
+        }
+
+        return intlMiddleware(req)
+    }
 
     // Check if a path already has a locale prefix
     if (!hasLocalePrefix(path)) {

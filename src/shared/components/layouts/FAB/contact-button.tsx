@@ -17,59 +17,59 @@ type Props = {
     onClose: () => void
 }
 
-export default function ContactButton({ isOpen, onOpen, onClose }: Props) {
-    const slides: {
-        id: number
-        title: string
-        body: React.ReactNode
-    }[] = [
-        {
-            id: 1,
-            title: 'Contact us',
-            body: (
-                <div className="flex items-center justify-center flex-col">
-                    <FabMail width={24} height={24} className="text-white" />
-                    <p className="text-white mt-0.5 text-[10px] font-semibold">
-                        Contact us
-                    </p>
-                </div>
-            ),
-        },
-        {
-            id: 2,
-            title: 'Whatsapp',
-            body: (
-                <div className="p-3 bg-white rounded-full text-[#ef4444]">
-                    <FabCall width={34} height={34} />
-                </div>
-            ),
-        },
-        {
-            id: 3,
-            title: 'Messenger',
-            body: (
-                <div className="p-3 bg-white rounded-full text-[#ef4444]">
-                    <FabMessenger width={34} height={34} />
-                </div>
-            ),
-        },
-        {
-            id: 4,
-            title: 'Zalo',
-            body: (
-                <div className="p-3 bg-white rounded-full text-[#ef4444]">
-                    <Image
-                        src={FabZalo}
-                        width={32}
-                        height={32}
-                        className="size-[32px] hue-rotate-170"
-                        alt="Zalo"
-                    />
-                </div>
-            ),
-        },
-    ]
+const slides: {
+    id: number
+    title: string
+    body: React.ReactNode
+}[] = [
+    {
+        id: 1,
+        title: 'Contact us',
+        body: (
+            <div className="flex items-center justify-center flex-col">
+                <FabMail width={24} height={24} className="text-white" />
+                <p className="text-white mt-0.5 text-[10px] font-semibold">
+                    Contact us
+                </p>
+            </div>
+        ),
+    },
+    {
+        id: 2,
+        title: 'Whatsapp',
+        body: (
+            <div className="p-3 bg-white rounded-full text-[#ef4444]">
+                <FabCall width={34} height={34} />
+            </div>
+        ),
+    },
+    {
+        id: 3,
+        title: 'Messenger',
+        body: (
+            <div className="p-3 bg-white rounded-full text-[#ef4444]">
+                <FabMessenger width={34} height={34} />
+            </div>
+        ),
+    },
+    {
+        id: 4,
+        title: 'Zalo',
+        body: (
+            <div className="p-3 bg-white rounded-full text-[#ef4444]">
+                <Image
+                    src={FabZalo}
+                    width={32}
+                    height={32}
+                    className="size-[32px] hue-rotate-170"
+                    alt="Zalo"
+                />
+            </div>
+        ),
+    },
+]
 
+export default function ContactButton({ isOpen, onOpen, onClose }: Props) {
     const [currentSlide, setCurrentSlide] = useState<(typeof slides)[0]>(
         slides[0]
     )

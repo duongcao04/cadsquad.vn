@@ -15,7 +15,7 @@ import { ChevronDown } from 'lucide-react'
 import { useLocale } from 'next-intl'
 import { usePathname } from 'next/navigation'
 
-import { AppLanguage, LANGUAGE_LIST } from '@/config/app.config'
+import appConfig, { AppLanguage } from '@/config/app.config'
 import { FLAG_ICONS } from '@/config/flag-icons'
 import { useRouter } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
@@ -25,6 +25,14 @@ import { routing } from '@/i18n/routing'
 addCollection(FLAG_ICONS)
 
 export default function ChangeLanguage() {
+    if (!appConfig.language.isEnable || appConfig.language.list.length <= 1) {
+        return null
+    }
+
+    return <ChangeLanguageDropdown />
+}
+
+function ChangeLanguageDropdown() {
     const locale = useLocale()
     const getPathname = usePathname().slice(1)
     const router = useRouter()
@@ -47,7 +55,9 @@ export default function ChangeLanguage() {
     }
 
     useEffect(() => {
-        const findLanguage = LANGUAGE_LIST.find((lang) => lang.code === locale)
+        const findLanguage = appConfig.language.list.find(
+            (lang) => lang.code === locale
+        )
         setCurrentLanguage(findLanguage ?? null)
     }, [locale])
 
@@ -71,7 +81,7 @@ export default function ChangeLanguage() {
                 </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
-                {LANGUAGE_LIST.map((lang) => (
+                {appConfig.language.list.map((lang) => (
                     <DropdownItem key={lang.code} onPress={onChangeLanguage}>
                         <div className="flex items-center justify-start gap-3">
                             <Icon
