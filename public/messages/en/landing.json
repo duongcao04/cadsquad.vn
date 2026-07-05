@@ -1,13 +1,45 @@
 {
     "layout": {
-        "followUsOn": "Follow us on"
+        "followUsOn": "Follow us on",
+        "header": {
+            "aboutUs": {
+                "label": "About us",
+                "menu": {
+                    "overview": "Overview",
+                    "vision": "Vision",
+                    "ourJourney": "Our journey"
+                }
+            },
+            "cadServices": "CAD Services",
+            "digitalServices": "Digital Services",
+            "academy": "Academy",
+            "newsMedia": "News & Media"
+        },
+        "footer": {
+            "groups": {
+                "company": "",
+                "academy": "Academy",
+                "cadServices": "CAD services"
+            },
+            "company": {
+                "aboutUs": "About us",
+                "overview": "Overview",
+                "vision": "Vision",
+                "ourJourney": "Our Journey"
+            },
+            "academy": {
+                "inventorBasic": "Autodesk Inventor Basic",
+                "inventorAdvance": "Autodesk Inventor Advance",
+                "autocad": "Autodesk AutoCAD"
+            }
+        }
     },
     "home": {
         "heading": {
             "title": "Home"
         },
-        "slogan": "Global Mechanical Design Partner",
-        "sloganDescription": "We turn innovative ideas, drawing into reality, delivering high-quality CAD and engineering solutions for a sustainable future.",
+        "slogan": "Global Engineering Partner",
+        "sloganDescription": "Transforming engineering ideas into reliable, real-world solutions.",
         "sections": {
             "ourServices": {
                 "title": "Our <highlight>Services</highlight>"
@@ -16,7 +48,41 @@
                 "title": "Popular <highlight>Project</highlight>"
             },
             "whyChooseUs": {
-                "title": "Why Choose <highlight> Cadsquad </highlight>?"
+                "title": "Why Choose <highlight> Cadsquad </highlight>?",
+                "items": {
+                    "experience": {
+                        "title": "Experience and Expertise",
+                        "description": "CADSQUAD boasts a wealth of experience in 3D modeling and rendering, particularly in the field of mechanical. Our team's deep expertise ensures high-quality results."
+                    },
+                    "comprehensive": {
+                        "title": "Comprehensive Services",
+                        "description": "We offer a wide range of services, including 3D modeling, 2D drawings, steel structure, simulation, rendering, 3D printing. Our versatility caters to various client needs."
+                    },
+                    "qualityAssurance": {
+                        "title": "Quality Assurance",
+                        "description": "CADSQUAD is committed to delivering top-notch results with a focus on precision and attention to detail. Our quality assurance processes guarantee excellence in every project we undertake"
+                    },
+                    "creative": {
+                        "title": "Creative Solutions",
+                        "description": "Our team of 3D artists is dedicated to bringing your ideas to life with creativity and innovation, turning concepts into stunning visual representations that make a lasting impact."
+                    },
+                    "technology": {
+                        "title": "Cutting-Edge Technology",
+                        "description": "We leverage the latest software and hardware tools to stay at the forefront of the industry, ensuring efficiency and accuracy in all our projects."
+                    },
+                    "timelyDelivery": {
+                        "title": "Timely Delivery",
+                        "description": "CADSQUAD understands the importance of deadlines. We are dedicated to delivering projects on time, helping you stay on track with your project schedules."
+                    },
+                    "clientCentric": {
+                        "title": "Client-Centric Approach",
+                        "description": "We prioritize open communication with our clients, ensuring that your vision and feedback are incorporated into the design process to achieve your desired outcomes."
+                    },
+                    "competitivePricing": {
+                        "title": "Competitive Pricing",
+                        "description": "Despite our high-quality services, CADSQUAD offers competitive pricing options, making professional 3D modeling, rendering, and design services accessible to a broad range of clients."
+                    }
+                }
             },
             "customerReview": {
                 "title": "Customer <highlight>Review</highlight>"
@@ -30,7 +96,29 @@
                 }
             },
             "workflow": {
-                "title": "How do we <highlight>work</highlight> ?"
+                "title": "How do we <highlight>work</highlight> ?",
+                "items": {
+                    "step1": {
+                        "title": "Idea reception",
+                        "description": "We begin by receiving your concept and understanding your vision. Our team collaborates to grasp your project's objectives and unique requirements."
+                    },
+                    "step2": {
+                        "title": "3D Modeling and Technical Drawings",
+                        "description": "Once we have a clear understanding of your idea, our experts proceed to create detailed 3D models and technical drawings. These serve as the foundation for the design and engineering aspects of the project."
+                    },
+                    "step3": {
+                        "title": "Inspection and Handover",
+                        "description": "After the 3D models and technical drawings are complete, we conduct thorough quality checks to ensure that all aspects meet the specified standards. Upon successful validation, we deliver the project to you."
+                    },
+                    "step4": {
+                        "title": "Production",
+                        "description": "Depending on the nature of your project, this step can involve the actual production, fabrication, or realization of the design. We tailor our production processes to align with your specific project requirements and goals."
+                    },
+                    "step5": {
+                        "title": "Acceptance Testing",
+                        "description": "The final phase involves acceptance testing, which is performed based on your project's individual needs and criteria. We work closely with you to conduct the necessary testing and ensure that the end product aligns with your expectations."
+                    }
+                }
             }
         }
     },
@@ -49,6 +137,56 @@
         }
     },
     "aboutUs": {
+        "companyName": "CAD services company",
+        "navigate": {
+            "overview": "Overview",
+            "ourJourney": "Our journey",
+            "clientPartner": "Client & Partner"
+        },
+        "companyInfo": {
+            "taxId": {
+                "label": "Tax identification number",
+                "value": "0319622492"
+            },
+            "companyName": {
+                "label": "Company name",
+                "value": "CADSQUAD VIETNAM"
+            },
+            "location": {
+                "label": "Address",
+                "value": "Ho Chi Minh City, Viet Nam"
+            },
+            "phone": {
+                "label": "Phone number",
+                "value": "(+84) 765 279 228"
+            },
+            "email": {
+                "label": "Email",
+                "value": "Contact@cadsquad.vn"
+            },
+            "founder": {
+                "label": "Founder",
+                "value": "Pham Tien Phong (Mr.)"
+            },
+            "address": {
+                "label": "Address",
+                "value": "P.702A, 7th Floor, Centre Point Building, 106 Nguyen Van Troi Street, Phu Nhuan Ward, Ho Chi Minh City, Vietnam"
+            },
+            "businessActivities": {
+                "label": "Business activities",
+                "items": {
+                    "technicalDrawing": "Technical Drawing Digitization & CAD Data Creation",
+                    "partExtraction": "Part Extraction from Assembly Drawings",
+                    "customMachine": "Custom Machine Design for Food & Material Handling Systems",
+                    "steelStructure": "3D and 2D for Steel structure",
+                    "sheetMetal": "CAD for Sheet Metal Manufacturing",
+                    "machineDesignSupport": "Machine Design Support - From Concept to Manufacturing",
+                    "structuralAnalysis": "Structural Analysis (FEA)",
+                    "motionSimulation": "Mechanical Motion Simulation",
+                    "customDesign": "Custom Design Services on Request"
+                }
+            }
+        },
         "heading": {
             "title": "About Us",
             "slogan": "CADSQUAD VIETNAM",

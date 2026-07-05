@@ -1,0 +1,11 @@
+🔍 [21:33:37] BẮT ĐẦU KIỂM TRA KẾT NỐI HỆ THỐNG
+📝 File log trận này: logs/connection_check_20260705_213337.log
+--------------------------------------------------------
+🖥️ [1/2] Đang kết nối VPS để kiểm tra Port 3000 nội bộ...
+--------------------------------------------------------
+✅ OK: Ứng dụng Next.js đang phản hồi tốt tại port 3000 nội bộ VPS.
+HTTP/1.1 307 Temporary Redirect
+Connection to 103.82.192.189 closed.
+--------------------------------------------------------
+🌍 [2/2] Đang kiểm tra kết nối thực tế tới tên miền công cộng...
+--------------------------------------------------------

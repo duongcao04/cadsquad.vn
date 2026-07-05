@@ -2,12 +2,18 @@ import nodemailer from 'nodemailer'
 
 import envConfig from '@/config/config'
 
-export const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: envConfig.NEXT_PUBLIC_SMTP_USER,
-        pass: envConfig.NEXT_PUBLIC_SMTP_PASS,
-    },
-})
+let transporter: nodemailer.Transporter | null = null
 
-export const isVerified = await transporter.verify()
+export function getTransporter() {
+    if (!transporter) {
+        transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: envConfig.NEXT_PUBLIC_SMTP_USER,
+                pass: envConfig.NEXT_PUBLIC_SMTP_PASS,
+            },
+        })
+    }
+
+    return transporter
+}

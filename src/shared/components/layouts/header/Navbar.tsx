@@ -5,21 +5,22 @@ import React from 'react'
 import { Button } from '@heroui/react'
 import { ChevronRight } from 'lucide-react'
 import { Variants } from 'motion'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 
 import { Link, usePathname } from '@/i18n/navigation'
 import { SupportLanguages } from '@/i18n/routing'
 import { MotionButton, MotionDiv, MotionLi, MotionP } from '@/lib/motion'
-import {
-    HEADER_NAVIGATES,
-    NavigateItem,
-} from '@/shared/constants/headerNavigate'
+import { NavigateItem } from '@/shared/constants/header-navigate'
+import { useHeaderNavigates } from '@/shared/hooks/use-header-navigates'
+import { resolveNavLabel } from '@/shared/utils/navLabel'
 
 export default function Navbar() {
+    const navigates = useHeaderNavigates()
+
     return (
         <nav className="z-50 flex items-center justify-start gap-2">
-            {HEADER_NAVIGATES.map((item, index) => {
+            {navigates.map((item, index) => {
                 return <NavbarItem key={index} data={item} index={index} />
             })}
         </nav>
@@ -27,14 +28,15 @@ export default function Navbar() {
 }
 
 function NavbarItem({ data, index }: { data: NavigateItem; index: number }) {
-    const locale = useLocale()
+    const locale = useLocale() as SupportLanguages
+    const t = useTranslations('landing.layout.header')
 
     const pathname = usePathname()
     const isCurrentPath =
         data.href.startsWith('/') &&
         pathname.split('/').includes(data.href.split('/')[1])
 
-    const label = data[`${locale as SupportLanguages}Label`]
+    const label = resolveNavLabel(data, t, locale)
 
     const labelVariants: Variants = {
         init: {
@@ -146,13 +148,16 @@ function NavbarItem({ data, index }: { data: NavigateItem; index: number }) {
                         </Link>
                     </div>
                     <ul className="grid grid-cols-3 gap-6 max-h-[80vh] overflow-y-auto pr-5">
-                        {data.menus.map((menuItem, index) => {
-                            const itemLabel =
-                                menuItem[`${locale as SupportLanguages}Label`]
+                        {data.menus.map((menuItem) => {
+                            const itemLabel = resolveNavLabel(
+                                menuItem,
+                                t,
+                                locale
+                            )
 
                             return (
                                 <MotionLi
-                                    key={index + menuItem.enLabel}
+                                    key={menuItem.href}
                                     initial="init"
                                     animate="animate"
                                     whileHover="hover"

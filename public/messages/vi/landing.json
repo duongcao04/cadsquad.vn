@@ -1,13 +1,45 @@
 {
     "layout": {
-        "followUsOn": "Theo dõi chúng tôi"
+        "followUsOn": "Theo dõi chúng tôi",
+        "header": {
+            "aboutUs": {
+                "label": "Về chúng tôi",
+                "menu": {
+                    "overview": "Tổng quan",
+                    "vision": "Tầm nhìn",
+                    "ourJourney": "Hành trình của chúng tôi"
+                }
+            },
+            "cadServices": "Dịch vụ CAD",
+            "digitalServices": "Dịch vụ số",
+            "academy": "Khóa học",
+            "newsMedia": "Tin tức"
+        },
+        "footer": {
+            "groups": {
+                "company": "",
+                "academy": "Khóa học",
+                "cadServices": "Dịch vụ CAD"
+            },
+            "company": {
+                "aboutUs": "Về chúng tôi",
+                "overview": "Tổng quan",
+                "vision": "Tầm nhìn",
+                "ourJourney": "Hành trình của chúng tôi"
+            },
+            "academy": {
+                "inventorBasic": "Khóa học AutoCAD cơ bản",
+                "inventorAdvance": "Khóa học SolidWorks nâng cao",
+                "autocad": "Thiết kế sản phẩm 3D"
+            }
+        }
     },
     "home": {
         "heading": {
             "title": "Trang chủ"
         },
-        "slogan": "Đối tác thiết kế cơ khí toàn cầu",
-        "sloganDescription": "Chúng tôi biến ý tưởng sáng tạo và bản vẽ thành hiện thực, cung cấp các giải pháp CAD và kỹ thuật chất lượng cao vì một tương lai bền vững.",
+        "slogan": "Giải Pháp Kỹ Thuật Toàn Diện",
+        "sloganDescription": "Chuyên thiết kế, phát triển và triển khai các giải pháp kỹ thuật tiên tiến, giúp doanh nghiệp tăng tốc đổi mới và phát triển bền vững.",
         "sections": {
             "ourServices": {
                 "title": "Dịch vụ <highlight>CAD</highlight>"
@@ -16,7 +48,41 @@
                 "title": "Dự án <highlight>phổ biến</highlight>"
             },
             "whyChooseUs": {
-                "title": "Tại sao chọn <highlight> Cadsquad </highlight>?"
+                "title": "Tại sao chọn <highlight> Cadsquad </highlight>?",
+                "items": {
+                    "experience": {
+                        "title": "Kinh nghiệm và Chuyên môn",
+                        "description": "CADSQUAD sở hữu bề dày kinh nghiệm trong lĩnh vực mô hình hóa và dựng hình 3D, đặc biệt trong ngành cơ khí. Chuyên môn sâu của đội ngũ chúng tôi đảm bảo mang lại kết quả chất lượng cao."
+                    },
+                    "comprehensive": {
+                        "title": "Dịch vụ toàn diện",
+                        "description": "Chúng tôi cung cấp đa dạng dịch vụ, bao gồm mô hình 3D, bản vẽ 2D, kết cấu thép, mô phỏng, dựng hình, in 3D. Sự đa dạng này đáp ứng nhiều nhu cầu khác nhau của khách hàng."
+                    },
+                    "qualityAssurance": {
+                        "title": "Đảm bảo chất lượng",
+                        "description": "CADSQUAD cam kết mang lại kết quả xuất sắc với sự chính xác và chú trọng từng chi tiết. Quy trình kiểm soát chất lượng của chúng tôi đảm bảo sự hoàn hảo trong mọi dự án."
+                    },
+                    "creative": {
+                        "title": "Giải pháp sáng tạo",
+                        "description": "Đội ngũ nghệ sĩ 3D của chúng tôi tận tâm biến ý tưởng của bạn thành hiện thực với sự sáng tạo và đổi mới, biến các khái niệm thành những hình ảnh ấn tượng để lại dấu ấn lâu dài."
+                    },
+                    "technology": {
+                        "title": "Công nghệ hiện đại",
+                        "description": "Chúng tôi áp dụng các công cụ phần mềm và phần cứng mới nhất để luôn dẫn đầu trong ngành, đảm bảo hiệu quả và độ chính xác cho mọi dự án."
+                    },
+                    "timelyDelivery": {
+                        "title": "Giao hàng đúng hạn",
+                        "description": "CADSQUAD hiểu rõ tầm quan trọng của tiến độ. Chúng tôi luôn nỗ lực bàn giao dự án đúng thời gian, giúp bạn duy trì lịch trình công việc."
+                    },
+                    "clientCentric": {
+                        "title": "Lấy khách hàng làm trung tâm",
+                        "description": "Chúng tôi ưu tiên giao tiếp cởi mở với khách hàng, đảm bảo tầm nhìn và phản hồi của bạn được tích hợp vào quá trình thiết kế để đạt kết quả mong muốn."
+                    },
+                    "competitivePricing": {
+                        "title": "Giá cả cạnh tranh",
+                        "description": "Bên cạnh chất lượng dịch vụ cao, CADSQUAD vẫn mang đến mức giá cạnh tranh, giúp dịch vụ mô hình 3D, dựng hình và thiết kế chuyên nghiệp trở nên dễ tiếp cận cho nhiều khách hàng."
+                    }
+                }
             },
             "customerReview": {
                 "title": "<highlight>Đánh giá</highlight>"
@@ -30,7 +96,29 @@
                 }
             },
             "workflow": {
-                "title": "Quy trình <highlight>làm việc</highlight>"
+                "title": "Quy trình <highlight>làm việc</highlight>",
+                "items": {
+                    "step1": {
+                        "title": "Tiếp nhận ý tưởng",
+                        "description": "Chúng tôi bắt đầu bằng việc tiếp nhận ý tưởng và tìm hiểu tầm nhìn của bạn. Đội ngũ của chúng tôi sẽ phối hợp để nắm rõ mục tiêu và các yêu cầu đặc thù của dự án."
+                    },
+                    "step2": {
+                        "title": "Mô hình 3D và Bản vẽ kỹ thuật",
+                        "description": "Khi đã hiểu rõ ý tưởng của bạn, các chuyên gia của chúng tôi sẽ tiến hành tạo mô hình 3D chi tiết và bản vẽ kỹ thuật. Đây là nền tảng cho các yếu tố thiết kế và kỹ thuật của dự án."
+                    },
+                    "step3": {
+                        "title": "Kiểm tra và Bàn giao",
+                        "description": "Sau khi hoàn thành mô hình 3D và bản vẽ kỹ thuật, chúng tôi tiến hành kiểm tra chất lượng kỹ lưỡng để đảm bảo mọi yếu tố đạt tiêu chuẩn. Sau khi xác nhận đạt yêu cầu, chúng tôi sẽ bàn giao dự án cho bạn."
+                    },
+                    "step4": {
+                        "title": "Sản xuất",
+                        "description": "Tùy thuộc vào tính chất dự án, bước này có thể bao gồm sản xuất, gia công hoặc hiện thực hóa thiết kế. Chúng tôi tùy chỉnh quy trình sản xuất để phù hợp với yêu cầu và mục tiêu cụ thể của bạn."
+                    },
+                    "step5": {
+                        "title": "Kiểm tra nghiệm thu",
+                        "description": "Giai đoạn cuối cùng là kiểm tra nghiệm thu, được thực hiện dựa trên nhu cầu và tiêu chí riêng của dự án. Chúng tôi phối hợp chặt chẽ với bạn để tiến hành các bước kiểm tra cần thiết, đảm bảo sản phẩm cuối cùng đáp ứng đúng kỳ vọng."
+                    }
+                }
             }
         }
     },
@@ -49,6 +137,56 @@
         }
     },
     "aboutUs": {
+        "companyName": "Công ty dịch vụ CAD",
+        "navigate": {
+            "overview": "Tổng quan",
+            "ourJourney": "Lịch sử phát triển",
+            "clientPartner": "Khách hàng & Đối tác"
+        },
+        "companyInfo": {
+            "taxId": {
+                "label": "Mã số thuế",
+                "value": "0319622492"
+            },
+            "companyName": {
+                "label": "Tên công ty",
+                "value": "CADSQUAD VIỆT NAM"
+            },
+            "location": {
+                "label": "Địa chỉ",
+                "value": "TP. Hồ Chí Minh, Việt Nam"
+            },
+            "phone": {
+                "label": "Số điện thoại",
+                "value": "(+84) 765 279 228"
+            },
+            "email": {
+                "label": "Email",
+                "value": "Contact@cadsquad.vn"
+            },
+            "founder": {
+                "label": "Nhà sáng lập",
+                "value": "Ông Phạm Tiền Phong"
+            },
+            "address": {
+                "label": "Địa chỉ",
+                "value": "P.702A Tầng 7, Tòa nhà Centre Point, 106 Nguyễn Văn Trỗi, Phường Phú Nhuận, TP Hồ Chí Minh, Việt Nam"
+            },
+            "businessActivities": {
+                "label": "Sản phẩm & dịch vụ",
+                "items": {
+                    "technicalDrawing": "Số hóa bản vẽ kỹ thuật & Tạo dữ liệu CAD",
+                    "partExtraction": "Tách chi tiết từ bản vẽ lắp ráp",
+                    "customMachine": "Thiết kế máy tùy chỉnh cho hệ thống thực phẩm & xử lý vật liệu",
+                    "steelStructure": "Thiết kế 3D và 2D cho kết cấu thép",
+                    "sheetMetal": "Thiết kế CAD cho gia công kim loại tấm",
+                    "machineDesignSupport": "Hỗ trợ thiết kế máy – Từ ý tưởng đến sản xuất",
+                    "structuralAnalysis": "Phân tích kết cấu (FEA)",
+                    "motionSimulation": "Mô phỏng chuyển động cơ khí",
+                    "customDesign": "Dịch vụ thiết kế tùy chỉnh theo yêu cầu"
+                }
+            }
+        },
         "heading": {
             "title": "Về Chúng Tôi",
             "slogan": "CADSQUAD VIETNAM",
