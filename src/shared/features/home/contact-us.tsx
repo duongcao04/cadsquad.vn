@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/navigation'
 import Decorate from '@/shared/components/layouts/footer/decorate'
-import { CONTACT_INFORMATIONS } from '@/shared/constants/appConstant'
+import { CONTACT_INFORMATIONS } from '@/shared/constants/app-constant'
 import { Section } from '@/shared/features/home/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 

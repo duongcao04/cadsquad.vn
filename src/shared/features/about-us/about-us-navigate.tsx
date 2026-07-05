@@ -4,7 +4,7 @@ import React from 'react'
 
 import { useTranslations } from 'next-intl'
 
-import { ABOUT_US_NAVIGATE } from '@/shared/constants/aboutUsNavigate'
+import { ABOUT_US_NAVIGATE } from '@/shared/constants/about-us-navigate'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 export default function AboutUsNavigate() {

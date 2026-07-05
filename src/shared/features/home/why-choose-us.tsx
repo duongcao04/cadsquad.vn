@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
-import { WHY_CHOOSE_US } from '@/shared/constants/whyChooseUs'
+import { WHY_CHOOSE_US } from '@/shared/constants/why-choose-us'
 import { Section, fadeInUp } from '@/shared/features/home/section'
 
 import ReasonCard from './cards/reason-card'

@@ -5,7 +5,7 @@ import React from 'react'
 import { Button } from '@heroui/react'
 
 import { Link } from '@/i18n/navigation'
-import { Social } from '@/shared/constants/appConstant'
+import { Social } from '@/shared/constants/app-constant'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 type Props = {

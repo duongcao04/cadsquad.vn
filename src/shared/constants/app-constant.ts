@@ -6,10 +6,10 @@ import { TiktokIcon } from '@/shared/components/icons/tiktok-icon'
 import { YoutubeIcon } from '@/shared/components/icons/youtube-icon'
 import { ZaloIcon } from '@/shared/components/icons/zalo-icon'
 
-import { ABOUT_US_NAVIGATE } from './aboutUsNavigate'
-import { FLOAT_CONTACTS } from './floatContact'
-import { HEADER_NAVIGATES } from './headerNavigate'
-import { WHY_CHOOSE_US } from './whyChooseUs'
+import { ABOUT_US_NAVIGATE } from './about-us-navigate'
+import { FLOAT_CONTACTS } from './float-contact'
+import { HEADER_NAVIGATES } from './header-navigate'
+import { WHY_CHOOSE_US } from './why-choose-us'
 import { WORKFLOW } from './workflow'
 
 export const ourSlogan = [

@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslations } from 'next-intl'
 
 import { Link } from '@/i18n/navigation'
-import { ABOUT_CADSQUAD_INFO } from '@/shared/constants/companyTable'
+import { ABOUT_CADSQUAD_INFO } from '@/shared/constants/company-table'
 
 export default function InformationTable() {
     const t = useTranslations('landing.aboutUs.companyInfo')

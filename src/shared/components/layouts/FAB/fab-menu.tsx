@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 import { Link } from '@/i18n/navigation'
 import { MotionDiv } from '@/lib/motion'
-import { FLOAT_CONTACTS } from '@/shared/constants/appConstant'
+import { FLOAT_CONTACTS } from '@/shared/constants/app-constant'
 
 type Props = {
     isOpen: boolean

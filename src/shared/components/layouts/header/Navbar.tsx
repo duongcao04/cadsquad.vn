@@ -14,7 +14,7 @@ import { MotionButton, MotionDiv, MotionLi, MotionP } from '@/lib/motion'
 import {
     HEADER_NAVIGATES,
     NavigateItem,
-} from '@/shared/constants/headerNavigate'
+} from '@/shared/constants/header-navigate'
 import { resolveNavLabel } from '@/shared/utils/navLabel'
 
 export default function Navbar() {

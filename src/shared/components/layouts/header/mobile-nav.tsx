@@ -13,7 +13,7 @@ import { SupportLanguages } from '@/i18n/routing'
 import {
     HEADER_NAVIGATES,
     NavigateItem,
-} from '@/shared/constants/headerNavigate'
+} from '@/shared/constants/header-navigate'
 import { resolveNavLabel } from '@/shared/utils/navLabel'
 
 import Logo from '../../logo'
