@@ -1,0 +1,13 @@
+🌐 [23:13:27] Đang kết nối tới VPS 103.82.192.189 để khởi động lại...
+📝 Logs trận này sẽ được lưu tại: logs/restart_20260705_231327.log
+--------------------------------------------------------
+🔄 [1/3] Đang nạp lại cấu hình hệ thống (daemon-reload)...
+🚀 [2/3] Đang khởi động lại dịch vụ landpage.service...
+📊 [3/3] Đợi hệ thống ổn định và kiểm tra trạng thái...
+✅ Kết quả: Dịch vụ đang hoạt động ONLINE (Running)!
+--------------------------------------------------------
+[sudo] password for landpage: 
+Sorry, user landpage is not allowed to execute '/usr/bin/systemctl status landpage.service --no-pager -n 15' as root on instance-54567705.
+Connection to 103.82.192.189 closed.
+--------------------------------------------------------
+🎉 [23:13:34] Toàn bộ quy trình hoàn tất!
