@@ -11,7 +11,7 @@ import { Link } from '@/i18n/navigation'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
 import ServiceCard from '@/shared/features/cad-services/cards/service-card'
 
-import ButtonDownloadBrochure from '../../../../../components/button-download-brochure'
+import ButtonDownloadBrochure from '../../../../../shared/components/button-download-brochure'
 
 export default function CADServices() {
     const tBreadcrumb = useTranslations('breadcrumbs')
