@@ -71,10 +71,10 @@ export const STATIC_HEADER_NAVIGATES: NavigateItem[] = [
         labelKey: 'cadServices',
         href: '/cad-services',
     },
-    {
-        labelKey: 'digitalServices',
-        href: '/digital-services',
-    },
+    // {
+    //     labelKey: 'digitalServices',
+    //     href: '/digital-services',
+    // },
     {
         labelKey: 'academy',
         href: '/academy',
@@ -97,12 +97,12 @@ export function buildHeaderNavigates(
             }
         }
 
-        if (item.href === '/digital-services') {
-            return {
-                ...item,
-                menus: getServiceMenu(digitalServices, '/digital-services'),
-            }
-        }
+        // if (item.href === '/digital-services') {
+        //     return {
+        //         ...item,
+        //         menus: getServiceMenu(digitalServices, '/digital-services'),
+        //     }
+        // }
 
         return item
     })
