@@ -4,7 +4,7 @@ import ImgCsdHeart from '@/assets/images/cadsquad-heart.webp'
 import ImgTeam from '@/assets/images/teams.webp'
 import ImgVision from '@/assets/images/vision.webp'
 import { SupportLanguages } from '@/i18n/routing'
-import { CAD_SERVICES } from '@/shared/database/cadServices'
+import { CadService } from '@/validationSchemas/cad-service.schema'
 
 /**
  * A label is either an i18n key (`labelKey`, resolved against
@@ -29,20 +29,23 @@ export type NavigateItem = {
     menus?: NavigateMenuItem[]
 }
 
-const getCadServiceMenu: () => NavigateMenuItem[] = () => {
-    return CAD_SERVICES.map((item) => {
+function getServiceMenu(
+    services: CadService[],
+    basePath: string
+): NavigateMenuItem[] {
+    return services.map((item) => {
         return {
             label: {
                 en: item.title.original!,
                 vi: item.title.vi!,
             },
-            href: `/cad-services/${item.slug!}`,
+            href: `${basePath}/${item.slug!}`,
             image: item.thumbnail.vertical!,
         }
     })
 }
 
-export const HEADER_NAVIGATES: NavigateItem[] = [
+export const STATIC_HEADER_NAVIGATES: NavigateItem[] = [
     {
         labelKey: 'aboutUs.label',
         href: '/about-us',
@@ -67,7 +70,10 @@ export const HEADER_NAVIGATES: NavigateItem[] = [
     {
         labelKey: 'cadServices',
         href: '/cad-services',
-        menus: getCadServiceMenu(),
+    },
+    {
+        labelKey: 'digitalServices',
+        href: '/digital-services',
     },
     {
         labelKey: 'academy',
@@ -78,3 +84,26 @@ export const HEADER_NAVIGATES: NavigateItem[] = [
         href: '/news-and-media',
     },
 ]
+
+export function buildHeaderNavigates(
+    cadServices: CadService[],
+    digitalServices: CadService[] = []
+): NavigateItem[] {
+    return STATIC_HEADER_NAVIGATES.map((item) => {
+        if (item.href === '/cad-services') {
+            return {
+                ...item,
+                menus: getServiceMenu(cadServices, '/cad-services'),
+            }
+        }
+
+        if (item.href === '/digital-services') {
+            return {
+                ...item,
+                menus: getServiceMenu(digitalServices, '/digital-services'),
+            }
+        }
+
+        return item
+    })
+}

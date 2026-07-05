@@ -11,16 +11,16 @@ import Image from 'next/image'
 import { Link, usePathname } from '@/i18n/navigation'
 import { SupportLanguages } from '@/i18n/routing'
 import { MotionButton, MotionDiv, MotionLi, MotionP } from '@/lib/motion'
-import {
-    HEADER_NAVIGATES,
-    NavigateItem,
-} from '@/shared/constants/header-navigate'
+import { NavigateItem } from '@/shared/constants/header-navigate'
+import { useHeaderNavigates } from '@/shared/hooks/use-header-navigates'
 import { resolveNavLabel } from '@/shared/utils/navLabel'
 
 export default function Navbar() {
+    const navigates = useHeaderNavigates()
+
     return (
         <nav className="z-50 flex items-center justify-start gap-2">
-            {HEADER_NAVIGATES.map((item, index) => {
+            {navigates.map((item, index) => {
                 return <NavbarItem key={index} data={item} index={index} />
             })}
         </nav>

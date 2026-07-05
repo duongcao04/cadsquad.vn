@@ -2,6 +2,13 @@ import { createClient } from '@supabase/supabase-js'
 
 import envConfig from '@/config/config'
 
+export function hasSupabaseConfig() {
+    return Boolean(
+        envConfig.NEXT_PUBLIC_SUPABASE_URL &&
+            envConfig.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    )
+}
+
 function getSupabaseConfig() {
     const supabaseUrl = envConfig.NEXT_PUBLIC_SUPABASE_URL
     const supabaseAnonKey = envConfig.NEXT_PUBLIC_SUPABASE_ANON_KEY

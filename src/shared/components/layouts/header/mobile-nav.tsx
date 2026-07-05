@@ -10,10 +10,8 @@ import Image from 'next/image'
 
 import { Link, usePathname } from '@/i18n/navigation'
 import { SupportLanguages } from '@/i18n/routing'
-import {
-    HEADER_NAVIGATES,
-    NavigateItem,
-} from '@/shared/constants/header-navigate'
+import { NavigateItem } from '@/shared/constants/header-navigate'
+import { useHeaderNavigates } from '@/shared/hooks/use-header-navigates'
 import { resolveNavLabel } from '@/shared/utils/navLabel'
 
 import Logo from '../../logo'
@@ -26,6 +24,7 @@ type Props = {
 }
 export default function MobileNav({ isOpen, onClose }: Props) {
     const [currentNav, setCurrentNav] = useState<NavigateItem | null>(null)
+    const navigates = useHeaderNavigates()
 
     return (
         <Drawer
@@ -53,7 +52,11 @@ export default function MobileNav({ isOpen, onClose }: Props) {
             }}
         >
             {!currentNav && (
-                <RootNav setCurrentNav={setCurrentNav} onClose={onClose} />
+                <RootNav
+                    navigates={navigates}
+                    setCurrentNav={setCurrentNav}
+                    onClose={onClose}
+                />
             )}
             {currentNav && (
                 <NavItem
@@ -67,9 +70,11 @@ export default function MobileNav({ isOpen, onClose }: Props) {
 }
 
 function RootNav({
+    navigates,
     setCurrentNav,
     onClose,
 }: {
+    navigates: NavigateItem[]
     setCurrentNav: React.Dispatch<React.SetStateAction<NavigateItem | null>>
     onClose: () => void
 }) {
@@ -92,7 +97,7 @@ function RootNav({
                         </Button>
                     </Link>
                 </li>
-                {HEADER_NAVIGATES.map((item, idx) => {
+                {navigates.map((item, idx) => {
                     if (item.menus) {
                         return (
                             <li
