@@ -35,7 +35,7 @@ export async function generateMetadata({
             type: 'website',
         },
         alternates: {
-            canonical: `https://cadsquad.vn/cad-services/${data?.slug}`,
+            canonical: `https://cadsquad.vn/digital-services/${data?.slug}`,
         },
     }
 }

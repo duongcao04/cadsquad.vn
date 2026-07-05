@@ -1,1 +1,1 @@
-export {}
+export * from './digital-service.api'
