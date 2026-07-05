@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import Decorate from '@/shared/components/layouts/footer/decorate'
 import { CONTACT_INFORMATIONS } from '@/shared/constants/app-constant'
-import { Section } from '@/features/home/_components/section'
+import { Section } from '@/shared/components/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 import ContactForm from './forms/contact-form'

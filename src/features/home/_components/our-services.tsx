@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { CAD_SERVICES } from '@/shared/database/cadServices'
-import { Section, fadeInUp } from '@/features/home/_components/section'
+import { Section, fadeInUp } from '@/shared/components/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 import ServiceCard from './cards/service-card'

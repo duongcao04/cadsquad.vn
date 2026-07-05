@@ -86,6 +86,8 @@
     "breadcrumbs": {
         "home": "Trang chủ",
         "cadService": "Dịch vụ CAD",
-        "aboutUs": "Về chúng tôi"
+        "digitalService": "Dịch vụ số",
+        "aboutUs": "Về chúng tôi",
+        "aboutCadsquadDigital": "Về CSD Digital"
     }
 }

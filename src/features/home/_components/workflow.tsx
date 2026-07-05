@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { WORKFLOW } from '@/shared/constants/workflow'
-import { Section, fadeInUp } from '@/features/home/_components/section'
+import { Section, fadeInUp } from '@/shared/components/section'
 
 export default function Workflow() {
     const tHome = useTranslations('landing.home')

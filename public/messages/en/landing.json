@@ -7,7 +7,8 @@
                 "menu": {
                     "overview": "Overview",
                     "vision": "Vision",
-                    "ourJourney": "Our journey"
+                    "ourJourney": "Our journey",
+                    "aboutCadsquadDigital": "About CSD Digital"
                 }
             },
             "cadServices": "CAD Services",
@@ -43,6 +44,29 @@
         "sections": {
             "ourServices": {
                 "title": "Our <highlight>Services</highlight>"
+            },
+            "ecosystem": {
+                "title": "The CADSQUAD <highlight>Ecosystem</highlight>",
+                "subtitle": "One partner, end to end — from engineering design to digital growth and skills.",
+                "comingSoon": "Coming soon",
+                "items": {
+                    "cad": {
+                        "title": "CAD Services",
+                        "description": "2D/3D CAD design, drawing digitization and end-to-end technical solutions for manufacturing."
+                    },
+                    "digital": {
+                        "title": "CSD Digital",
+                        "description": "Websites, e-commerce, branding and digital optimization for a strong online identity."
+                    },
+                    "academy": {
+                        "title": "CSD Academy",
+                        "description": "Hands-on CAD, engineering software and digital skills training that bridges theory and practice."
+                    },
+                    "affiliate": {
+                        "title": "Affiliate",
+                        "description": "Refer customers in engineering, manufacturing or digital — we deliver, you earn commission."
+                    }
+                }
             },
             "popularProject": {
                 "title": "Popular <highlight>Project</highlight>"
@@ -211,6 +235,48 @@
                     "partner": "Partner"
                 }
             }
+        }
+    },
+    "aboutCadsquadDigital": {
+        "heading": {
+            "title": "About CADSQUAD Digital",
+            "description": "The digital arm of CADSQUAD — building websites, brands and online growth for engineering and industrial businesses."
+        },
+        "intro": {
+            "paraph1": "CADSQUAD Digital (CSD Digital) helps engineering and manufacturing companies build a strong digital presence. From corporate websites to e-commerce and branding, we turn technical excellence into online growth.",
+            "paraph2": "We combine engineering-grade rigor with modern digital craft — designing, developing and optimizing digital products that support sustainable business growth."
+        },
+        "offerings": {
+            "title": "What we <highlight>do</highlight>",
+            "items": {
+                "web": {
+                    "title": "Website Development",
+                    "description": "Fast, responsive corporate and product websites built to convert."
+                },
+                "ecommerce": {
+                    "title": "E-commerce",
+                    "description": "Online stores and business platforms that scale with your sales."
+                },
+                "branding": {
+                    "title": "Branding & Digital Design",
+                    "description": "Visual identity and digital design that make your brand stand out."
+                },
+                "optimization": {
+                    "title": "Digital Optimization",
+                    "description": "SEO, performance and analytics to keep growing after launch."
+                }
+            }
+        },
+        "cta": {
+            "title": "Grow your digital presence with CADSQUAD",
+            "description": "Tell us your goals — we'll craft a digital solution that fits your business.",
+            "button": "Explore Digital Services"
+        }
+    },
+    "digitalServices": {
+        "heading": {
+            "title": "Digital Services",
+            "description": "CSD Digital builds websites, e-commerce, branding and digital optimization — turning your business into a strong online presence."
         }
     },
     "cadServices": {

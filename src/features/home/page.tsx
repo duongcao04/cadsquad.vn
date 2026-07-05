@@ -4,7 +4,7 @@ import { MotionSection } from '@/lib/motion'
 import Banner from '@/features/home/_components/banner'
 import ContactUs from '@/features/home/_components/contact-us'
 import CustomerReview from '@/features/home/_components/customer-review'
-import OurServices from '@/features/home/_components/our-services'
+import EcosystemServices from '@/features/home/_components/ecosystem-services'
 import Partner from '@/features/home/_components/partner'
 import WhyChooseUs from '@/features/home/_components/why-choose-us'
 import Workflow from '@/features/home/_components/workflow'
@@ -32,17 +32,9 @@ export default function HomePage() {
                 variants={sectionVariants}
                 initial="init"
                 whileInView="animate"
-                className="py-4"
-            >
-                <Partner />
-            </MotionSection>
-            <MotionSection
-                variants={sectionVariants}
-                initial="init"
-                whileInView="animate"
                 className="mt-8 pb-10 lg:pt-10 lg:pb-16"
             >
-                <OurServices />
+                <EcosystemServices />
             </MotionSection>
             <MotionSection
                 variants={sectionVariants}
@@ -59,6 +51,14 @@ export default function HomePage() {
                 className="mt-8 pb-10 lg:pt-10 lg:pb-16"
             >
                 <Workflow />
+            </MotionSection>
+            <MotionSection
+                variants={sectionVariants}
+                initial="init"
+                whileInView="animate"
+                className="py-4"
+            >
+                <Partner />
             </MotionSection>
             <MotionSection
                 variants={sectionVariants}

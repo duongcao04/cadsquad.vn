@@ -7,89 +7,17 @@ import { MDXRemote } from 'next-mdx-remote-client/rsc'
 
 import { MotionSection } from '@/lib/motion'
 import { cleanMarkdownString } from '@/lib/utils'
-import { CAD_SERVICES } from '@/shared/database/cadServices'
-import PageBreadcumbs from '@/features/cad-services/_components/detail/page-breadcumbs'
-import ServiceNavigate from '@/features/cad-services/_components/detail/service-navigate'
-import OurServices from '@/features/home/_components/our-services'
+import { DIGITAL_SERVICES } from '@/shared/database/digitalServices'
+import PageBreadcumbs from '@/features/digital-service/_components/detail/page-breadcumbs'
 
-const cadServices = CAD_SERVICES
-export default async function CADServiceDetailPage({
+export default async function DigitalServiceDetailPage({
     params,
 }: {
     params: Promise<{ slug: string }>
 }) {
     const locale = await getLocale()
     const { slug } = await params
-    const data = cadServices.filter((item) => item.slug === slug)?.[0]
-
-    /**
-     * Use for create new content with this template
-     */
-    // const templateContent = `<div className="grid grid-cols-2 gap-5">
-    //                     <div className="leading-relaxed text-base">
-    //                         <h1 className="font-bold text-2xl mb-1">⚙️ Our Capabilities</h1>
-    //                         <ul className="list-disc ml-10">
-    //                             <li>Design of **non-standard parts and mechanical equipment**</li>
-    //                             <li>**2D/3D factory layout design** for machines, conveyors, and pipelines</li>
-    //                             <li>**Mechatronic integration** - sensor brackets, control cabinets, motor supports</li>
-    //                             <li>**Industrial piping design** based on P&ID or 3D layout requirements</li>
-    //                             <li>Custom design of **jigs, fixtures, dies, and specialized tooling**</li>
-    //                             <li>**Redesign and optimization** of legacy or outdated machines</li>
-    //                             <li>CAD support for **cross-functional engineering teams or outsourced projects**</li>
-    //                         </ul>
-    //                         <br />
-    //                         <h1 className="font-bold text-2xl mb-1">✅ Why Choose Us</h1>
-    //                         <ul className="list-disc ml-10">
-    //                             <li>One-stop solution for unique engineering challenges</li>
-    //                             <li>We work from **sketches, specs, or physical samples**</li>
-    //                             <li>Seamless collaboration with **your internal design teams**</li>
-    //                             <li>Shorter development time and lower costs</li>
-    //                             <li>Fully documented and ready for **manufacturing or fabrication**</li>
-    //                         </ul>
-    //                         <br />
-    //                         <br />
-    //                         <h1 className="font-bold text-2xl mb-1">📐 Supported Formats & Software</h1>
-    //                         <ul className="list-disc ml-10">
-    //                             <li>**AutoCAD** - DWG, DXF</li>
-    //                             <li>**Autodesk Inventor** - IPT, IAM, IDW</li>
-    //                             <li>**SolidWorks** - SLDPRT, SLDDRW</li>
-    //                             <li>**Revit**- piping and layout (on request)</li>
-    //                             <li>**Neutral formats** - STEP, IGES, PDF (if required)</li>
-
-    //                         </ul>
-    //                         <br />
-    //                         <h1 className="font-bold text-2xl mb-1">📩 Have a special design request?</h1>
-    //                             Send us your concept, sketch, or challenge—we'll deliver a **tailored CAD solution** that fits your industry, budget, and timeline.
-    //                     </div>
-    //                     <div className="flex flex-col items-center gap-1">
-    //                         <img
-    //                             src="https://res.cloudinary.com/dqx1guyc0/image/upload/v1750845543/Cadsquad/services/rmdjfgx5vjavnujo5zs2.png"
-    //                             alt="input"
-    //                             className="border shadow-lg w-full object-cover"
-    //                         />
-    //                         <svg
-    //                             xmlns="http://www.w3.org/2000/svg"
-    //                             width="140"
-    //                             height="140"
-    //                             viewBox="0 0 24 24"
-    //                             fill="#f47a1f"
-    //                             stroke="#1b1564"
-    //                             strokeWidth="0.25"
-    //                             strokeLinecap="round"
-    //                             strokeLinejoin="round"
-    //                             className="lucide lucide-arrow-big-down-icon lucide-arrow-big-down"
-    //                         >
-    //                             <path d="M15 6v6h4l-7 7-7-7h4V6h6z" />
-    //                         </svg>
-    //                         <img
-    //                             src="https://res.cloudinary.com/dqx1guyc0/image/upload/v1750845543/Cadsquad/services/pomzhvgrsw8wfjfuhqdf.png"
-    //                             alt="output"
-    //                             className="border shadow-lg w-full object-cover"
-    //                         />
-    //                     </div>
-    //                 </div>`
-
-    // console.log(JSON.stringify(templateContent.replaceAll('  ', '')))
+    const data = DIGITAL_SERVICES.filter((item) => item.slug === slug)?.[0]
 
     const descriptionSource = (
         locale === 'vi' ? data?.description?.vi : data?.description?.original
@@ -109,7 +37,7 @@ export default async function CADServiceDetailPage({
                     <Image
                         src={
                             data?.thumbnail.horizontal ??
-                            (data?.thumbnail as string)
+                            (data?.thumbnail.vertical as string)
                         }
                         alt="Image"
                         className="!object-cover !size-full"
@@ -146,7 +74,6 @@ export default async function CADServiceDetailPage({
                 className="container min-h-40 mt-16"
             >
                 <Suspense fallback={<p>Loading...</p>}>
-                    {/* Use antd Image and replace bold middle paraph */}
                     <MDXRemote
                         source={source
                             .replaceAll('img', 'Image')
@@ -162,14 +89,6 @@ export default async function CADServiceDetailPage({
                         )}
                     />
                 </Suspense>
-            </MotionSection>
-
-            <MotionSection className="container mt-24 mb-16 flex items-center justify-end lg:justify-between gap-5">
-                <ServiceNavigate service={data} />
-            </MotionSection>
-
-            <MotionSection>
-                <OurServices />
             </MotionSection>
         </div>
     )

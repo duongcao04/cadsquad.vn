@@ -86,6 +86,8 @@
     "breadcrumbs": {
         "home": "Home",
         "cadService": "CAD Services",
-        "aboutUs": "About us"
+        "digitalService": "Digital Services",
+        "aboutUs": "About us",
+        "aboutCadsquadDigital": "About CSD Digital"
     }
 }

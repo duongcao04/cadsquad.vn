@@ -9,7 +9,7 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { MotionDiv } from '@/lib/motion'
 import { TESTIMONIALS, VI_TESTIMONIALS } from '@/shared/database/testimonials'
-import { Section, fadeInUp } from '@/features/home/_components/section'
+import { Section, fadeInUp } from '@/shared/components/section'
 import { useDevice } from '@/shared/hooks/useDevice'
 
 import CustomerReviewCard from './cards/customer-review-card'

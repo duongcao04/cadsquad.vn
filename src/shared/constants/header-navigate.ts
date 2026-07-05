@@ -1,5 +1,6 @@
 import { StaticImageData } from 'next/image'
 
+import ImgCsdDigital from '@/assets/images/cadsquad-card.webp'
 import ImgCsdHeart from '@/assets/images/cadsquad-heart.webp'
 import ImgTeam from '@/assets/images/teams.webp'
 import ImgVision from '@/assets/images/vision.webp'
@@ -64,6 +65,11 @@ export const STATIC_HEADER_NAVIGATES: NavigateItem[] = [
                 labelKey: 'aboutUs.menu.ourJourney',
                 image: ImgCsdHeart,
                 href: '/about-us#our-journey',
+            },
+            {
+                labelKey: 'aboutUs.menu.aboutCadsquadDigital',
+                image: ImgCsdDigital,
+                href: '/about-us/about-cadsquad-digital',
             },
         ],
     },

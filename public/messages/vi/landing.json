@@ -7,7 +7,8 @@
                 "menu": {
                     "overview": "Tổng quan",
                     "vision": "Tầm nhìn",
-                    "ourJourney": "Hành trình của chúng tôi"
+                    "ourJourney": "Hành trình của chúng tôi",
+                    "aboutCadsquadDigital": "Về CSD Digital"
                 }
             },
             "cadServices": "Dịch vụ CAD",
@@ -43,6 +44,29 @@
         "sections": {
             "ourServices": {
                 "title": "Dịch vụ <highlight>CAD</highlight>"
+            },
+            "ecosystem": {
+                "title": "Hệ sinh thái <highlight>CADSQUAD</highlight>",
+                "subtitle": "Một đối tác trọn gói — từ thiết kế kỹ thuật đến tăng trưởng số và đào tạo kỹ năng.",
+                "comingSoon": "Sắp ra mắt",
+                "items": {
+                    "cad": {
+                        "title": "Dịch vụ CAD",
+                        "description": "Thiết kế CAD 2D/3D, số hóa bản vẽ và giải pháp kỹ thuật trọn gói cho sản xuất."
+                    },
+                    "digital": {
+                        "title": "CSD Digital",
+                        "description": "Website, thương mại điện tử, thương hiệu và tối ưu số cho dấu ấn trực tuyến vững mạnh."
+                    },
+                    "academy": {
+                        "title": "CSD Academy",
+                        "description": "Đào tạo thực hành CAD, phần mềm kỹ thuật và kỹ năng số, gắn lý thuyết với thực tế."
+                    },
+                    "affiliate": {
+                        "title": "Affiliate",
+                        "description": "Giới thiệu khách hàng ngành kỹ thuật, sản xuất hay số — chúng tôi thực hiện, bạn nhận hoa hồng."
+                    }
+                }
             },
             "popularProject": {
                 "title": "Dự án <highlight>phổ biến</highlight>"
@@ -211,6 +235,48 @@
                     "partner": "Đối tác"
                 }
             }
+        }
+    },
+    "aboutCadsquadDigital": {
+        "heading": {
+            "title": "Về CADSQUAD Digital",
+            "description": "Nhánh số của CADSQUAD — xây dựng website, thương hiệu và tăng trưởng trực tuyến cho doanh nghiệp kỹ thuật và công nghiệp."
+        },
+        "intro": {
+            "paraph1": "CADSQUAD Digital (CSD Digital) giúp các công ty kỹ thuật và sản xuất xây dựng hiện diện số vững mạnh. Từ website doanh nghiệp đến thương mại điện tử và thương hiệu, chúng tôi biến thế mạnh kỹ thuật thành tăng trưởng trực tuyến.",
+            "paraph2": "Chúng tôi kết hợp sự chỉn chu chuẩn kỹ thuật với thiết kế số hiện đại — thiết kế, phát triển và tối ưu các sản phẩm số hỗ trợ tăng trưởng bền vững."
+        },
+        "offerings": {
+            "title": "Chúng tôi <highlight>làm gì</highlight>",
+            "items": {
+                "web": {
+                    "title": "Phát triển Website",
+                    "description": "Website doanh nghiệp và sản phẩm nhanh, chuẩn responsive, tối ưu chuyển đổi."
+                },
+                "ecommerce": {
+                    "title": "Thương mại điện tử",
+                    "description": "Cửa hàng trực tuyến và nền tảng kinh doanh mở rộng theo doanh số."
+                },
+                "branding": {
+                    "title": "Thương hiệu & Thiết kế số",
+                    "description": "Bộ nhận diện và thiết kế số giúp thương hiệu của bạn nổi bật."
+                },
+                "optimization": {
+                    "title": "Tối ưu số",
+                    "description": "SEO, hiệu năng và phân tích để tiếp tục tăng trưởng sau khi ra mắt."
+                }
+            }
+        },
+        "cta": {
+            "title": "Phát triển hiện diện số cùng CADSQUAD",
+            "description": "Cho chúng tôi biết mục tiêu của bạn — chúng tôi sẽ tạo giải pháp số phù hợp.",
+            "button": "Khám phá Dịch vụ số"
+        }
+    },
+    "digitalServices": {
+        "heading": {
+            "title": "Dịch vụ số",
+            "description": "CSD Digital xây dựng website, thương mại điện tử, thương hiệu và tối ưu số — biến doanh nghiệp của bạn thành hiện diện trực tuyến vững mạnh."
         }
     },
     "cadServices": {

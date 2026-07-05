@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { AnimatedTestimonials } from '@/shared/components/ui/animated-testimonials'
 import { TESTIMONIALS, VI_TESTIMONIALS } from '@/shared/database/testimonials'
-import { Section } from '@/features/home/_components/section'
+import { Section } from '@/shared/components/section'
 
 export default function Testimonials() {
     const locale = useLocale()
