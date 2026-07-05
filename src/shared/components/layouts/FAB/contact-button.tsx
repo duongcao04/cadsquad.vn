@@ -5,11 +5,11 @@ import React, { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import Image from 'next/image'
 
-import FabZalo from '@/shared/components/icons/fab/FabZalo.webp'
+import FabZalo from '@/shared/components/icons/fab/fab-zalo.webp'
 
-import { FabCall } from '../../icons/fab/FabCall'
-import { FabMail } from '../../icons/fab/FabMail'
-import { FabMessenger } from '../../icons/fab/FabMessenger'
+import { FabCall } from '../../icons/fab/fab-call'
+import { FabMail } from '../../icons/fab/fab-mail'
+import { FabMessenger } from '../../icons/fab/fab-messenger'
 
 type Props = {
     isOpen: boolean

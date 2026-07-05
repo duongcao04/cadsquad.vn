@@ -13,8 +13,8 @@ import { CONTACT_INFORMATIONS, SOCIALS } from '@/shared/constants/appConstant'
 import { FOOTER_LINKS } from '@/shared/constants/footerLinks'
 import { resolveNavLabel } from '@/shared/utils/navLabel'
 
-import Decorate from './Decorate'
-import SocialButton from './SocialButton'
+import Decorate from './decorate'
+import SocialButton from './social-button'
 
 export default function Footer() {
     const locale = useLocale() as SupportLanguages

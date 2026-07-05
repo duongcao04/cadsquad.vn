@@ -4,7 +4,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { HeroUIProvider, ToastProvider } from '@heroui/react'
 import { NextIntlClientProvider } from 'next-intl'
 
-import SwrProvider from './SwrProvider'
+import SwrProvider from './swr-provider'
 
 type Props = {
     children: React.ReactNode

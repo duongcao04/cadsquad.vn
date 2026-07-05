@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 
 import { CallLoopIcon } from '@/shared/components/icons/call-loop-icon'
 
-import ContactModal from '../../ContactModal'
+import ContactModal from '../../contact-modal'
 
 export default function CTAButton() {
     const { isOpen, onOpen, onClose } = useDisclosure({ id: 'ContactModal' })

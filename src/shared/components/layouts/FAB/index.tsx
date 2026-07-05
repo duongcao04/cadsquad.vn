@@ -4,9 +4,9 @@ import React, { useEffect, useState } from 'react'
 
 import { Tooltip, useDisclosure } from '@heroui/react'
 
-import ContactButton from './ContactButton'
-import FABMenu from './FABMenu'
-import ScrollToTop from './ScrollToTop'
+import ContactButton from './contact-button'
+import FABMenu from './fab-menu'
+import ScrollToTop from './scroll-to-top'
 
 export default function FAB() {
     const { isOpen, onOpen, onClose } = useDisclosure({ id: 'FAB' })

@@ -8,8 +8,8 @@ import { Variants } from 'motion'
 
 import { MotionDiv } from '@/lib/motion'
 
-import Logo from '../../Logo'
-import MobileNav from './MobileNav'
+import Logo from '../../logo'
+import MobileNav from './mobile-nav'
 
 export default function MobileHeader() {
     const wrapperRef = useRef<HTMLDivElement | null>(null)

@@ -16,9 +16,9 @@ import {
 } from '@/shared/constants/headerNavigate'
 import { resolveNavLabel } from '@/shared/utils/navLabel'
 
-import Logo from '../../Logo'
-import CTAButton from './CTAButton'
-import ChangeLanguage from './ChangeLanguage'
+import Logo from '../../logo'
+import CTAButton from './cta-button'
+import ChangeLanguage from './change-language'
 
 type Props = {
     isOpen: boolean

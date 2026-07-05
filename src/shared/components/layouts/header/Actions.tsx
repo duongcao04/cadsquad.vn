@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { MotionDiv } from '../../../../lib/motion'
-import CTAButton from './CTAButton'
-import ChangeLanguage from './ChangeLanguage'
+import CTAButton from './cta-button'
+import ChangeLanguage from './change-language'
 
 export default function Actions() {
     return (
