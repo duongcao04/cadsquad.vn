@@ -87,7 +87,7 @@ export const STATIC_HEADER_NAVIGATES: NavigateItem[] = [
 
 export function buildHeaderNavigates(
     cadServices: CadService[],
-    digitalServices: CadService[] = []
+    // digitalServices: CadService[] = []
 ): NavigateItem[] {
     return STATIC_HEADER_NAVIGATES.map((item) => {
         if (item.href === '/cad-services') {
