@@ -7,8 +7,9 @@ import { Variants } from 'motion'
 
 import { MotionDiv, MotionHeader } from '@/lib/motion'
 import Logo from '@/shared/components/logo'
-import Actions from '@/shared/components/layouts/header/actions'
-import Navbar from '@/shared/components/layouts/header/navbar'
+
+import Actions from './actions'
+import Navbar from './navbar'
 
 const BREAKPOINT = 20
 

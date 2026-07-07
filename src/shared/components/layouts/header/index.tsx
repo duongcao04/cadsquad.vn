@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Header from './header'
 import MobileHeader from './mobile-header'
+import Header from './header'
 
 export default function AppHeader() {
     return (
