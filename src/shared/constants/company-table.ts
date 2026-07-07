@@ -17,49 +17,24 @@ export type CompanyInfoRow = {
 export const ABOUT_CADSQUAD_INFO: CompanyInfoRow[] = [
     { key: 'taxId' },
     { key: 'companyName' },
-    { key: 'location' },
+    { key: 'address' },
     { key: 'phone' },
     { key: 'email' },
     { key: 'founder' },
-    { key: 'address' },
     {
-        key: 'businessActivities',
+        key: 'ourEcosystem',
         items: [
             {
-                key: 'technicalDrawing',
-                href: 'technical-drawing-digitization-and-cad-data-creation',
+                key: 'cadServices',
+                href: 'cad-services',
             },
             {
-                key: 'partExtraction',
-                href: 'part-extraction-from-assembly-drawings',
+                key: 'csdAcademy',
+                href: 'academy',
             },
             {
-                key: 'customMachine',
-                href: 'custom-machine-design-for-food-and-material-handling-systems',
-            },
-            {
-                key: 'steelStructure',
-                href: '3d-and-2d-for-steel-structure',
-            },
-            {
-                key: 'sheetMetal',
-                href: 'cad-for-sheet-metal-manufacturing',
-            },
-            {
-                key: 'machineDesignSupport',
-                href: 'machine-design-support-from-concept-to-manufacturing',
-            },
-            {
-                key: 'structuralAnalysis',
-                href: 'structural-analysis-(-fea-)',
-            },
-            {
-                key: 'motionSimulation',
-                href: 'mechanical-motion-simulation',
-            },
-            {
-                key: 'customDesign',
-                href: 'custom-design-services-on-request',
+                key: 'csdDigital',
+                href: 'digital',
             },
         ],
     },

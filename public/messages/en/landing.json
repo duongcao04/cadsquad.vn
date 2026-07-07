@@ -152,10 +152,6 @@
                 "label": "Company name",
                 "value": "CADSQUAD VIETNAM"
             },
-            "location": {
-                "label": "Address",
-                "value": "Ho Chi Minh City, Viet Nam"
-            },
             "phone": {
                 "label": "Phone number",
                 "value": "(+84) 765 279 228"
@@ -172,18 +168,12 @@
                 "label": "Address",
                 "value": "P.702A, 7th Floor, Centre Point Building, 106 Nguyen Van Troi Street, Phu Nhuan Ward, Ho Chi Minh City, Vietnam"
             },
-            "businessActivities": {
-                "label": "Business activities",
+            "ourEcosystem": {
+                "label": "Our ecosystem",
                 "items": {
-                    "technicalDrawing": "Technical Drawing Digitization & CAD Data Creation",
-                    "partExtraction": "Part Extraction from Assembly Drawings",
-                    "customMachine": "Custom Machine Design for Food & Material Handling Systems",
-                    "steelStructure": "3D and 2D for Steel structure",
-                    "sheetMetal": "CAD for Sheet Metal Manufacturing",
-                    "machineDesignSupport": "Machine Design Support - From Concept to Manufacturing",
-                    "structuralAnalysis": "Structural Analysis (FEA)",
-                    "motionSimulation": "Mechanical Motion Simulation",
-                    "customDesign": "Custom Design Services on Request"
+                    "cadServices": "CAD Services",
+                    "csdAcademy": "CSD Academy",
+                    "csdDigital": "CSD Digital"
                 }
             }
         },

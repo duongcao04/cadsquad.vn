@@ -152,10 +152,6 @@
                 "label": "Tên công ty",
                 "value": "CADSQUAD VIỆT NAM"
             },
-            "location": {
-                "label": "Địa chỉ",
-                "value": "TP. Hồ Chí Minh, Việt Nam"
-            },
             "phone": {
                 "label": "Số điện thoại",
                 "value": "(+84) 765 279 228"
@@ -172,18 +168,12 @@
                 "label": "Địa chỉ",
                 "value": "P.702A Tầng 7, Tòa nhà Centre Point, 106 Nguyễn Văn Trỗi, Phường Phú Nhuận, TP Hồ Chí Minh, Việt Nam"
             },
-            "businessActivities": {
-                "label": "Sản phẩm & dịch vụ",
+            "ourEcosystem": {
+                "label": "Hệ sinh thái của chúng tôi",
                 "items": {
-                    "technicalDrawing": "Số hóa bản vẽ kỹ thuật & Tạo dữ liệu CAD",
-                    "partExtraction": "Tách chi tiết từ bản vẽ lắp ráp",
-                    "customMachine": "Thiết kế máy tùy chỉnh cho hệ thống thực phẩm & xử lý vật liệu",
-                    "steelStructure": "Thiết kế 3D và 2D cho kết cấu thép",
-                    "sheetMetal": "Thiết kế CAD cho gia công kim loại tấm",
-                    "machineDesignSupport": "Hỗ trợ thiết kế máy – Từ ý tưởng đến sản xuất",
-                    "structuralAnalysis": "Phân tích kết cấu (FEA)",
-                    "motionSimulation": "Mô phỏng chuyển động cơ khí",
-                    "customDesign": "Dịch vụ thiết kế tùy chỉnh theo yêu cầu"
+                    "cadServices": "CAD Services",
+                    "csdAcademy": "CSD Academy",
+                    "csdDigital": "CSD Digital"
                 }
             }
         },
