@@ -14,6 +14,8 @@ export default function FeaturedPosts({ data }: Props) {
     const firstFeaturedPost = data?.[0]
     const otherPosts = data?.slice(1, 6)
 
+    if (!firstFeaturedPost) return null
+
     return (
         <div className="lg:grid grid-cols-3 gap-7">
             <div className="col-span-2 w-full aspect-[4/2.4]">

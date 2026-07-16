@@ -1,19 +1,22 @@
-'use client'
-
 import React from 'react'
 
-import { Button } from '@heroui/react'
-import { useTranslations } from 'next-intl'
+import { getLocale, getTranslations } from 'next-intl/server'
 
-import { Link } from '@/i18n/navigation'
-import { POSTS } from '@/shared/database/posts'
+import { getPostsList, toPostView } from '@/features/news-and-media/_actions'
 import FeaturedPosts from '@/features/news-and-media/_components/featured-posts'
 import RecentPosts from '@/features/news-and-media/_components/recent-posts'
 
-export default function NewsAndMediaPage() {
-    const tNewMedia = useTranslations('landing.newsMedia')
-    const featuredPosts = POSTS
-    const recentPosts = POSTS
+import { Link } from '@/i18n/navigation'
+
+export default async function NewsAndMediaPage() {
+    const [locale, tNewMedia, posts] = await Promise.all([
+        getLocale(),
+        getTranslations('landing.newsMedia'),
+        getPostsList(),
+    ])
+    const postViews = posts.map((post) => toPostView(post, locale))
+    const featuredPosts = postViews.slice(0, 6)
+    const recentPosts = postViews.slice(0, 6)
 
     return (
         <div className="container pb-20">
@@ -26,9 +29,9 @@ export default function NewsAndMediaPage() {
                         {tNewMedia('recentPosts')}
                     </h2>
                     <Link href="/news-and-media/all-posts">
-                        <Button variant="ghost" className="font-semibold">
+                        <span className="inline-flex min-h-10 items-center rounded-xl px-4 font-semibold transition hover:bg-default-100">
                             {tNewMedia('button.allPosts')}
-                        </Button>
+                        </span>
                     </Link>
                 </div>
                 <RecentPosts data={recentPosts} />

@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: 'media1.giphy.com',
             },
+            {
+                protocol: 'https',
+                hostname: '*.supabase.co',
+            },
         ],
     },
 }

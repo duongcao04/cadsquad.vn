@@ -6,9 +6,8 @@ import { Image, ImageProps } from 'antd'
 
 import { Link } from '@/i18n/navigation'
 import { MotionDiv } from '@/lib/motion'
-import { Post } from '@/validationSchemas/post.schema'
-
 import { cn } from '@/lib/utils'
+import { Post } from '@/validationSchemas/post.schema'
 
 type Props = {
     variant?: 'sm' | 'md' | 'lg'

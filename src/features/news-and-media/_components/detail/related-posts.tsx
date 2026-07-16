@@ -2,9 +2,9 @@ import React from 'react'
 
 import { useTranslations } from 'next-intl'
 
-import { Post } from '@/validationSchemas/post.schema'
-
 import PostCard from '@/features/news-and-media/_components/cards/post-card'
+
+import { Post } from '@/validationSchemas/post.schema'
 
 type Props = {
     data: Post[]

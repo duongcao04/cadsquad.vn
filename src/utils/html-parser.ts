@@ -1,4 +1,4 @@
-import { Element, Text, htmlToDOM } from 'html-react-parser'
+import { Element, htmlToDOM } from 'html-react-parser'
 import type { DOMNode } from 'html-react-parser'
 
 export type HtmlHeading = {
@@ -39,12 +39,11 @@ export function createHeadingIdGenerator() {
 }
 
 export function getNodeText(node: DOMNode): string {
-    if (node instanceof Text) return node.data
-    if (node instanceof Element) {
+    if (node.type === 'text' && 'data' in node) return node.data
+    if ('children' in node && Array.isArray(node.children))
         return node.children
             .map((child) => getNodeText(child as DOMNode))
             .join('')
-    }
     return ''
 }
 
@@ -59,15 +58,17 @@ export function getHeadings(html: string, maxLevel = 6): Array<HtmlHeading> {
 
     const walk = (nodes: Array<DOMNode>) => {
         for (const node of nodes) {
-            if (!(node instanceof Element)) continue
+            if (!('tagName' in node) || !('children' in node)) continue
 
-            const level = getHeadingLevel(node)
+            const element = node as Element
+
+            const level = getHeadingLevel(element)
             if (level > 0) {
-                const text = getNodeText(node).trim()
-                const id = node.attribs.id || nextId(text)
+                const text = getNodeText(element).trim()
+                const id = element.attribs.id || nextId(text)
                 if (level <= maxLevel) headings.push({ id, text, level })
             } else {
-                walk(node.children as Array<DOMNode>)
+                walk(element.children as Array<DOMNode>)
             }
         }
     }

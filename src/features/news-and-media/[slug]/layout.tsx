@@ -1,35 +1,44 @@
-import { POSTS } from '@/shared/database/posts'
+import { getPostDetail } from '@/features/news-and-media/_actions'
+import {
+    getLocalizedSeo,
+    getLocalizedText,
+} from '@/features/news-and-media/_actions/post.types'
 
 export async function generateMetadata({
     params,
 }: {
     params: Promise<{ locale: string; slug: string }>
 }) {
-    const { slug } = await params
+    const { locale, slug } = await params
+    const data = await getPostDetail(slug)
 
-    const data = POSTS.find((post) => post.slug === slug)
+    if (!data) return {}
+
+    const title = getLocalizedText(data?.title, locale)
+    const fallbackDescription = getLocalizedText(data?.shortDescription, locale)
+    const seo = getLocalizedSeo(data?.seo, locale)
+    const description = seo?.metaDescription || fallbackDescription
+    const canonical =
+        seo?.canonicalUrl ||
+        `https://cadsquad.vn/${locale}/news-and-media/${slug}`
+    const image = data?.bgCoverUrl || data?.thumbnailUrl
 
     return {
-        title: data?.title + ' | Cadsquad.vn',
-        description: data?.shortDescription,
+        title: `${seo?.metaTitle || title} | Cadsquad.vn`,
+        description,
         keywords: data?.keywords,
         openGraph: {
-            title: data?.title,
-            description: data?.shortDescription,
-            images: [
-                {
-                    url: data?.thumbnailUrl,
-                    width: 1200,
-                    height: 630,
-                    alt: data?.title,
-                },
-            ],
+            title: seo?.metaTitle || title,
+            description,
+            images: image
+                ? [{ url: image, width: 1200, height: 630, alt: title }]
+                : [],
             siteName: 'Cadsquad.vn',
-            locale: 'en_US',
+            locale: locale === 'vi' ? 'vi_VN' : 'en_US',
             type: 'website',
         },
         alternates: {
-            canonical: `https://cadsquad.vn/news-and-media/${data?.slug}`,
+            canonical,
         },
     }
 }
