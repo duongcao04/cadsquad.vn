@@ -1,1 +1,1 @@
-export { default } from '@/features/cad-services/[slug]/page'
+export { default } from '@/features/services/cad-services/[slug]/page'

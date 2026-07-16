@@ -1,26 +1,34 @@
 import React from 'react'
-import { Suspense } from 'react'
 
-import { Image } from 'antd'
 import { getLocale } from 'next-intl/server'
-import { MDXRemote } from 'next-mdx-remote-client/rsc'
+import { notFound } from 'next/navigation'
+
+import OurServices from '@/features/home/_components/our-services'
+import {
+    getCadServiceDetail,
+    getCadServices,
+} from '@/features/services/cad-services/_actions'
+import PageBreadcumbs from '@/features/services/cad-services/_components/detail/page-breadcumbs'
+import Image from '@/features/services/cad-services/_components/detail/service-image'
+import ServiceNavigate from '@/features/services/cad-services/_components/detail/service-navigate'
 
 import { MotionSection } from '@/lib/motion'
-import { cleanMarkdownString } from '@/lib/utils'
-import { CAD_SERVICES } from '@/shared/database/cadServices'
-import PageBreadcumbs from '@/features/cad-services/_components/detail/page-breadcumbs'
-import ServiceNavigate from '@/features/cad-services/_components/detail/service-navigate'
-import OurServices from '@/features/home/_components/our-services'
+import { sanitizeServiceContent } from '@/lib/sanitize-content'
+import { HtmlContent } from '@/shared/components/html-content'
 
-const cadServices = CAD_SERVICES
 export default async function CADServiceDetailPage({
     params,
 }: {
     params: Promise<{ slug: string }>
 }) {
-    const locale = await getLocale()
     const { slug } = await params
-    const data = cadServices.filter((item) => item.slug === slug)?.[0]
+    const [locale, data, services] = await Promise.all([
+        getLocale(),
+        getCadServiceDetail(slug),
+        getCadServices(),
+    ])
+
+    if (!data) notFound()
 
     /**
      * Use for create new content with this template
@@ -91,16 +99,18 @@ export default async function CADServiceDetailPage({
 
     // console.log(JSON.stringify(templateContent.replaceAll('  ', '')))
 
-    const descriptionSource = (
-        locale === 'vi' ? data?.description?.vi : data?.description?.original
-    ) as string
-    const contentSource = (
-        locale === 'vi' ? data?.content?.vi : data?.content?.original
-    ) as string
-    const description = cleanMarkdownString(descriptionSource)
-    const source = cleanMarkdownString(contentSource)
+    const getLocalizedText = (value: Record<string, string> | null) =>
+        value?.[locale]?.trim() ||
+        value?.en?.trim() ||
+        Object.values(value ?? {}).find((item) => item.trim()) ||
+        ''
 
-    const title = locale === 'vi' ? data?.title?.vi : data?.title?.original
+    const descriptionSource = getLocalizedText(data.description)
+    const contentSource = getLocalizedText(data.content)
+    const description = sanitizeServiceContent(descriptionSource)
+    const content = sanitizeServiceContent(contentSource)
+
+    const title = getLocalizedText(data.title)
 
     return (
         <div className="min-h-screen pb-20 max-w-screen">
@@ -108,8 +118,8 @@ export default async function CADServiceDetailPage({
                 <div className="relative size-full">
                     <Image
                         src={
-                            data?.thumbnail.horizontal ??
-                            (data?.thumbnail as string)
+                            data.thumbnail?.horizontal ??
+                            data.thumbnail?.vertical
                         }
                         alt="Image"
                         className="!object-cover !size-full"
@@ -123,18 +133,9 @@ export default async function CADServiceDetailPage({
                         <h2 className="mt-5 text-3xl lg:text-6xl font-bold font-saira mb-3">
                             {title}
                         </h2>
-                        <MDXRemote
-                            source={description}
-                            components={{
-                                wrapper({ children }) {
-                                    return (
-                                        <div className="leading-normal lg:leading-relaxed !text-sm lg:!text-lg !opacity-85">
-                                            {children}
-                                        </div>
-                                    )
-                                },
-                            }}
-                            onError={() => <p></p>}
+                        <HtmlContent
+                            html={description}
+                            className="leading-normal lg:leading-relaxed !text-sm lg:!text-lg !opacity-85"
                         />
                     </div>
                 </div>
@@ -145,27 +146,11 @@ export default async function CADServiceDetailPage({
                 whileInView={{ opacity: 1 }}
                 className="container min-h-40 mt-16"
             >
-                <Suspense fallback={<p>Loading...</p>}>
-                    {/* Use antd Image and replace bold middle paraph */}
-                    <MDXRemote
-                        source={source
-                            .replaceAll('img', 'Image')
-                            .replaceAll('**', '')}
-                        components={{
-                            Image,
-                            wrapper: ({ children }) => (
-                                <div suppressHydrationWarning>{children}</div>
-                            ),
-                        }}
-                        onError={(err) => (
-                            <p>{`Couldn't load content!${JSON.stringify(err)}`}</p>
-                        )}
-                    />
-                </Suspense>
+                <HtmlContent html={content} className="service-content" />
             </MotionSection>
 
             <MotionSection className="container mt-24 mb-16 flex items-center justify-end lg:justify-between gap-5">
-                <ServiceNavigate service={data} />
+                <ServiceNavigate service={data} services={services} />
             </MotionSection>
 
             <MotionSection>

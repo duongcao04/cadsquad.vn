@@ -1,1 +1,4 @@
-export { default, generateMetadata } from '@/features/cad-services/layout'
+export {
+    default,
+    generateMetadata,
+} from '@/features/services/cad-services/layout'

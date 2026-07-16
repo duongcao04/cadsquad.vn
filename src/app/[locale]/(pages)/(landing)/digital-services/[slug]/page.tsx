@@ -1,1 +1,1 @@
-export { default } from '@/features/digital-service/[slug]/page'
+export { default } from '@/features/services/digital-service/[slug]/page'

@@ -5,34 +5,39 @@ import React from 'react'
 import { ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 
+import { type Service } from '@/features/services/_actions'
+
 import { Link } from '@/i18n/navigation'
-import { CAD_SERVICES } from '@/shared/database/cadServices'
-import { CadService } from '@/validationSchemas/cad-service.schema'
 
-type Props = { service: CadService }
+type Props = {
+    service: Service
+    services: Service[]
+}
 
-const cadServices = CAD_SERVICES
-export default function ServiceNavigate({ service }: Props) {
+function getLocalizedTitle(service: Service | undefined, locale: string) {
+    if (!service?.title) return ''
+
+    return (
+        service.title[locale]?.trim() ||
+        service.title.en?.trim() ||
+        Object.values(service.title).find((item) => item.trim()) ||
+        ''
+    )
+}
+
+export default function ServiceNavigate({ service, services }: Props) {
     const locale = useLocale()
     const tButton = useTranslations('button')
 
-    const lastService = cadServices.find(
-        (item) => item?.order === cadServices.length - 1
-    )
-    const firstService = cadServices.find((item) => item?.order === 1)
+    const currentIndex = services.findIndex((item) => item.id === service.id)
+    const previousIndex =
+        currentIndex <= 0 ? services.length - 1 : currentIndex - 1
+    const nextIndex =
+        currentIndex === services.length - 1 ? 0 : currentIndex + 1
+    const prevService = services[previousIndex]
+    const nextService = services[nextIndex]
 
-    const prevService =
-        Number(service?.order) - 1 === 0
-            ? lastService
-            : cadServices.find(
-                  (item) => item?.order === Number(service?.order) - 1
-              )
-    const nextService =
-        Number(service?.order) === cadServices.length
-            ? firstService
-            : cadServices.find(
-                  (item) => item?.order === Number(service?.order) + 1
-              )
+    if (services.length < 2 || currentIndex < 0) return null
 
     return (
         <>
@@ -48,9 +53,7 @@ export default function ServiceNavigate({ service }: Props) {
                         </p>
                     </div>
                     <p className="mt-1 text-lg font-semibold line-clamp-2 w-[350px] max-h-[2lh] leading-normal group-hover:text-danger transition duration-250">
-                        {locale === 'vi'
-                            ? prevService?.title?.vi
-                            : prevService?.title.original}
+                        {getLocalizedTitle(prevService, locale)}
                     </p>
                 </button>
             </Link>
@@ -66,9 +69,7 @@ export default function ServiceNavigate({ service }: Props) {
                         />
                     </div>
                     <p className="mt-1 text-lg font-semibold line-clamp-2 w-[350px] max-h-[2lh] leading-normal group-hover:text-danger transition duration-250">
-                        {locale === 'vi'
-                            ? nextService?.title?.vi
-                            : nextService?.title.original}
+                        {getLocalizedTitle(nextService, locale)}
                     </p>
                 </button>
             </Link>

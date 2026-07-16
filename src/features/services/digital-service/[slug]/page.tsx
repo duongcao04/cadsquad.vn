@@ -5,10 +5,11 @@ import { Image } from 'antd'
 import { getLocale } from 'next-intl/server'
 import { MDXRemote } from 'next-mdx-remote-client/rsc'
 
+import PageBreadcumbs from '@/features/services/digital-service/_components/detail/page-breadcumbs'
+
 import { MotionSection } from '@/lib/motion'
 import { cleanMarkdownString } from '@/lib/utils'
 import { DIGITAL_SERVICES } from '@/shared/database/digitalServices'
-import PageBreadcumbs from '@/features/digital-service/_components/detail/page-breadcumbs'
 
 export default async function DigitalServiceDetailPage({
     params,

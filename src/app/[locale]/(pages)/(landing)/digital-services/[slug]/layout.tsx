@@ -1,1 +1,4 @@
-export { default, generateMetadata } from '@/features/digital-service/[slug]/layout'
+export {
+    default,
+    generateMetadata,
+} from '@/features/services/digital-service/[slug]/layout'

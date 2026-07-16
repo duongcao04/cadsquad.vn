@@ -8,13 +8,28 @@ import { ChevronRight } from 'lucide-react'
 import { Variants } from 'motion'
 import { useLocale, useTranslations } from 'next-intl'
 
+import { type Service } from '@/features/services/_actions'
+
 import { Link } from '@/i18n/navigation'
 import { MotionDiv } from '@/lib/motion'
 import { useDevice } from '@/shared/hooks/useDevice'
-import { CadService } from '@/validationSchemas/cad-service.schema'
 
 type Props = {
-    data: CadService
+    data: Service
+}
+
+function getLocalizedText(
+    value: Record<string, string> | null,
+    locale: string
+) {
+    if (!value) return ''
+
+    return (
+        value[locale]?.trim() ||
+        value.en?.trim() ||
+        Object.values(value).find((item) => item.trim()) ||
+        ''
+    )
 }
 
 export default function ServiceCard({ data }: Props) {
@@ -22,11 +37,8 @@ export default function ServiceCard({ data }: Props) {
     const tButton = useTranslations('button')
     const { isMobile } = useDevice()
 
-    const title = locale === 'vi' ? data?.title?.vi : data?.title?.original
-    const shortDescription =
-        locale === 'vi'
-            ? data?.shortDescription?.vi
-            : data?.shortDescription?.original
+    const title = getLocalizedText(data.title, locale)
+    const shortDescription = getLocalizedText(data.shortDescription, locale)
 
     const wrapperVariants: Variants = {
         init: {
@@ -63,7 +75,10 @@ export default function ServiceCard({ data }: Props) {
                     title={title}
                 >
                     <Image
-                        src={data?.thumbnail?.vertical}
+                        src={
+                            data.thumbnail?.vertical ??
+                            data.thumbnail?.horizontal
+                        }
                         alt={title}
                         className="object-cover h-full aspect-video"
                         preview={false}
