@@ -1,0 +1,37 @@
+🚀 [21:36:11] BẮT ĐẦU QUY TRÌNH DEPLOY LANDING PAGE
+📝 File log trận này: logs/deploy_20260707_213611.log
+--------------------------------------------------------
+📦 [1/4] Đang build dự án Next.js (Standalone mode) trên máy thật...
+
+> next-cadsquad@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.19
+   - Environments: .env
+
+   Creating an optimized production build ...
+(node:2327) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:2327) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/duongcao/Documents/00.%20Project/cadsquad.vn/src/lib/hero.ts?id=1783434995482 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/duongcao/Documents/00. Project/cadsquad.vn/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ Compiled successfully in 38.6s
+   Linting and checking validity of types ...
+Failed to compile.
+
+./src/shared/components/layouts/header/header.tsx:11:21
+Type error: Already included file name '/Users/duongcao/Documents/00. Project/cadsquad.vn/src/shared/components/layouts/header/actions.tsx' differs from file name '/Users/duongcao/Documents/00. Project/cadsquad.vn/src/shared/components/layouts/header/Actions.tsx' only in casing.
+  The file is in the program because:
+    Imported via './actions' from file '/Users/duongcao/Documents/00. Project/cadsquad.vn/src/shared/components/layouts/header/header.tsx'
+    Root file specified for compilation
+
+[0m [90m  9 |[39m [36mimport[39m [33mLogo[39m [36mfrom[39m [32m'@/shared/components/logo'[39m
+ [90m 10 |[39m
+[31m[1m>[22m[39m[90m 11 |[39m [36mimport[39m [33mActions[39m [36mfrom[39m [32m'./actions'[39m
+ [90m    |[39m                     [31m[1m^[22m[39m
+ [90m 12 |[39m [36mimport[39m [33mNavbar[39m [36mfrom[39m [32m'./navbar'[39m
+ [90m 13 |[39m
+ [90m 14 |[39m [36mconst[39m [33mBREAKPOINT[39m [33m=[39m [35m20[39m[0m
+Next.js build worker exited with code: 1 and signal: null
+❌ LỖI: Build Next.js thất bại! Dừng deploy ngay lập tức.
