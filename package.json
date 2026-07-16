@@ -36,7 +36,7 @@
     "lucide-react": "^0.515.0",
     "marked": "^16.1.2",
     "motion": "^12.18.1",
-    "next": "^15.3.9",
+    "next": "15.5.20",
     "next-images": "^1.8.5",
     "next-intl": "^4.1.0",
     "next-mdx-remote-client": "^2.1.2",
@@ -64,7 +64,7 @@
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.1",
     "eslint": "^9",
-    "eslint-config-next": "^15.3.9",
+    "eslint-config-next": "15.5.20",
     "tailwindcss": "^4.1.10",
     "typescript": "^5"
   }
