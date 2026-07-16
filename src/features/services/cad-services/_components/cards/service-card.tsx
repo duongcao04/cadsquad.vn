@@ -10,7 +10,6 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { type Service } from '@/features/services/_actions'
 
-import { Link } from '@/i18n/navigation'
 import { MotionDiv } from '@/lib/motion'
 import { useDevice } from '@/shared/hooks/useDevice'
 
@@ -68,12 +67,7 @@ export default function ServiceCard({ data }: Props) {
             className="lg:grid grid-cols-[600px_1fr] gap-10 border-1 p-4 rounded-lg"
         >
             <div className="h-full overflow-hidden rounded-lg aspect-video">
-                <Link
-                    href={destination}
-                    passHref
-                    className="block"
-                    title={title}
-                >
+                <a href={destination} className="block" title={title}>
                     <Image
                         src={
                             data.thumbnail?.vertical ??
@@ -83,20 +77,20 @@ export default function ServiceCard({ data }: Props) {
                         className="object-cover h-full aspect-video"
                         preview={false}
                     />
-                </Link>
+                </a>
             </div>
             <div className="mt-6 lg:mt-0 w-full">
-                <Link
+                <a
                     href={destination}
                     className="text-2xl font-semibold line-clamp-1 hover:underline underline-offset-4"
                     title={title}
                 >
                     {title}
-                </Link>
+                </a>
                 <p className="mt-3 lg:mt-5 text-lg text-gray-700">
                     {shortDescription}
                 </p>
-                <Link href={destination} className="block">
+                <a href={destination} className="block">
                     <Button
                         className="mt-8 capitalize rounded-full"
                         variant="bordered"
@@ -106,7 +100,7 @@ export default function ServiceCard({ data }: Props) {
                         {tButton('getStartedNow')}
                         <ChevronRight />
                     </Button>
-                </Link>
+                </a>
             </div>
         </MotionDiv>
     )

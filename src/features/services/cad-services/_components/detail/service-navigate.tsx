@@ -7,8 +7,6 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { type Service } from '@/features/services/_actions'
 
-import { Link } from '@/i18n/navigation'
-
 type Props = {
     service: Service
     services: Service[]
@@ -41,7 +39,7 @@ export default function ServiceNavigate({ service, services }: Props) {
 
     return (
         <>
-            <Link href={`/cad-services/${prevService?.slug}`} className="block">
+            <a href={`/cad-services/${prevService?.slug}`} className="block">
                 <button className="hidden lg:block text-left border border-border rounded-lg px-7 py-4 group transition duration-250 hover:border-danger cursor-pointer">
                     <div className="flex items-center justify-start gap-1">
                         <ChevronsLeft
@@ -56,8 +54,8 @@ export default function ServiceNavigate({ service, services }: Props) {
                         {getLocalizedTitle(prevService, locale)}
                     </p>
                 </button>
-            </Link>
-            <Link href={`/cad-services/${nextService?.slug}`} className="block">
+            </a>
+            <a href={`/cad-services/${nextService?.slug}`} className="block">
                 <button className="text-right border border-border rounded-lg px-7 py-4 group transition duration-250 hover:border-danger cursor-pointer">
                     <div className="flex items-center justify-end gap-1">
                         <p className="text-sm font-semibold opacity-75">
@@ -72,7 +70,7 @@ export default function ServiceNavigate({ service, services }: Props) {
                         {getLocalizedTitle(nextService, locale)}
                     </p>
                 </button>
-            </Link>
+            </a>
         </>
     )
 }

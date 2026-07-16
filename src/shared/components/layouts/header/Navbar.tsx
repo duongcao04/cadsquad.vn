@@ -11,7 +11,10 @@ import Image from 'next/image'
 import { Link, usePathname } from '@/i18n/navigation'
 import { SupportLanguages } from '@/i18n/routing'
 import { MotionButton, MotionDiv, MotionLi, MotionP } from '@/lib/motion'
-import { NavigateItem } from '@/shared/constants/header-navigate'
+import {
+    NavigateItem,
+    NavigateMenuItem,
+} from '@/shared/constants/header-navigate'
 import { useHeaderNavigates } from '@/shared/hooks/use-header-navigates'
 import { resolveNavLabel } from '@/shared/utils/navLabel'
 
@@ -24,6 +27,32 @@ export default function Navbar() {
                 return <NavbarItem key={index} data={item} index={index} />
             })}
         </nav>
+    )
+}
+
+function MenuItemLink({
+    item,
+    children,
+}: {
+    item: NavigateMenuItem
+    children: React.ReactNode
+}) {
+    const className = 'block space-y-2 size-full'
+    const target = item.outSite ? '_blank' : undefined
+    const isServiceDetail = /^\/(cad|digital)-services\/.+/.test(item.href)
+
+    if (isServiceDetail) {
+        return (
+            <a href={item.href} className={className} target={target}>
+                {children}
+            </a>
+        )
+    }
+
+    return (
+        <Link href={item.href} className={className} target={target}>
+            {children}
+        </Link>
     )
 }
 
@@ -163,13 +192,7 @@ function NavbarItem({ data, index }: { data: NavigateItem; index: number }) {
                                     whileHover="hover"
                                     className="group"
                                 >
-                                    <Link
-                                        href={menuItem.href}
-                                        className="block space-y-2 size-full"
-                                        target={
-                                            menuItem.outSite ? '_blank' : ''
-                                        }
-                                    >
+                                    <MenuItemLink item={menuItem}>
                                         <div className="w-full overflow-hidden rounded-sm aspect-video">
                                             <Image
                                                 src={menuItem.image}
@@ -186,7 +209,7 @@ function NavbarItem({ data, index }: { data: NavigateItem; index: number }) {
                                         >
                                             {itemLabel}
                                         </MotionP>
-                                    </Link>
+                                    </MenuItemLink>
                                 </MotionLi>
                             )
                         })}
