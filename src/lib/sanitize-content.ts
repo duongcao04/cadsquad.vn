@@ -1,7 +1,9 @@
 import sanitizeHtml from 'sanitize-html'
 
 export function sanitizeServiceContent(html: string) {
-    return sanitizeHtml(html, {
+    const normalizedHtml = html.replace(/\bclassName=/g, 'class=')
+
+    return sanitizeHtml(normalizedHtml, {
         allowedTags: [
             ...sanitizeHtml.defaults.allowedTags,
             'img',

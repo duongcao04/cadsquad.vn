@@ -135,7 +135,7 @@ export default async function CADServiceDetailPage({
                         </h2>
                         <HtmlContent
                             html={description}
-                            className="leading-normal lg:leading-relaxed !text-sm lg:!text-lg !opacity-85"
+                            className="prose prose-invert max-w-none !text-sm lg:!text-lg !opacity-85 prose-headings:font-saira prose-headings:leading-tight prose-p:leading-relaxed prose-li:leading-relaxed"
                         />
                     </div>
                 </div>
@@ -146,7 +146,10 @@ export default async function CADServiceDetailPage({
                 whileInView={{ opacity: 1 }}
                 className="container min-h-40 mt-16"
             >
-                <HtmlContent html={content} className="service-content" />
+                <HtmlContent
+                    html={content}
+                    className="service-content prose prose-slate max-w-none prose-headings:font-saira prose-headings:font-bold prose-headings:leading-tight prose-p:leading-relaxed prose-li:leading-relaxed prose-img:mx-auto prose-img:rounded-xl"
+                />
             </MotionSection>
 
             <MotionSection className="container mt-24 mb-16 flex items-center justify-end lg:justify-between gap-5">
