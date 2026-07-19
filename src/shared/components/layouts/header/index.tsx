@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Header from './header'
+import Header from './header-nav'
 import MobileHeader from './mobile-header'
 
 export default function AppHeader() {

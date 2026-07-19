@@ -1,0 +1,66 @@
+🚀 [14:38:36] BẮT ĐẦU QUY TRÌNH DEPLOY LANDING PAGE
+📝 File log trận này: logs/deploy_20260719_143836.log
+--------------------------------------------------------
+📦 [1/4] Đang build dự án Next.js (Standalone mode) trên máy thật...
+
+> next-cadsquad@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.20
+   - Environments: .env
+
+   Creating an optimized production build ...
+(node:40678) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:40678) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/duongcao/Documents/00.%20Project/cadsquad/landing-page/src/lib/hero.ts?id=1784446720160 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/duongcao/Documents/00. Project/cadsquad/landing-page/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ Compiled successfully in 4.5s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/9) ...
+   Generating static pages (2/9) 
+   Generating static pages (4/9) 
+   Generating static pages (6/9) 
+ ✓ Generating static pages (9/9)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                       Size  First Load JS
+┌ ○ /_not-found                                   1 kB         103 kB
+├ ƒ /[locale]                                  33.2 kB         368 kB
+├ ƒ /[locale]/[...rest]                          990 B         498 kB
+├ ƒ /[locale]/about-us                         8.95 kB         281 kB
+├ ƒ /[locale]/about-us/about-cadsquad-digital  4.19 kB         317 kB
+├ ƒ /[locale]/about-us/overview                  726 B         108 kB
+├ ƒ /[locale]/about-us/vision                  4.97 kB         227 kB
+├ ƒ /[locale]/academy                          2.21 kB         170 kB
+├ ƒ /[locale]/cad-services                     3.07 kB         327 kB
+├ ƒ /[locale]/cad-services/[slug]              16.2 kB         370 kB
+├ ƒ /[locale]/digital-services                 4.67 kB         329 kB
+├ ƒ /[locale]/digital-services/[slug]            547 B         271 kB
+├ ƒ /[locale]/news-and-media                   3.04 kB         222 kB
+├ ƒ /[locale]/news-and-media/[slug]            13.2 kB         298 kB
+├ ƒ /[locale]/news-and-media/all-posts         3.03 kB         222 kB
+├ ƒ /api/posts                                   139 B         102 kB
+├ ƒ /api/send                                    139 B         102 kB
+├ ○ /manifest.json                                 0 B            0 B
+├ ○ /robots.txt                                    0 B            0 B
+├ ○ /sitemap.xml                                   0 B            0 B
+└ ƒ /sites/default/files/[...file]               139 B         102 kB
++ First Load JS shared by all                   102 kB
+  ├ chunks/1255-ab54a41c275880be.js              46 kB
+  ├ chunks/4bd1b696-100b9d70ed4e49c1.js        54.2 kB
+  └ other shared chunks (total)                2.06 kB
+
+
+ƒ Middleware                                   45.9 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+📦 [2/4] Đang gom public, static vào thư mục standalone và nén...
+🚚 [3/4] Đang copy file deploy.tar.gz lên VPS...
+🔄 [4/4] Đang kết nối SSH vào VPS để giải nén và cập nhật...
+--------------------------------------------------------
